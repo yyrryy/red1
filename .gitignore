@@ -1,0 +1,9 @@
+venv
+vauto
+.env
+pycache
+requirements.txt
+db.*
+__pycache__
+migrations
+logs.txt
