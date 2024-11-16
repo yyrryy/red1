@@ -28,10 +28,11 @@ def searchref(request):
     search_terms = ref.split('+')
     
     q_objects = Q()
-    for term in search_terms:
+    for term in ref.split('+'):
         print('>>> ', term)
-        q_objects &= (Q(ref=term) | Q(name__icontains=term) | Q(category__title__icontains=term) |  Q(mark__name__icontains=term) |  Q(equivalent__icontains=term)  |  Q(cars__icontains=term))
-    products=Produit.objects.filter(q_objects).exclude(price=0).order_by('-stock')[:50]
+        q_objects &= (Q(ref__icontains=term) | Q(name__icontains=term) | Q(category__name__icontains=term) |  Q(mark__name__icontains=term) |  Q(equivalent__icontains=term)  |  Q(cars__icontains=term))
+    products=Produit.objects.filter(q_objects)[:50]
+    print('>> ', products)
     return JsonResponse({
         'data':render(request, 'searchref.html', {'products':products}).content.decode('utf-8')
     })
