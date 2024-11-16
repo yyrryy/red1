@@ -102,14 +102,17 @@
 </head>
 
 <body>
-    <div class="searchscreen bg-white w-100 h-100 p-2 d-none" style="position:fixed; z-index: 999;">
+    <div class="searchscreen bg-white w-100 h-100 p-2 d-none" style="position:fixed; z-index: 9999;">
       <div class="d-flex justify-content-between">
         <div class="col-5 d-flex align-items-center">
-          <input type="text" class="form-control" placeholder="chercher ref, OEM, ...">
+          <input type="text" class="form-control searchref" placeholder="chercher ref, OEM, ...">
 
-          <button class="btn btn-danger">X</button>
+          <!-- <button class="btn btn-danger">X</button> -->
         </div>
         <button class="btn btn-danger" onclick="$('.searchscreen').addClass('d-none')">X</button>
+      </div>
+      <div class="suggestions__group-content searchresults">
+                  
       </div>
     </div>
 

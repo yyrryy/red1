@@ -538,13 +538,13 @@ def addtocart(request):
     if cart:
         print('>>>>cart already')
         cartitem=Cartitem.objects.filter(cart=cart, product=product).first()
-        # if cartitem:
-        #     return JsonResponse({
-        #         'success':False
-        #     })
-        # else:
-        Cartitem.objects.create(cart=cart, product=product, qty=qty, total=total)
-        cart.total+=total
+        if cartitem:
+            return JsonResponse({
+                'success':False
+            })
+        else:
+            Cartitem.objects.create(cart=cart, product=product, qty=qty, total=total)
+            cart.total+=total
         cart.save()
         
     else:
