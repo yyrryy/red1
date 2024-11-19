@@ -64,7 +64,9 @@
                             <td>
                               <!-- hint: link to mark to display all products in mark -->
                               {{product.mark.name.upper}} <br>
-                              <img src="{{product.mark.image}}" width="100">
+                              {% if product.mark.image %}
+                              <img src="{{product.mark.image.url}}" width="100">
+                              {% endif %}
                             </td>
                             
                           </tr>

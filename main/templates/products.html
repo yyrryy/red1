@@ -56,8 +56,7 @@
 	  </div>
 	</div>
 </div>
-<div class="col-12 shadow-lg rounded p-2 categorytitle fixed-bottom  border border-2" style="
-  background:#0d44a2;">
+<div class="col-12 shadow-lg rounded p-2 categorytitle fixed-bottom  border border-2 bg-white">
     <!-- <div class="d-flex justify-content-between align-items-center">
       <a href="/catalog" class="bi bi-arrow-left me-2 btn text-primary">Catalog</a>
       <div>
@@ -68,8 +67,11 @@
       
       
     </div> -->
-
       <div class="d-flex justify-content-between align-items-center">
+        <div class="layout-switcher__list  bg-whitex ">
+          <button onclick="$('.products-view__list').attr('data-layout', 'list')" type="button" class="layoutbtn  bi bi-list"></button>
+          <button onclick="$('.products-view__list').attr('data-layout', 'grid')" type="button" class="layoutbtn bi bi-grid"></button>
+        </div>
           <a href="/catalog" class="btn text-white">
             ←
           </a>

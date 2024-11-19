@@ -192,14 +192,14 @@ def createmarque(request):
 def updatemarque(request):
     image=request.FILES.get('image') or None
     id=request.POST.get('id')
-    hideclient=request.POST.get('hideclientmrk')=='True'
-    commercialexcluded=request.POST.getlist('commercialexcludedmrk')
-    reps=Represent.objects.filter(pk__in=commercialexcluded)
+    # hideclient=request.POST.get('hideclientmrk')=='True'
+    # commercialexcluded=request.POST.getlist('commercialexcludedmrk')
+    # reps=Represent.objects.filter(pk__in=commercialexcluded)
 
     mark=Mark.objects.get(pk=id)
     mark.name=request.POST.get('name')
-    mark.masqueclients=hideclient
-    mark.excludedrep.set(reps)
+    # mark.masqueclients=hideclient
+    # mark.excludedrep.set(reps)
     if image:
         mark.image=image
     mark.save()

@@ -70,8 +70,8 @@
     {% if user.groups.all.0.name != 'admin' %}
     <div class="header__indicators align-items-center">
       
-      <div class="indicator indicator--trigger--click">
-        <a href="#" class="indicator__button">
+      <!-- <div class="indicator indicator--trigger--click">
+        <a href="#" class="bi bi-list">
           <span class="indicator__icon">
             
           </span>
@@ -99,8 +99,11 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
 
+      <button class="mobile-header__menu-button p-2 me-3" type="button">
+        <svg width="18px" height="14px"><path d="M-0,8L-0,6L18,6L18,8L-0,8ZM-0,-0L18,-0L18,2L-0,2L-0,-0ZM14,14L-0,14L-0,12L14,12L14,14Z"></path></svg>
+      </button>
 
       <div class="indicator indicator--trigger--click">
         <a href="/cart">

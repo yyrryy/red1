@@ -9,7 +9,12 @@
       </div>
       
     </div>
-    <strong class="text-primary">{{i.price}} Net</strong>
+    <div>
+      <strong class="text-primary">{{i.sellprice}} Net</strong> <br>
+      {% if i.mark.image %}
+      <img src="{{i.mark.image.url}}" width="60">
+      {% endif %}
+    </div>
   </a>
 {% empty %}
 <strong>

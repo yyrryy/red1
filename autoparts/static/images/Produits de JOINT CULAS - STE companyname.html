@@ -1,26 +1,21 @@
-{% load static %}
 <!DOCTYPE html>
-
-<html dir="ltr" lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width,initial-scale=1" name="viewport" />
-    <meta content="telephone=no" name="format-detection" />
+<!-- saved from url=(0043)http://localhost:8000/categories/products/2 -->
+<html dir="ltr" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta content="telephone=no" name="format-detection">
     <!-- favicon -->
-    <link href="{% static 'images/favicon.png'%}" rel="icon" />
-    {% block meta %}
-    {% endblock %}
-    {% if title %}
-    <title>{{title}} - STE companyname</title>
-    {% else %}
-    <title>Catalogue</title>
-    {% endif %}
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet" />
+    <link href="http://localhost:8000/static/images/favicon.png" rel="icon">
+    
+    
+    
+    <title>Produits de JOINT CULAS - STE companyname</title>
+    
+    <link href="./Produits de JOINT CULAS - STE companyname_files/css" rel="stylesheet">
     <!-- css -->
-    <script src="{% static 'js/jquery.min.js'%}"></script>
-    <link href="{% static 'css/minified.css'%}" rel="stylesheet" />
-    <link href="{% static 'css/alertify.css'%}" rel="stylesheet" />
+    <script src="./Produits de JOINT CULAS - STE companyname_files/jquery.min.js.téléchargement"></script>
+    <link href="./Produits de JOINT CULAS - STE companyname_files/minified.css" rel="stylesheet">
+    <link href="./Produits de JOINT CULAS - STE companyname_files/alertify.css" rel="stylesheet">
 
     <style>
         .fixedheader{
@@ -97,8 +92,13 @@
             visibility: visible;
             }
     </style>
-    {% block css%}
-    {% endblock %}
+    
+<style>
+  .products-list__item:hover {
+    box-shadow: -1px 3px 9px 2px #d9d9d9
+  }
+</style>
+
 </head>
 
 <body>
@@ -109,9 +109,9 @@
 
           <!-- <button class="btn btn-danger">X</button> -->
         </div>
-        <button class="btn btn-danger" onclick="$('.searchscreen').addClass('d-none')">X</button>
+        <button class="btn btn-danger" onclick="$(&#39;.searchscreen&#39;).addClass(&#39;d-none&#39;)">X</button>
       </div>
-      <div class="suggestions__group-content searchresults" style="overflow-y: scroll;height: 92vh;">
+      <div class="suggestions__group-content searchresults">
                   
       </div>
     </div>
@@ -122,17 +122,241 @@
     <a id="button"></a>
     <div class="site">
 
-        {% if user.username %}
+        
         <!-- mobile site__header -->
-        {% include "mobileheader.html" %}
-        {% include "header.html" %}
-        {% endif %}
+        <header class="site__mobile-header">
+    <div class="mobile-header">
+      <div class="container">
+        <div class="mobile-header__body">
+          
+          <button class="mobile-header__menu-button" type="button">
+            <svg width="18px" height="14px"><path d="M-0,8L-0,6L18,6L18,8L-0,8ZM-0,-0L18,-0L18,2L-0,2L-0,-0ZM14,14L-0,14L-0,12L14,12L14,14Z"></path></svg>
+          </button>
+          
+          
+          <a class="mobile-header__logo" href="http://localhost:8000/catalog">
+            <!-- mobile-logo -->
+            <img src="./Produits de JOINT CULAS - STE companyname_files/logo.png" alt="Logo">
+            <!-- mobile-logo / end -->
+          </a>
+          
+          
+          <div class="mobile-header__search mobile-search d-none flex-column">
+            <div class="mobile-search__body">
+              <!-- <input type="text" class="mobile-search__input searchref" placeholder="Enter keyword or part number"> -->
+              <!-- <button type="button" class="mobile-search__vehicle-picker" aria-label="Select Vehicle">
+                <svg width="20" height="20">
+                  <path d="M6.6,2c2,0,4.8,0,6.8,0c1,0,2.9,0.8,3.6,2.2C17.7,5.7,17.9,7,18.4,7C20,7,20,8,20,8v1h-1v7.5c0,0.8-0.7,1.5-1.5,1.5h-1
+      c-0.8,0-1.5-0.7-1.5-1.5V16H5v0.5C5,17.3,4.3,18,3.5,18h-1C1.7,18,1,17.3,1,16.5V16V9H0V8c0,0,0.1-1,1.6-1C2.1,7,2.3,5.7,3,4.2
+      C3.7,2.8,5.6,2,6.6,2z M13.3,4H6.7c-0.8,0-1.4,0-2,0.7c-0.5,0.6-0.8,1.5-1,2C3.6,7.1,3.5,7.9,3.7,8C4.5,8.4,6.1,9,10,9
+      c4,0,5.4-0.6,6.3-1c0.2-0.1,0.2-0.8,0-1.2c-0.2-0.4-0.5-1.5-1-2C14.7,4,14.1,4,13.3,4z M4,10c-0.4-0.3-1.5-0.5-2,0
+      c-0.4,0.4-0.4,1.6,0,2c0.5,0.5,4,0.4,4,0C6,11.2,4.5,10.3,4,10z M14,12c0,0.4,3.5,0.5,4,0c0.4-0.4,0.4-1.6,0-2c-0.5-0.5-1.3-0.3-2,0
+      C15.5,10.2,14,11.3,14,12z"></path>
+                </svg>
+                <span class="mobile-search__vehicle-picker-label">Vehicle</span>
+              </button> -->
+              <button onclick="$(&#39;.searchscreen&#39;).removeClass(&#39;d-none&#39;)" type="submit" class="mobile-search__button mobile-search__button--search">
+                <svg width="20" height="20">
+                  <path d="M19.2,17.8c0,0-0.2,0.5-0.5,0.8c-0.4,0.4-0.9,0.6-0.9,0.6s-0.9,0.7-2.8-1.6c-1.1-1.4-2.2-2.8-3.1-3.9C10.9,14.5,9.5,15,8,15
+      c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7c0,1.5-0.5,2.9-1.3,4c1.1,0.8,2.5,2,4,3.1C20,16.8,19.2,17.8,19.2,17.8z M8,3C5.2,3,3,5.2,3,8
+      c0,2.8,2.2,5,5,5c2.8,0,5-2.2,5-5C13,5.2,10.8,3,8,3z"></path>
+                </svg>
+              </button>
+              <button type="button" class="mobile-search__button mobile-search__button--close">
+                <svg width="20" height="20">
+                  <path d="M16.7,16.7L16.7,16.7c-0.4,0.4-1,0.4-1.4,0L10,11.4l-5.3,5.3c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L8.6,10L3.3,4.7
+      c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L10,8.6l5.3-5.3c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L11.4,10l5.3,5.3
+      C17.1,15.7,17.1,16.3,16.7,16.7z"></path>
+                </svg>
+              </button>
+              <div class="mobile-search__field"></div>
+              
+            </div>
+            <div class="bg-white rounded shadow-lg" style="height: 50vh; overflow-y: scroll; width: 100%;">
+              <div class="suggestions__group">
+                <div class="suggestions__group-title">Products</div>
+                <div class="suggestions__group-content searchresults">
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          <div class="mobile-header__indicators">
+            
+            <div onclick="$(&#39;.searchscreen&#39;).removeClass(&#39;d-none&#39;)" class="mobile-indicator mobile-indicator--search">
+              <button type="button" class="mobile-indicator__button">
+                <span class="mobile-indicator__icon">
+                  <svg width="20" height="20">
+                    <path d="M19.2,17.8c0,0-0.2,0.5-0.5,0.8c-0.4,0.4-0.9,0.6-0.9,0.6s-0.9,0.7-2.8-1.6c-1.1-1.4-2.2-2.8-3.1-3.9C10.9,14.5,9.5,15,8,15
+      c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7c0,1.5-0.5,2.9-1.3,4c1.1,0.8,2.5,2,4,3.1C20,16.8,19.2,17.8,19.2,17.8z M8,3C5.2,3,3,5.2,3,8
+      c0,2.8,2.2,5,5,5c2.8,0,5-2.2,5-5C13,5.2,10.8,3,8,3z"></path>
+                  </svg>
+                </span>
+              </button>
+            </div>
+            
+            <!-- account icon 
+            <div class="mobile-indicator d-block">
+              <a href="#" class="mobile-indicator__button">
+                <span class="mobile-indicator__icon">
+                  <svg width="20" height="20">
+                    <path d="M20,20h-2c0-4.4-3.6-8-8-8s-8,3.6-8,8H0c0-4.2,2.6-7.8,6.3-9.3C4.9,9.6,4,7.9,4,6c0-3.3,2.7-6,6-6s6,2.7,6,6
+      c0,1.9-0.9,3.6-2.3,4.7C17.4,12.2,20,15.8,20,20z M14,6c0-2.2-1.8-4-4-4S6,3.8,6,6s1.8,4,4,4S14,8.2,14,6z"></path>
+                  </svg>
+                </span>
+              </a>
+            </div>-->
+            <div class="mobile-indicator">
+              <a href="http://localhost:8000/cart" class="mobile-indicator__button">
+                <span class="mobile-indicator__icon">
+                  <svg width="20" height="20">
+                    <circle cx="7" cy="17" r="2"></circle>
+                    <circle cx="15" cy="17" r="2"></circle>
+                    <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6
+      V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4
+      C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
+                  </svg>
+                  <span class="mobile-indicator__counter commanditems">3</span>
+                </span>
+              </a>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+        <header class="site__header">
+  <div class="header" style="background: #210f42;">
+    
+    <div class="header__logo">
+      
+      <a href="http://localhost:8000/catalog" class="logo">
+        
+        <div class="logo__image">
+          <!-- logo -->
+          <img src="./Produits de JOINT CULAS - STE companyname_files/logo.jpg" alt="">
+          <!-- <img src="/static/images/logo.png" alt=""> -->
+          <!-- logo / end -->
+        </div>
+      </a>
+      
+    </div>
+    
+
+    <div class="header__search">
+      <div class="search">
+        <div class="search__body">
+          <div class="search__shadow"></div>
+          <input class="search__input searchref" type="text" placeholder="Enter Keyword or Part Number">
+          <!-- <button class="search__button search__button--start" type="button">
+            <span class="search__button-icon">
+              <svg width="20" height="20">
+                <path d="M6.6,2c2,0,4.8,0,6.8,0c1,0,2.9,0.8,3.6,2.2C17.7,5.7,17.9,7,18.4,7C20,7,20,8,20,8v1h-1v7.5c0,0.8-0.7,1.5-1.5,1.5h-1
+    c-0.8,0-1.5-0.7-1.5-1.5V16H5v0.5C5,17.3,4.3,18,3.5,18h-1C1.7,18,1,17.3,1,16.5V16V9H0V8c0,0,0.1-1,1.6-1C2.1,7,2.3,5.7,3,4.2
+    C3.7,2.8,5.6,2,6.6,2z M13.3,4H6.7c-0.8,0-1.4,0-2,0.7c-0.5,0.6-0.8,1.5-1,2C3.6,7.1,3.5,7.9,3.7,8C4.5,8.4,6.1,9,10,9
+    c4,0,5.4-0.6,6.3-1c0.2-0.1,0.2-0.8,0-1.2c-0.2-0.4-0.5-1.5-1-2C14.7,4,14.1,4,13.3,4z M4,10c-0.4-0.3-1.5-0.5-2,0
+    c-0.4,0.4-0.4,1.6,0,2c0.5,0.5,4,0.4,4,0C6,11.2,4.5,10.3,4,10z M14,12c0,0.4,3.5,0.5,4,0c0.4-0.4,0.4-1.6,0-2c-0.5-0.5-1.3-0.3-2,0
+    C15.5,10.2,14,11.3,14,12z"></path>
+              </svg>
+            </span>
+            <span class="search__button-title"></span>
+          </button> -->
+          <button onclick="$(&#39;.searchscreen&#39;).removeClass(&#39;d-none&#39;)" class="search__button search__button--end" type="submit">
+            <span class="search__button-icon">
+              <svg width="20" height="20">
+                <path d="M19.2,17.8c0,0-0.2,0.5-0.5,0.8c-0.4,0.4-0.9,0.6-0.9,0.6s-0.9,0.7-2.8-1.6c-1.1-1.4-2.2-2.8-3.1-3.9C10.9,14.5,9.5,15,8,15
+    c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7c0,1.5-0.5,2.9-1.3,4c1.1,0.8,2.5,2,4,3.1C20,16.8,19.2,17.8,19.2,17.8z M8,3C5.2,3,3,5.2,3,8
+    c0,2.8,2.2,5,5,5c2.8,0,5-2.2,5-5C13,5.2,10.8,3,8,3z"></path>
+              </svg>
+            </span>
+          </button>
+          <div class="search__box"></div>
+          <div class="search__decor">
+            <div class="search__decor-start"></div>
+            <div class="search__decor-end"></div>
+          </div>
+          <!-- suggestions -->
+          <div class="search__dropdown search__dropdown--suggestions suggestions" style="height: 50vh; overflow-y: scroll;">
+            <div class="suggestions__group">
+              <div class="suggestions__group-title">Products</div>
+              <div class="suggestions__group-content searchresults">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="header__indicators align-items-center">
+      
+      <div class="indicator indicator--trigger--click">
+        <a href="http://localhost:8000/categories/products/2#" class="indicator__button">
+          <span class="indicator__icon">
+            
+          </span>
+        </a>
+        <div class="indicator__content">
+          <div class="account-menu">
+            
+            <div class="account-menu__divider"></div>
+            <a href="http://localhost:8000/categories/products/2#" class="account-menu__user">
+              
+              <div class="account-menu__user-info">
+                testrep
+              </div>
+            </a>
+            <div class="account-menu__divider"></div>
+            
+            <div class="account-menu__divider"></div>
+            <ul class="account-menu__links">
+              <li>
+                <a href="http://localhost:8000/ordersforeach">Commandes</a>
+              </li>
+              <li>
+                <a href="http://localhost:8000/logoutuser" class="text-danger">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="indicator indicator--trigger--click">
+        <a href="http://localhost:8000/cart">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+              <span class="badge bg-danger rounded-pill commanditems">3</span>
+              <svg width="20" height="20">
+                <circle cx="7" cy="17" r="2"></circle>
+                <circle cx="15" cy="17" r="2"></circle>
+                <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6
+  V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4
+  C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
+              </svg>
+            </span>
+            <!-- <div type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="basic-addon1">
+              
+            </div> -->
+          </div>
+        </a>
+            
+      </div>
+      
+    </div>
+    
+    
+
+  </div>
+</header>
+        
         <!-- site__body -->
         
         <!-- screen loader -->
-        <div class="d-flex flex-column align-items-center justify-content-center loadingscreen position-fixed d-none"
-        style="height: 100vh;background:#171717bc ; width: 100vw; z-index: 9999;"
-        >
+        <div class="d-flex flex-column align-items-center justify-content-center loadingscreen position-fixed d-none" style="height: 100vh;background:#171717bc ; width: 100vw; z-index: 9999;">
         <div class="spinner-border text-white" role="status">
         </div>
         </div>
@@ -141,8 +365,446 @@
             <div class="px-3">
                 
                 <div class="">
-                    {% block content %}
-                    {% endblock %}
+                    
+<!-- confirm order fixed at the bottom -->
+
+<!--question Modal -->
+<div class="modal fade" id="questionmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+      <p class="text-center">
+        سؤال عن المنتج
+      </p>
+			<div class="accordion mb-2" id="accordionExample">
+				<div class="accordion-item">
+				  
+				  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+						<form id="questionform">
+							<input type="hidden" name="csrfmiddlewaretoken" value="Y6mjAYBK61trB2Uielx3On3dPdfYKbTIcwZWjacixm7VKJGbySDTIGlXPeTz1ToF">
+							<div class="form-group">
+								<label for="exampleInputEmail1">ref</label>
+								<input readonly="" name="ref" type="text" required="" class="form-control">
+							</div>
+							
+							<div class="form-group">
+								<label for="exampleInputPassword1">question</label>
+								<textarea name="question" class="form-control" rows="15"></textarea>
+							</div>
+							
+              <input type="text" hidden="" name="phone" value="">
+              <input type="text" hidden="" name="client" value="">
+
+							<button class="btn btn-primary addclientbtn w-100 mt-3">Submit</button>
+					  </form>
+					</div>
+				  </div>
+				</div>
+			</div>
+			
+		</div>
+	  </div>
+	</div>
+</div>
+<div class="col-12 shadow-lg rounded p-2 categorytitle fixed-bottom  border border-2 bg-white">
+    <!-- <div class="d-flex justify-content-between align-items-center">
+      <a href="/catalog" class="bi bi-arrow-left me-2 btn text-primary">Catalog</a>
+      <div>
+        
+      </div>
+
+
+      
+      
+    </div> -->
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="layout-switcher__list  bg-whitex ">
+          <button onclick="$(&#39;.products-view__list&#39;).data(&#39;layout&#39;, &#39;grid&#39;)" type="button" class="layoutbtn  bi bi-list"></button>
+          <button onclick="$(&#39;.products-view__list&#39;).data(&#39;layout&#39;, &#39;grid&#39;)" type="button" class="layoutbtn bi bi-list"></button>
+        </div>
+          <a href="http://localhost:8000/catalog" class="btn text-white">
+            ←
+          </a>
+          <div class="d-flex col-8">
+            <input type="text" placeholder="Chercher dans JOINT CULAS" aria-describedby="button-addon1" class="form-control border bg-light" id="searchbox">
+            
+          </div>
+          
+          <a href="http://localhost:8000/cart">
+            <div class="d-flex flex-column">
+              <span class="input-group-text" id="basic-addon1">
+                <span class="badge bg-danger rounded-pill commanditems">3</span>
+                <svg width="20" height="20">
+                  <circle cx="7" cy="17" r="2"></circle>
+                  <circle cx="15" cy="17" r="2"></circle>
+                  <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6
+    V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4
+    C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
+                </svg>
+              </span>
+              
+            </div>
+          </a>
+          
+        
+      </div>
+      
+      <div type="text" class="text-center" placeholder="Input group example" aria-label="Input group example" aria-describedby="basic-addon1">
+
+      </div>
+      
+  </div>
+<div class="container" style="height: 80vh; overflow-y: scroll;">
+  
+  <!-- products holder -->
+  <div class="block-split__item block-split__item-content col-auto mt-3">
+    <div class="block">
+      <div class="products-view">
+        <div class="products-view__list products-list products-list--grid--4 position-relative" data-layout="list" data-with-features="false">
+
+        <!-- title holder -->
+        
+          <div class="products-list__content">
+              
+              <div class="products-list__item col-md-9 col-12 mb-2">
+                <div class="border rounded product-card">
+                  <div class="product-card__image">
+                    
+                    <div class="image image--type--product text-center">
+                      <img src="http://localhost:8000/categories/products/2" alt="ee" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="&gt;
+
+                    &lt;/div&gt;
+                    &lt;div class=" status-badge="" status-badge--style--success="" product-card__fit="" status-badge--has-icon="" status-badge--has-text"="">
+                    </div>
+                  </div>
+                  <div class="product-card__info p-2">
+                    
+                    <div class="product-card__name">
+                      <div class="">
+                          <p>
+                            EE - TEST 
+                          </p>
+
+                      </div>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="status-badge status-badge--style--success status-badge--has-icon status-badge--has-text"><div class="status-badge__body"><div class="status-badge__icon"><svg width="13" height="13"><path d="M12,4.4L5.5,11L1,6.5l1.4-1.4l3.1,3.1L10.6,3L12,4.4z"></path></svg></div><div class="status-badge__text">In Stock</div><div class="status-badge__tooltip" tabindex="0" data-toggle="tooltip" title="" data-original-title="In Stock"></div></div></div>
+                        
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="product-card__footer d-flex flex-column">
+                    <div class="bg-dark text-white w-100 text-center rounded mt-2">
+                      <strong>REF: TEST </strong>
+                    </div>
+                    <div class="product-card__prices p-2 border w-100 mt-2">
+                      <div class="product-card__price product-card__price--current ">
+                        120.00 (NET)
+                      </div>
+
+                    </div>
+                
+                    <div class="cart-table__quantity input-number mb-3"><input class="form-control input-number__input qty" type="number" min="1" value="1"><div class="input-number__add"></div><div class="input-number__sub"></div></div>
+                <button class="btn btn-primary w-100" pdct="5" pdctref="test" pdctname="ee" pdctpr="120.0" pdctid="5" pdctimg="" pdctmin="" pdctcategory="" onclick="addtocart(event, &#39;5&#39;)">Cmnd</button>
+
+                
+                
+                <button class="mt-3 added btn btn-sm bi bi-check bg-success text-white d-none"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            
+              <div class="products-list__item col-md-9 col-12 mb-2">
+                <div class="border rounded product-card">
+                  <div class="product-card__image">
+                    
+                    <div class="image image--type--product text-center">
+                      <img src="./Produits de JOINT CULAS - STE companyname_files/P83.jpeg" alt="JOINT CULAS PEUGEOT 83* BYSUN" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="/media/product_images/P83.jpeg">
+
+                    </div>
+                    <div class="status-badge status-badge--style--success product-card__fit status-badge--has-icon status-badge--has-text">
+                    </div>
+                  </div>
+                  <div class="product-card__info p-2">
+                    
+                    <div class="product-card__name">
+                      <div class="">
+                          <p>
+                            JOINT CULAS PEUGEOT 83* BYSUN - B 61-31065-40 
+                          </p>
+
+                      </div>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="status-badge status-badge--style--success status-badge--has-icon status-badge--has-text"><div class="status-badge__body"><div class="status-badge__icon"><svg width="13" height="13"><path d="M12,4.4L5.5,11L1,6.5l1.4-1.4l3.1,3.1L10.6,3L12,4.4z"></path></svg></div><div class="status-badge__text">In Stock</div><div class="status-badge__tooltip" tabindex="0" data-toggle="tooltip" title="" data-original-title="In Stock"></div></div></div>
+                        
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="product-card__footer d-flex flex-column">
+                    <div class="bg-dark text-white w-100 text-center rounded mt-2">
+                      <strong>REF: B 61-31065-40 </strong>
+                    </div>
+                    <div class="product-card__prices p-2 border w-100 mt-2">
+                      <div class="product-card__price product-card__price--current ">
+                        65.00 (NET)
+                      </div>
+
+                    </div>
+                
+                    <div class="cart-table__quantity input-number mb-3"><input class="form-control input-number__input qty" type="number" min="1" value="1"><div class="input-number__add"></div><div class="input-number__sub"></div></div>
+                <button class="btn btn-primary w-100" pdct="8" pdctref="b 61-31065-40" pdctname="JOINT CULAS PEUGEOT 83* BYSUN" pdctpr="65.0" pdctid="8" pdctimg="/media/product_images/P83.jpeg" pdctmin="" pdctcategory="" onclick="addtocart(event, &#39;8&#39;)">Cmnd</button>
+
+                
+                
+                <button class="mt-3 added btn btn-sm bi bi-check bg-success text-white d-none"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            
+              <div class="products-list__item col-md-9 col-12 mb-2">
+                <div class="border rounded product-card">
+                  <div class="product-card__image">
+                    
+                    <div class="image image--type--product text-center">
+                      <img src="http://localhost:8000/categories/products/2" alt="test" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="&gt;
+
+                    &lt;/div&gt;
+                    &lt;div class=" status-badge="" status-badge--style--success="" product-card__fit="" status-badge--has-icon="" status-badge--has-text"="">
+                    </div>
+                  </div>
+                  <div class="product-card__info p-2">
+                    
+                    <div class="product-card__name">
+                      <div class="">
+                          <p>
+                            TEST - REF44 
+                          </p>
+
+                      </div>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="status-badge status-badge--style--success status-badge--has-icon status-badge--has-text"><div class="status-badge__body"><div class="status-badge__icon"><svg width="13" height="13"><path d="M12,4.4L5.5,11L1,6.5l1.4-1.4l3.1,3.1L10.6,3L12,4.4z"></path></svg></div><div class="status-badge__text">In Stock</div><div class="status-badge__tooltip" tabindex="0" data-toggle="tooltip" title="" data-original-title="In Stock"></div></div></div>
+                        
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="product-card__footer d-flex flex-column">
+                    <div class="bg-dark text-white w-100 text-center rounded mt-2">
+                      <strong>REF: REF44 </strong>
+                    </div>
+                    <div class="product-card__prices p-2 border w-100 mt-2">
+                      <div class="product-card__price product-card__price--current ">
+                        120.00 (NET)
+                      </div>
+
+                    </div>
+                
+                    <div class="cart-table__quantity input-number mb-3"><input class="form-control input-number__input qty" type="number" min="1" value="1"><div class="input-number__add"></div><div class="input-number__sub"></div></div>
+                <button class="btn btn-primary w-100" pdct="14" pdctref="ref44" pdctname="test" pdctpr="120.0" pdctid="14" pdctimg="" pdctmin="" pdctcategory="" onclick="addtocart(event, &#39;14&#39;)">Cmnd</button>
+
+                
+                
+                <button class="mt-3 added btn btn-sm bi bi-check bg-success text-white d-none"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            
+              <div class="products-list__item col-md-9 col-12 mb-2">
+                <div class="border rounded product-card">
+                  <div class="product-card__image">
+                    
+                    <div class="image image--type--product text-center">
+                      <img src="http://localhost:8000/categories/products/2" alt="test" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="&gt;
+
+                    &lt;/div&gt;
+                    &lt;div class=" status-badge="" status-badge--style--success="" product-card__fit="" status-badge--has-icon="" status-badge--has-text"="">
+                    </div>
+                  </div>
+                  <div class="product-card__info p-2">
+                    
+                    <div class="product-card__name">
+                      <div class="">
+                          <p>
+                            TEST - REF44 
+                          </p>
+
+                      </div>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="status-badge status-badge--style--success status-badge--has-icon status-badge--has-text"><div class="status-badge__body"><div class="status-badge__icon"><svg width="13" height="13"><path d="M12,4.4L5.5,11L1,6.5l1.4-1.4l3.1,3.1L10.6,3L12,4.4z"></path></svg></div><div class="status-badge__text">In Stock</div><div class="status-badge__tooltip" tabindex="0" data-toggle="tooltip" title="" data-original-title="In Stock"></div></div></div>
+                        
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="product-card__footer d-flex flex-column">
+                    <div class="bg-dark text-white w-100 text-center rounded mt-2">
+                      <strong>REF: REF44 </strong>
+                    </div>
+                    <div class="product-card__prices p-2 border w-100 mt-2">
+                      <div class="product-card__price product-card__price--current ">
+                        120.00 (NET)
+                      </div>
+
+                    </div>
+                
+                    <div class="cart-table__quantity input-number mb-3"><input class="form-control input-number__input qty" type="number" min="1" value="1"><div class="input-number__add"></div><div class="input-number__sub"></div></div>
+                <button class="btn btn-primary w-100" pdct="15" pdctref="ref44" pdctname="test" pdctpr="120.0" pdctid="15" pdctimg="" pdctmin="" pdctcategory="" onclick="addtocart(event, &#39;15&#39;)">Cmnd</button>
+
+                
+                
+                <button class="mt-3 added btn btn-sm bi bi-check bg-success text-white d-none"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            
+              <div class="products-list__item col-md-9 col-12 mb-2">
+                <div class="border rounded product-card">
+                  <div class="product-card__image">
+                    
+                    <div class="image image--type--product text-center">
+                      <img src="./Produits de JOINT CULAS - STE companyname_files/R-19.jpeg" alt="JOINT CULAS RENAULT 19 KANGO AM  80*" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" imgsrc="/media/product_images/R-19.jpeg">
+
+                    </div>
+                    <div class="status-badge status-badge--style--success product-card__fit status-badge--has-icon status-badge--has-text">
+                    </div>
+                  </div>
+                  <div class="product-card__info p-2">
+                    
+                    <div class="product-card__name">
+                      <div class="">
+                          <p>
+                            JOINT CULAS RENAULT 19 KANGO AM  80* - B 61-31210-20 
+                          </p>
+
+                      </div>
+                      <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center">
+                          
+                          <div class="status-badge status-badge--style--success status-badge--has-icon status-badge--has-text"><div class="status-badge__body"><div class="status-badge__icon"><svg width="13" height="13"><path d="M12,4.4L5.5,11L1,6.5l1.4-1.4l3.1,3.1L10.6,3L12,4.4z"></path></svg></div><div class="status-badge__text">In Stock</div><div class="status-badge__tooltip" tabindex="0" data-toggle="tooltip" title="" data-original-title="In Stock"></div></div></div>
+                        
+                        
+                        
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          
+                          
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="product-card__footer d-flex flex-column">
+                    <div class="bg-dark text-white w-100 text-center rounded mt-2">
+                      <strong>REF: B 61-31210-20 </strong>
+                    </div>
+                    <div class="product-card__prices p-2 border w-100 mt-2">
+                      <div class="product-card__price product-card__price--current ">
+                        65.00 (NET)
+                      </div>
+
+                    </div>
+                
+                    <div class="cart-table__quantity input-number mb-3"><input class="form-control input-number__input qty" type="number" min="1" value="1"><div class="input-number__add"></div><div class="input-number__sub"></div></div>
+                <button class="btn btn-primary w-100" pdct="17" pdctref="b 61-31210-20" pdctname="JOINT CULAS RENAULT 19 KANGO AM  80*" pdctpr="65.0" pdctid="17" pdctimg="/media/product_images/R-19.jpeg" pdctmin="" pdctcategory="" onclick="addtocart(event, &#39;17&#39;)">Cmnd</button>
+
+                
+                
+                <button class="mt-3 added btn btn-sm bi bi-check bg-success text-white d-none"></button>
+                  </div>
+                  
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- cart 
+   <div class="col-md-4 borders cartdd">
+  <div class="sticky-top card-header text-center d-flex justify-content-between align-items-center">
+    <small>
+        Bon de commande
+    </small>
+    <button class="btn clearcommande bi bi-trash-fill text-danger" onclick="clearcommande()">
+    </button>
+  </div>
+    <div class="col-5 fitscreen bg-white shadow rounded px-2 w-100">
+    
+    
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th >ref</th>
+            <th >article</th>
+            <th style="width: 5%;">Qty</th>
+            <th style="width: 5%;">total</th>
+        </tr>
+        </thead>
+        <tbody class="commande-table">
+            
+        </tbody>
+    </table>
+    
+    </div>
+    
+</div>-->
+</div>
+  
+
                 </div>
                 <!-- cart -->
                 <!-- <div class="position-fixed cartholder">
@@ -193,17 +855,15 @@
                                 <option value="baha">Baha express</option>
                               </select>
                         </div>
-                        {% if user.groups.all.0.name == 'salsemen' %}
+                        
                         <div class="col-4">
                             <div class="d-flex justify-content-center">
                                 <select class="form-control form-control-select2 clientid" name="client" >
                                     <option value="0">---</option>
-                                    {% for i in clients %}
-                                        <option value="{{i.id}}">{{i.name}} ({{i.address}})</option>
-                                    {% endfor %}
+                                    
                                 </select>
                                 
-                                {% csrf_token %}
+                                <input type="hidden" name="csrfmiddlewaretoken" value="Y6mjAYBK61trB2Uielx3On3dPdfYKbTIcwZWjacixm7VKJGbySDTIGlXPeTz1ToF">
                                 <button class="btn btn-primary valider" disabled>
                                 Confirmer
                                 </button>
@@ -218,13 +878,8 @@
                             </small>
                         </div>
                             
-                        {% endif %}
-                        {% if user.groups.all.0.name == 'clients' %}
-                        <input type="hidden" class="clientid" value="{{user.client.id}}">
-                        <div>{{ request.user.client.name }}</div>
-                        <button class="btn btn-primary valider" disabled>confirmer</button>
                         
-                        {% endif %}
+                        
                         
                     </div>
                 </div> -->
@@ -239,7 +894,7 @@
                 </small>
                 
                 <small>
-                   companyname @ <span id="thisyear"></span> 
+                   companyname @ <span id="thisyear">2024</span> 
                 </small>
 
                 <!-- <small>
@@ -374,7 +1029,7 @@
               </div> -->
               <div class="mobile-menu__divider"></div>
               <div class="mobile-menu__indicators d-flex justify-content-between">
-                <a class="mobile-menu__indicator" href="/ordersforeach">
+                <a class="mobile-menu__indicator" href="http://localhost:8000/ordersforeach">
                   <span class="mobile-menu__indicator-icon">
                     <svg width="20" height="20">
                         <path d="M20,20h-2c0-4.4-3.6-8-8-8s-8,3.6-8,8H0c0-4.2,2.6-7.8,6.3-9.3C4.9,9.6,4,7.9,4,6c0-3.3,2.7-6,6-6s6,2.7,6,6
@@ -407,7 +1062,7 @@
                   </span>
                   <span class="mobile-menu__indicator-title">Garage</span>
                 </a> -->
-                <a class="mobile-menu__indicator" href="/cart">
+                <a class="mobile-menu__indicator" href="http://localhost:8000/cart">
                     <span class="mobile-menu__indicator-icon">
                       <svg width="20" height="20">
                         <circle cx="7" cy="17" r="2"></circle>
@@ -416,7 +1071,7 @@
             V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4
             C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
                       </svg>
-                      <span class="mobile-menu__indicator-counter commanditems">0</span>
+                      <span class="mobile-menu__indicator-counter commanditems">3</span>
                     </span>
                     <span class="mobile-menu__indicator-title">Cart</span>
                   </a>
@@ -963,7 +1618,7 @@
               </ul> -->
               <div class="mobile-menu__spring"></div>
               <div class="mobile-menu__divider"></div>
-              <a class="mobile-menu__contacts" href="/logoutuser">
+              <a class="mobile-menu__contacts" href="http://localhost:8000/logoutuser">
                 <!-- <div class="mobile-menu__contacts-subtitle">Probleme de system</div>
                 <div class="mobile-menu__contacts-title">800 060-0730</div> -->
                 Deconnexion
@@ -978,7 +1633,7 @@
 	  <div class="modal-content">
 		<div class="modal-header">
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+			<span aria-hidden="true">×</span>
 		  </button>
 		</div>
 		<div class="modal-body">
@@ -992,25 +1647,25 @@
 				  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 					<div class="accordion-body">
 						<form id="addclientform">
-							{% csrf_token %}
+							<input type="hidden" name="csrfmiddlewaretoken" value="Y6mjAYBK61trB2Uielx3On3dPdfYKbTIcwZWjacixm7VKJGbySDTIGlXPeTz1ToF">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Nom ou Nom commercial</label>
-								<input name="name" type="text" required class="form-control">
+								<input name="name" type="text" required="" class="form-control">
 							</div>
 							
 							<div class="form-group">
 								<label for="exampleInputPassword1">Phone</label>
-								<input name="phone" type="text" required class="form-control">
+								<input name="phone" type="text" required="" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1">Ville</label>
-								<input name="city" type="text" required class="form-control">
+								<input name="city" type="text" required="" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1">Addresse</label>
-								<input name="address" type="text" required class="form-control">
+								<input name="address" type="text" required="" class="form-control">
 							</div>
-							<button  class="btn btn-primary addclientbtn w-100">Submit</button>
+							<button class="btn btn-primary addclientbtn w-100">Submit</button>
 					  </form>
 					</div>
 				  </div>
@@ -1028,7 +1683,7 @@
       <div class="modal-content">
   
         <div class="modal-body text-center">
-            <img src="" alt="" class="imgproductmodal" style="max-width: 100%;">
+            <img src="http://localhost:8000/categories/products/2" alt="" class="imgproductmodal" style="max-width: 100%;">
   
         </div>
         <div class="modal-footer">
@@ -1040,11 +1695,11 @@
   </div>
   
   <!-- scripts -->
-    <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
-    <script src="{% static 'js/select2.min.js'%}"></script>
-    <script src="{% static 'js/number.js'%}"></script>
-    <script src="{% static 'js/main.js'%}"></script>
-    <script src="{% static 'js/alertify.min.js'%}"></script>
+    <script src="./Produits de JOINT CULAS - STE companyname_files/bootstrap.bundle.min.js.téléchargement"></script>
+    <script src="./Produits de JOINT CULAS - STE companyname_files/select2.min.js.téléchargement"></script>
+    <script src="./Produits de JOINT CULAS - STE companyname_files/number.js.téléchargement"></script>
+    <script src="./Produits de JOINT CULAS - STE companyname_files/main.js.téléchargement"></script>
+    <script src="./Produits de JOINT CULAS - STE companyname_files/alertify.min.js.téléchargement"></script>
     
     <script>
       $.get('/makeuserconnected', {'activity':document.title}, (data)=>{
@@ -1133,7 +1788,7 @@
                     type: 'POST',
                     data: {
                         'ref': ref,
-                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        'csrfmiddlewaretoken': 'Y6mjAYBK61trB2Uielx3On3dPdfYKbTIcwZWjacixm7VKJGbySDTIGlXPeTz1ToF'
                     },
                     success: function (data) {
                         stoploading()
@@ -1153,11 +1808,68 @@
     // }
     $('.select2').select2()
     </script>
-    {% block js %}
     
-    {% endblock %}
-</body>
+<script src="./Produits de JOINT CULAS - STE companyname_files/catalog.js.téléchargement"></script>
+
+<script>
+  $('.askbtn').each((i, el)=>{
+    $(el).on('click', ()=>{
+      $('[name=ref]').val($(el).data('id'))
+    })
+  })
+  var form = document.getElementById('questionform');
+   $('.addclientbtn').on('click', function(e){
+        
+        e.preventDefault();
+        const scriptURL='https://script.google.com/macros/s/AKfycbysYBeRsdX8zbXzloiRkigWUsnAC0NWwtLUzcZGsoerf_VvLRBsdvVMi4LYjJYU5J90/exec'
+        if ($('[name=question]').val()=='' ){
+            alert('Veuillez remplir tous les champs');
+        }
+        else{
+            $(this).addClass('disabled')
+            $(this).text('En cours ...')
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+            alert('Votre demande a été envoyée avec succès');
+            // hide modal
+          $('#questionmodal').modal('hide')
+
+            })
+            .catch(error => {
+                alert('ERROR');
+                // redierct to home
+                location.reload 
+            }) 
+        }
+   }) 
+  // let pdctscards = document.querySelectorAll('.products-list__item')
+  // function pdctsliveSearch(e) {
+  //   console.log(e.target.value)
+  //   //Use innerText if all contents are visible
+  //   //Use textContent for including hidden elements
+  //   for (var i = 0; i < cards.length; i++) {
+  //       if(cards[i].textContent.toLowerCase()
+  //               .includes(e.target.value.toLowerCase())) {
+  //                   cards[i].classList.remove("d-none");
+  //       } else {
+  //           cards[i].classList.add("d-none");
+  //       }
+  //   }
+  // }
+  // let pdctssearchInput = document.getElementById('searchbox');
+
+  // pdctssearchInput.addEventListener('keyup', (e) => {
+  //     console.log('rr')
+  //     clearTimeout(typingTimer);
+  //     typingTimer = setTimeout(pdctsliveSearch(e), typeInterval);
+  // });
+   $(window).ready(function(){
+    
+   })
+</script>
 
 
-<!-- modals -->
-</html>
+
+
+
+</body><!-- modals --></html>
