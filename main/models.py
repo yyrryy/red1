@@ -75,14 +75,30 @@ class Commercial(models.Model):
 
 
 class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None, null=True, related_name='client')
-    commorcial=models.ForeignKey(Commercial, on_delete=models.SET_NULL, default=None, null=True)
+    represent=models.ForeignKey('Represent', on_delete=models.CASCADE, default=None, null=True, related_name="repclient")
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, default=None, null=True)
+    moderegl=models.CharField(max_length=200, default=0, null=True, blank=True)
     name=models.CharField(max_length=200)
+    clientname=models.CharField(max_length=200, null=True, default=None, blank=True)
+    code=models.CharField(max_length=200, null=True, default=None)
+    ice=models.CharField(max_length=200, null=True, default=None)
     city=models.CharField(max_length=200, null=True, default=None)
+    region=models.CharField(max_length=200, null=True, default=None)
+    total=models.FloatField(default=0.00, null=True, blank=True)
+    soldtotal=models.FloatField(default=0.00, null=True, blank=True)
+    soldbl=models.FloatField(default=0.00, null=True, blank=True)
+    soldfacture=models.FloatField(default=0.00, null=True, blank=True)
     address=models.CharField(max_length=200)
-    phone=models.CharField(max_length=200)
+    location=models.TextField(default='', null=True, blank=True)
+    phone=models.CharField(max_length=200, default=None, null=True)
+    phone2=models.CharField(max_length=200, default=None, null=True)
+    diver=models.BooleanField(default=False)
+    accesscatalog=models.BooleanField(default=False)
+    
+
     def __str__(self) -> str:
         return self.name+'-'+str(self.city)
+
 
 class Connectedusers(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)

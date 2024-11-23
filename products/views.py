@@ -1037,7 +1037,7 @@ def addcommercial(request):
             name=repname,
             phone=repphone,
             region=repregion,
-            info=repinfo
+            
         )
         # old code 04/07/2024
         # ctx={
@@ -1050,7 +1050,8 @@ def addcommercial(request):
         return JsonResponse({
             'success':True
         })
-    except:
+    except Exception as e:
+        print('>>>', e)
         return JsonResponse({
             'success':False,
             'message': 'ERROR CONEXION'
@@ -1104,6 +1105,7 @@ def addclient(request):
     code=request.POST.get('clientcode')
     city=request.POST.get('clientcity')
     ice=request.POST.get('clientice')
+    rep=request.POST.get('clientrep')
     region=request.POST.get('clientregion').lower().strip()
     plafon=request.GET.get('clientplafon', 0)
     if Client.objects.filter(Q(name=name) | Q(code=code)).exists():
@@ -1127,21 +1129,15 @@ def addclient(request):
             city=city,
             ice=ice,
             region=region,
-            plafon=plafon,
             code=code,
             name=name,
             phone=phone,
             phone2=phone2,
             address=address,
+            represent_id=rep,
             diver=False
         )
-        if target=="s":
-            client.clientsortie=True
-        elif target=="f":
-            client.clientfarah=True
-        else:
-            client.clientorgh=True
-        client.save()
+        
 
         return JsonResponse({
             'success':True
@@ -1167,7 +1163,6 @@ def getclientdata(request):
         #'location':client.location,
         'region':client.region,
         'ice':client.ice,
-        'plafon':client.plafon,
         #'rep':client.represent_id,
     })
 
@@ -1176,6 +1171,7 @@ def updateclient(request):
     id=request.POST.get('updateclientid')
     code=request.POST.get('updateclientcode')
     name=request.POST.get('updateclientname')
+    rep=request.POST.get('updateclientrep')
 
 
     client=Client.objects.get(pk=id)
@@ -1188,14 +1184,11 @@ def updateclient(request):
 
     client.name=request.POST.get('updateclientname')
     client.phone=request.POST.get('updateclientphone')
+    client.represent_id=request.POST.get('updateclientrep')
     client.clientname=request.POST.get('updateclientpersonalname')
-    client.phone2=request.POST.get('updateclientphone2')
-    client.address=request.POST.get('updateclientaddress')
     client.ice=request.POST.get('updateclientice')
     client.code=request.POST.get('updateclientcode')
     client.city=request.POST.get('updateclientcity')
-    client.location=request.POST.get('updateclientlocation')
-    client.address=request.POST.get('updateclientaddress')
     client.region=request.POST.get('updateclientregion').lower().strip()
     client.save()
     # req.get('http://serverip/products/updateclient', {

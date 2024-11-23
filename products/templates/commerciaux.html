@@ -1,5 +1,11 @@
 
-
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    
+</style>
+{% endblock %}
+{% block content %}
 <!-- addsupplier modal -->
 <div class="modal fade" id="updaterepmodal" tabindex="-1" aria-labelledby="updaterepmodalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -9,7 +15,7 @@
                 <form class="form-horizontal add-ledger-form" id="updatecommercialform" method="post" autocomplete="off">
                     <div class="form-group">
                         {% csrf_token %}
-                        <input type="text" name="updaterepname" class="form-control mb-2" placeholder="Nom">
+                        <input type="text" name="updaterepname" class="form-control mb-2" placeholder="Nom *">
                         <input type="number" name="updaterepphone" class="form-control mb-2" placeholder="phone">
                         <input type="number" name="updaterepphone2" class="form-control mb-2" placeholder="phone2">
                         <input type="text" name="updaterepregion" class="form-control mb-2" placeholder="Region">
@@ -47,13 +53,13 @@
             </strong>
             <form action="{% url 'products:addclient' %}" class="mt-3" method="post" id="addrepform">
                 {% csrf_token %}
-                <input type="text" name="repname" class="form-control mb-2" placeholder="Nom">
+                <input type="text" name="repname" class="form-control mb-2" placeholder="Nom *">
                 <input type="number" name="repphone" class="form-control mb-2" placeholder="phone">
                 <input type="number" name="repphone2" class="form-control mb-2" placeholder="phone2">
                 <input type="text" name="repregion" class="form-control mb-2" placeholder="Region">
                 <hr>
-                <input type="text" name="repusername" class="form-control mb-2 checkusername" placeholder="Username">
-                <input type="text" name="reppassword" class="form-control mb-2" placeholder="Password">
+                <input type="text" name="repusername" class="form-control mb-2 checkusername" placeholder="Username *">
+                <input type="text" name="reppassword" class="form-control mb-2" placeholder="Password *">
                 <button type="submit" class="btn btn-outline-success w-100 submitaddrepbtn">
                     Envoyer
                 </button>
@@ -128,7 +134,7 @@
     })
     $('.submitaddrepbtn').on('click', function(event){
         event.preventDefault()
-        if ($('[name="repname"]').val()=="" || $('[name="repphone"]').val()=="" || $('[name="repregion"]').val()=="" || $('[name="repusername"]').val()=="" || $('[name="reppassword"]').val()==""){
+        if ($('[name="repname"]').val()=="" || $('[name="repusername"]').val()=="" || $('[name="reppassword"]').val()==""){
             $('#addrepform').css('border', '1px solid red')
             return
         }
@@ -153,7 +159,7 @@
                     contentType: false,
                     success:((data)=>{
                       if (data.success){
-                        updatetab('replist', '/products/commercialspage')
+                        location.reload()
                       }else{
                         alertify.error(data.message)
                       }
@@ -166,3 +172,4 @@
     })
 
 </script>
+{% endblock %}

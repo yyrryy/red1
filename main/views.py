@@ -1,7 +1,7 @@
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import Brand, Category, Client, Order, Orderitem, Produit, Client, Model, Mark, Cart, Cartitem, Connectedusers, Commercial
+from .models import Brand, Category, Client, Order, Orderitem, Produit, Client, Model, Mark, Cart, Cartitem, Connectedusers, Commercial, Represent
 import pandas as pd
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -15,24 +15,32 @@ from django.shortcuts import reverse
 from django.db.models import Q
 import datetime
 from django.utils import timezone
+from itertools import chain
 
 
 
 def product(request, id):
     product=Produit.objects.get(pk=id)
-    return render(request, 'product.html', {'product':product, 'title':product.name})
+    regex_pattern = rf'(^|\s){product.ref.upper()}(\s|$)'
+    equiv=Produit.objects.filter(equivalent__iregex=regex_pattern)
+    return render(request, 'product.html', {'product':product, 'title':product.name, 'equiv':equiv})
 
 
 def searchref(request):
     ref=request.POST.get('ref').strip().lower()
     search_terms = ref.split('+')
-    
+    # search ref first
+    productsref=Produit.objects.filter(ref__icontains=ref)
     q_objects = Q()
     for term in ref.split('+'):
         print('>>> ', term)
         q_objects &= (Q(ref__icontains=term) | Q(name__icontains=term) | Q(category__name__icontains=term) |  Q(mark__name__icontains=term) |  Q(equivalent__icontains=term)  |  Q(cars__icontains=term))
-    products=Produit.objects.filter(q_objects)[:50]
-    print('>> ', products)
+    # Perform the broader query, excluding products already in `productsref`
+    products_broad = Produit.objects.filter(q_objects).exclude(id__in=productsref)
+
+    # Combine both querysets, prioritizing `productsref`
+    products = list(chain(productsref, products_broad))[:50]
+
     return JsonResponse({
         'data':render(request, 'searchref.html', {'products':products}).content.decode('utf-8')
     })
@@ -404,8 +412,7 @@ def catalog(request):
 def ordersforeach(request):
     # get id of request user
     if request.user.groups.filter(name='salsemen').exists():
-        id=request.user
-        orders=Order.objects.filter(salseman=id)
+        orders=Order.objects.filter(salseman=request.user.id)
     else:
         orders=Order.objects.filter(client=request.user.client)
     delivered=len(orders.filter(isdelivered=True))
@@ -655,3 +662,21 @@ def listsamesmen(request):
     }
     return render(request, 'listsamesmen.html', ctx)
     
+def listclients(request):
+    try:
+        lastcode = Client.objects.order_by('code').last()
+        print('lastcode', lastcode.code)
+        if lastcode:
+
+            codecl = f"{int(lastcode.code) + 1:07}"
+        else:
+            codecl = f"0000001"
+    except:
+        codecl="0000001"
+    ctx={
+        'title':'List clients',
+        'clients':Client.objects.all(),
+        'commerciaux':Represent.objects.all(),
+        'lastcode':codecl
+    }
+    return render(request, 'listclients.html', ctx)

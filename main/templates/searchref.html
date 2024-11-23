@@ -1,11 +1,11 @@
 {% for i in products %}
 <a class="suggestions__item suggestions__product mb-3 p-3 border-bottom" href="/product/{{i.id}}">
-    <div class="col-4">
+    <div class="col-2">
       <img src="{% if i.image %}{{i.image.url}}{% endif %}" alt="" style="width: 50%;">
     </div>
     <div class="suggestions__product-info">
       <div class="suggestions__product-name">
-        <strong>{{i.mark.name.upper}} -</strong>  {{i.name.upper}}
+        <strong>{{i.ref.upper}} -</strong>  {{i.name.upper}}
       </div>
       
     </div>

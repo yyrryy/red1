@@ -20,7 +20,9 @@
           <select class="form-control clientid">
             <option value="">---</option>
             {% for i in clients %}
-            <option value="">---</option>
+            <option value="{{i.id}}">
+              {{i.name}}
+            </option>
             {% endfor %}
           </select>
           {% endif %}

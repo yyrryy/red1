@@ -69,12 +69,13 @@
     </div> -->
       <div class="d-flex justify-content-between align-items-center">
         <div class="layout-switcher__list  bg-whitex ">
-          <button onclick="$('.products-view__list').attr('data-layout', 'list')" type="button" class="layoutbtn  bi bi-list"></button>
-          <button onclick="$('.products-view__list').attr('data-layout', 'grid')" type="button" class="layoutbtn bi bi-grid"></button>
-        </div>
-          <a href="/catalog" class="btn text-white">
+          <a href="/catalog" class="btn border me-2">
             ←
           </a>
+          <button onclick="$('.products-view__list').attr('data-layout', 'list')" type="button" class="layoutbtn btn border me-2 bi bi-list"></button>
+          <button onclick="$('.products-view__list').attr('data-layout', 'grid')" type="button" class="layoutbtn btn border me-2 bi bi-grid"></button>
+        </div>
+          
           <div class="d-flex col-8">
             <input type="text" placeholder="Chercher dans {{category|upper}}" aria-describedby="button-addon1" class="form-control border bg-light" id="searchbox">
             
