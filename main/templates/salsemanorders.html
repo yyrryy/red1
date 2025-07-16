@@ -5,10 +5,20 @@
 </style>
 {% endblock %}
 {% block content %}
-
-<button class="btn btn-primary" onclick="PrintInvoice('avances')">
-  Telecharger
-</button>
+<div class="d-flex">
+  <button class="btn btn-primary mt-2 me-2" onclick="PrintInvoice('avances')">
+    Telecharger
+  </button>
+  <button class="btn btn-info mt-2 me-2" onclick="window.location.href='/excel?id={{order.id}}'">
+    Telecharger excel
+  </button>
+  {% if user.groups.all.0.name == 'admin' and not order.isdelivered %}
+  <button class="btn btn-success mt-2 me-2" onclick="confirm('{{order.id}}')">
+    Confirmer
+  </button>
+  {%endif%}
+  
+</div>
 <div id="avances">
   <div class="">
     <div class="card">
@@ -141,6 +151,14 @@
 {% endblock %}
 {% block js %}
 <script>
+  function excel(){
+    window.location.href='/excel?id{order.id}}'
+  }
+  function confirm(id){
+    $.get('/dilevered/'+id, function(data){
+      location.reload()
+    })
+  }
   function PrintInvoice(divName){
          var printContents = document.getElementById(divName).innerHTML;
          var originalContents = document.body.innerHTML;

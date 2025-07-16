@@ -2,12 +2,15 @@
   <button class="btn btn-success" onclick="printavoir('{{avoir.id}}')">
     Telecharger
   </button>
+  <button class="btn btn-dark" onclick="$('.avoirlogo').toggleClass('invisible'); localStorage.getItem('showenteteavoir') === 'true'?localStorage.setItem('showenteteavoir', 'false'):localStorage.setItem('showenteteavoir', 'true')">
+    Entette
+  </button>
   <div>
     <input {% if avoir.note %}value="{{avoir.note}}"{%endif%} placeholder="Note">
     <button class="btn btn-info" onclick="updateavoirnote(event, '{{avoir.id}}')">+
     </button>
   </div>
-  <button class="btn btn-danger" onclick="ajaxpage('addmodifieravoir{{avoir.id}}', 'Modifier avoir {{avoir.no}}', '/products/modifieravoir/{{avoir.id}}')">
+  <button class="btn btn-danger" onclick="createtab('addmodifieravoir{{avoir.id}}', 'Modifier avoir {{avoir.no}}', '/products/modifieravoir/{{avoir.id}}')">
     Modifier
   </button>
 
@@ -22,7 +25,7 @@
 
     <!-- avoir header -->
     <div class="">
-      <img src="" alt="" style="width: 40%;" >
+      <img src="/media/logos/logo2.jpg" class="avoirlogo invisible" alt="" style="width: 40%;" >
         <div class="d-flex justify-content-between mt-5">
           <div>
             <h5 style="
@@ -40,9 +43,9 @@
           ">Date: <strong>{{avoir.date|date:"d/m/Y"}}</strong></h5>
           </div>
           <div style="width: 22em; text-align: center;margin-right: 10px; border: 3px solid; padding: 3px; box-shadow: 4px 3px black;border-radius: 12px">
-            <h5>Client: <strong>{{avoir.client.name.upper}}</strong></h5>
+            <strong>{{avoir.client.name.upper}}</strong>
             <p>
-              ICE: {{avoir.client.ice}} <br> Adresse: {{avoir.client.address}} <br>Ville: {{avoir.client.city}}
+               ICE: {{avoir.client.ice}} <br> Adresse: {{avoir.client.address}} <br>Ville: {{avoir.client.city}}
             </p>
           </div>
         </div>
@@ -64,6 +67,9 @@
           <tr>
             <td style="width: 13%;">Ref</td>
             <td>Designation</td>
+            {% if avoir.avoirfacture %}
+            <td>N° piece</td>
+            {% endif %}
             <td style="width: 6%;">Qté</td>
             <td style="width: 7%;">P.U</td>
             <td style="width: 5%;">Rem</td>
@@ -84,6 +90,14 @@
                         <br>
                       {% endfor %}
                   </td>
+                  {% if avoir.avoirfacture %}
+                  <td>
+                    {% for v in i %}
+                      {{v.source}}
+                      <br>
+                    {% endfor %}
+                </td>
+                {% endif %}
                   <td class="text-center">
                     {% for v in i %}
                     {{v.qty}}
@@ -114,7 +128,20 @@
 
       </table>
 
-      <div
+      <table class="table table-bordered" style="border:1px solid;">
+        <tr>
+          <td>
+            <b>Total HT: {{ht|floatformat:2}}</b>
+          </td>
+          <td>
+            <b>TVA: {{tva|floatformat:2}}</b>
+          </td>
+          <td class="text-end">
+            <b>Total TTC: {{avoir.total|floatformat:2}}</b>
+          </td>
+        </tr>
+      </table>
+      <!-- <div
         style="width: 8em;
         float: right;">
           <div class="text-center d-flex justify-content-between" style="background: #aeaeae8c;
@@ -128,7 +155,7 @@
           </div>
 
 
-        </div>
+        </div> -->
         <!--<div class="text-center" style="font-size: 13px">
 
           LOT ARGANA N° B25 - AIT MELLOUL <br>
@@ -144,7 +171,7 @@
 
     <!-- avoir header -->
     <div class="">
-      <img src="" alt="" style="width: 40%;" >
+      <img src="/media/logos/logo2.jpg" class="avoirlogo invisible" alt="" style="width: 40%;" >
         <div class="d-flex justify-content-between mt-5">
           <div>
             <h5 style="
@@ -162,7 +189,7 @@
           ">Date: <strong></strong></h5>
           </div>
           <div style="width: 22em; text-align: center;margin-right: 10px; border: 3px solid; padding: 3px; box-shadow: 4px 3px black;border-radius: 12px">
-            <h5>Client: {{avoir.client.name.upper}}</h5>
+            <strong>{{avoir.client.name.upper}}</strong>
             <p>
               ICE: {{avoir.client.ice}} <br> Adresse: {{avoir.client.address}} <br>Ville: {{avoir.client.city}}
             </p>
@@ -186,6 +213,9 @@
           <tr>
             <td style="width: 13%;">Ref</td>
             <td>Designation</td>
+            {% if avoir.avoirfacture %}
+            <td>Source</td>
+            {% endif %}
             <td style="width: 5%;">Qté</td>
             <td style="width: 7%;">P.U</td>
             <td style="width: 5%;">Rem</td>
@@ -206,6 +236,20 @@
                 <br>
               {% endfor %}
           </td>
+          {% if avoir.avoirfacture %}
+          <td>
+            {% for v in i %}
+              {{v.source}}
+              <br>
+            {% endfor %}
+        </td>
+        {% endif %}
+          <td>
+            {% for v in i %}
+              {{v.source}}
+              <br>
+            {% endfor %}
+        </td>
           <td class="text-center">
             {% for v in i %}
             {{v.qty}}
@@ -253,6 +297,9 @@
 
 
 <script>
+  if (localStorage.getItem('showenteteavoir') === 'true'){
+    $('.avoirlogo').removeClass('invisible')
+  }
   function updateavoirnote(event, avoirid){
     note=$(event.target).parent().find('input').val()
     console.log({

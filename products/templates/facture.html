@@ -348,7 +348,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -623,7 +623,7 @@
                 // remove list in localstorage
                 localStorage.removeItem('pdctsinfacture')
                 deletetab('addfacture')
-                ajaxpage('addlistfactures', 'Factures', '/products/listfactures')
+                createtab('addlistfactures', 'Factures', '/products/listfactures')
               }
           })
 

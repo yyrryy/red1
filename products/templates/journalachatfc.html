@@ -68,19 +68,21 @@
 
 </div>
 <script>
+  currentPagejournalachafc=1
   populateyears()
-    $('.searchinpulistjachfc').on("keyup", function() {
+    $('.searchinpulistjachfc').on("change", function() {
         var filterValue = $(this).val().toLowerCase();
         let year=$('.jachfcyear').val()
-        $.get('/products/searchforjachfc', {'term':filterValue.trim(), 'year':year}, (data)=>{
+        if (filterValue!=""){
+          $.get('/products/searchforjachfc', {'term':filterValue.trim(), 'year':year}, (data)=>{
             $('.listjournalachatfc tbody').html(data.trs)
             $('.totaljachfc').text(data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '))
             $('.totalqtyjachfc').text(data.totalqty)
-        })
+          })
+        }
     });
     function getdatefilterjachfc(){
-        currentPagejournalventefc=1
-        loadingjournalventefc=false
+
         $('.listjournalachatholder').on('scroll', handleScrolljachfc)
         datefrom=$('.jachfcdatefrom').val()
         dateto=$('.jachfcdateto').val()
@@ -89,12 +91,14 @@
             $('.listjournalachatfc tbody').html(data.trs)
             $('.totaljachfc').text(data.total?data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '):0)
             $('.totalqtyjachfc').text(data.totalqty?data.totalqty:0)
+            currentPagejournalachafc=1
+            loadingjournalachafc=false
+            console.log('page should be 1', currentPagejournalachafc)
         })
     }
 
     function getjachfcdatayear(event){
-        currentPagejournalventefc=1
-        loadingjournalventefc=false
+
         $('.journalvfctableholder').on('scroll', handleScrolljachfc);
         year=$(event.target).val()
         if (year != '0'){
@@ -103,13 +107,17 @@
                 $('.listjournalachatfc tbody').html(data.trs)
                 $('.totaljachfc').text(data.total?data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '):0)
                 $('.totalqtyjachfc').text(data.totalqty?data.totalqty:0)
+                let currentPagejournalachafc=1
+                let loadingjournalachafc=false
+                console.log('>> page should be initiated', currentPagejournalachafc)
             })
         }
     }
 
-    function loadMorejachfc ()  {
+    function loadMorejachfc (page)  {
     loadingjournalachafc = true;
-    $.get(`/products/loadjournalachatfc/?page=${currentPagejournalachafc}`, (data)=>{
+    year=$('.jachfcyear').val()
+    $.get(`/products/loadjournalachatfc/?page=${page}&year=${year}`, (data)=>{
 
       const tbody = $('.listjournalachatfc tbody');
       tbody.append(data.trs);
@@ -130,17 +138,16 @@
     };
 
     function handleScrolljachfc () {
-      console.log('scroll')
       const container = $('.listjournalachatfcholder')[0]; // Get the native DOM element
 
       const lastRow = document.querySelector('.journalachafc-row:last-child');
       const lastRowOffset = lastRow.offsetTop + lastRow.clientHeight;
 
       const containerBottom = container.scrollTop + container.clientHeight;
-      console.log(containerBottom+900, lastRowOffset, containerBottom+900 >= lastRowOffset)
       if (containerBottom+900 >= lastRowOffset && !loadingjournalachafc) {
           currentPagejournalachafc++;
-          loadMorejachfc();
+          console.log('currentPagejournalachafc', currentPagejournalachafc)
+          loadMorejachfc(currentPagejournalachafc);
       }
     };
 

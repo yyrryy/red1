@@ -402,7 +402,7 @@ margin: 0;
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -612,7 +612,7 @@ margin: 0;
                 alertify.success('Bon livraison modifié')
                 // delerte this tab
                 deletetab('modifierlivraison{{livraison.id}}')
-                ajaxpage('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
+                createtab('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
 
                 }
             })

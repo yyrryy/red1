@@ -41,7 +41,7 @@
                     
                 </div>
             </div>
-        <!-- <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-tooltip="Bon Nos: {% for bon in i.bons.all %}{{ bon.bon_no }}{% if not forloop.last %}, {% endif %}{% endfor %}" onclick="ajaxpage('regl{{i.id}}tab', 'regl{{i.id}}tab', 'products/viewreglement/{{i.id}}')">    
+        <!-- <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-tooltip="Bon Nos: {% for bon in i.bons.all %}{{ bon.bon_no }}{% if not forloop.last %}, {% endif %}{% endfor %}" onclick="createtab('regl{{i.id}}tab', 'regl{{i.id}}tab', '/products/viewreglement/{{i.id}}')">    
         </button> -->
             
         <button class="btn btn-success btn-sm" onclick="updatereglementbl({{i.id}})" style="font-size: 12px;

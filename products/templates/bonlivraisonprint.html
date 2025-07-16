@@ -34,7 +34,7 @@
     <script src="/static/js/jquerySpellingNumber.js"></script>
     <link href="/static/css/minified.css" rel="stylesheet" />
 </head>
-<body>
+<body style="font-family:sans-serif;">
 
   <div id="printbl{{order.id}}" class="bonbody position-relative">
 
@@ -50,7 +50,7 @@
     <div class="px-5 d-flex flex-column postion-relative livraison{{order.id}}holder p-3" style="height: 1123px;width: 21cm; page-break-before: always;">
       <!-- header -->
       <div class="">
-        <img src="" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
+        <img src="/media/logos/logo2.jpg" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
 
         <div class="d-flex justify-content-between" style="margin-top:3.5em;">
           <div class="">
@@ -59,12 +59,12 @@
                 <strong>Date: {{ order.date|date:"d/m/Y" }}</strong>
               </div>
               <div>
-                <strong>N°: {{ order.bon_no }}</strong>
+                <strong>N°: {{ bon_no }}</strong>
               </div>
           </div>
           <h3>
               <b>
-                Bon de Livraison
+
               </b>
             </h3>
 
@@ -89,7 +89,7 @@
           top: 5em;
           visibility: hidden;
           ">
-        <table class="table table-bordered blitems" style="font-size: 13px; font-family: serif; border-color: black;">
+        <table class="table table-bordered blitems" style="font-size: 13px; border-color: black;">
           <thead style="background: #c9c9c967; font-size: 10px;
         font-weight: 800;" class="text-center">
             <tr>
@@ -177,7 +177,7 @@
     <div class="px-5 d-flex flex-column postion-relative livraison{{order.id}}holder p-3" style="height: 1123px;width: 21cm; page-break-before: always;">
       <!-- header -->
       <div class="">
-        <img src="" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
+        <img src="/media/logos/logo2.jpg" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
 
         <div class="d-flex justify-content-between" style="margin-top:3.5em;">
           <div class="">
@@ -186,12 +186,12 @@
                 <strong>Date: {{ order.date|date:"d/m/Y" }}</strong>
               </div>
               <div>
-                <strong>N°: {{ order.bon_no }}</strong>
+                <strong>N°: {{ bon_no }}</strong>
               </div>
           </div>
           <h3>
               <b>
-                Bon de Livraison
+
               </b>
             </h3>
 
@@ -216,7 +216,7 @@
           top: 5em;
           visibility: hidden;
           ">
-        <table class="table table-bordered blitems" style="font-size: 13px; font-family: serif; border-color: black;">
+        <table class="table table-bordered blitems" style="font-size: 13px; border-color: black;">
           <thead style="background: #c9c9c980; font-size: 10px;
         font-weight: 800;" class="text-center">
             <tr>
@@ -301,7 +301,7 @@
          var printContents = document.getElementById(divName).innerHTML;
          var originalContents = document.body.innerHTML;
          document.body.innerHTML = printContents;
-         $('.blitems').css({'font-size': '15px','font-family':'serif'})
+         $('.blitems').css({'font-size': '15px'})
          $("table > tbody > tr > td").css({'padding':'5px', 'border-bottom':'0px', 'border-top':'0px'});
          //  $('body').addClass('d-flex flex-column vh-100 p-3')
          window.print();

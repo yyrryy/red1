@@ -1,0 +1,10 @@
+CNAME
+www
+parkingpage.namecheap.com
+Automatique
+
+Proxied
+
+
+gzenaya
+EFF4R55400G

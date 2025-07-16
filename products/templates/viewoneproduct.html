@@ -102,24 +102,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Remise 1</td>
-                                <td>{{product.remise1}}</td>
-                            </tr>
-                            <tr>
-                                <td>Remise 2</td>
-                                <td>{{product.remise2}}</td>
-                            </tr><tr>
-                                <td>Remise 3</td>
-                                <td>{{product.remise3}}</td>
-                            </tr><tr>
-                                <td>Remise 4</td>
-                                <td>{{product.remise4}}</td>
-                            </tr>
-                            <tr>
-                                <td>Prix achat net</td>
-                                <td>{{product.netbuyprice}}</td>
-                            </tr>
-                            <tr>
 
                                 <td>
                                     Prix Vente net
@@ -129,46 +111,47 @@
                                 </td>
                             </tr>
                             <tr>
-                                {% if target == "f" %}
                                 <td>
                                     Stock
                                 </td>
                                 <td class="stocktotal{{product.id}} d-flex">
-                                    
-                                    {{product.stocktotalfarah}}
-                                    
-                                </td>
-                                {% elif target == 'o' %}
-                                <td>
-                                    Stock
-                                </td>
-                                <td class="stocktotal{{product.id}} d-flex">
-                                    
-                                    {{product.stocktotalorgh}}
-                                    
-                                </td>
-                                {% else %}
-                                <td>
-                                    Stock farah
-                                </td>
-                                <td class="stocktotal{{product.id}} d-flex">
-                                    
-                                    {{product.stocktotalfarah}}
-                                    
-                                </td>
-                                <td>
-                                    Stock orgh
-                                </td>
-                                <td class="stocktotal{{product.id}} d-flex">
-                                    
-                                    {{product.stocktotalorgh}}
-                                    
-                                </td>
-                                {% endif %}
+                                    {{product.stocktotal}}
+                                    <div class="accordion" id="accordionpdct{{product.id}}">
+                                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseupdatestock{{product.id}}" aria-expanded="true" aria-controls="collapseupdatestock{{product.id}}">
 
+
+                                        </button>
+
+                                        <div id="collapseupdatestock{{product.id}}" class="collapse row" aria-labelledby="headingOne" data-parent="#accordionpdct{{product.id}}">
+                                            <input class="col-9" type="number">
+                                            <button class="btn btn-success col-3" onclick="updateproductstock(event, '{{product.id}}')"></button>
+
+
+                                        </div>
+                                      </div>
+                                </td>
                             </tr>
-                            <!-- <
-                             -->
+                            <tr style="background: #ffaa76;">
+                                <td>
+                                    Stock facture
+                                </td>
+                                <td class="d-flex">
+                                    {{product.stockfacture}}
+                                    <div class="accordion" id="accordionpdctstockfc{{product.id}}">
+                                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseupdatestockfc{{product.id}}" aria-expanded="true" aria-controls="collapseupdatestockfc{{product.id}}">
+
+
+                                        </button>
+
+                                        <div id="collapseupdatestockfc{{product.id}}" class="collapse row" aria-labelledby="headingOne" data-parent="#accordionpdctstockfc{{product.id}}">
+                                            <input class="col-9" type="number">
+                                            <button class="btn btn-success col-3" onclick="updateproductstockfc(event, '{{product.id}}')"></button>
+
+
+                                        </div>
+                                      </div>
+                                </td>
+                            </tr>
                             <!-- <tr style="background: #ffaa76;">
                                 <td>
                                     Stock bon
@@ -179,13 +162,13 @@
                             </tr> -->
 
                         </table>
-                        <!-- <div class="mb-2 d-flex">
+                        <div class="mb-2 d-flex">
                             <div>
                                 Status:
                             </div>
                             {{product.isactive}}
                             <div style="width: 15px; height: 15px;" class="status{{product.id}}  rounded bg-{% if product.isactive %}success{% else %}danger{% endif %}"></div>
-                        </div> -->
+                        </div>
                         <!-- {% if product.isactive %}
                         <button class="mb-2 w-100 btn btn-danger" onclick="desactiverproduct({{product.id}})">
                             Desactiver
@@ -195,30 +178,13 @@
                             Activer
                         </button>
                         {% endif %} -->
-                        <!-- <button class="mb-2 w-100 btn btn-success" onclick="activerproduct({{product.id}})">
+                        <button class="mb-2 w-100 btn btn-success" onclick="activerproduct({{product.id}})">
                             Activer
                         </button>
                         <button class="mb-2 w-100 btn btn-danger" onclick="desactiverproduct({{product.id}})">
                             Desactiver
-                        </button> -->
+                        </button>
                         <hr>
-                        <!-- duplicate -->
-                        <div class="border">
-                            <div class="text-center p-2 bg-dark text-white">duplicate</div>
-                            <strong>reference* :</strong>
-                            <input type="text" class="form-control ref">
-                            <strong>marque* :</strong>
-                            <select name="" id="" class="form-control mark">
-                                <option value="">--</option>
-                                {% for i in marques %}
-                                <option value="{{i.id}}">{{i.name.upper}}</option>
-                                {% endfor %}
-                            </select>
-                            <strong>min. stock:</strong>
-                            <input type="text" class="form-control stock">
-                            <button class="btn btn-success mt-2 w-100" onclick="duplicate(event, '{{product.id}}')">Creer</button>
-                        </div>
-
                         <!-- <div class="damagedpdctsholder">
                           <strong>
                             Les produits Damagés
@@ -261,7 +227,7 @@
                                     <small>Diametre</small>
                                     <input type="text" class="form-control mb-3" name="diametre" value="{%if product.diametre%}{{product.diametre}}{%endif%}">
                                 </div>
-                                <!-- <div class="col-3">
+                                <div class="col-3">
                                     <small for="name">Voiture logo. </small> <br>
                                     <select name="updatepdctlogo" id="" class="select2" style="width:100%;">
                                         <option value="{{product.carlogos.id}}">
@@ -272,7 +238,7 @@
                                         {% endfor %}
                                     </select>
 
-                                </div> -->
+                                </div>
                             </div>
 
 
@@ -299,7 +265,7 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <!-- <div class="col-3">
+                                <div class="col-3">
                                     <small>
                                         Representant price
                                     </small>
@@ -315,7 +281,12 @@
                                     <div class="col-12">
                                         <input style="background: #ffa600bc;" type="number" name="updaterepremise" value="{{product.representremise}}" class="form-control">
                                     </div>
-                                </div> -->
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
 
                                 <div class="col-3">
                                     <small>
@@ -325,11 +296,6 @@
                                         <input type="text" name="updatecode" value="{{product.code}}" class="form-control">
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-
-                                
                                 <div class="col-3">
                                     <small>Remise</small>
                                     <input type="text" class="form-control mb-3" name="remise" value="{{product.remise}}">
@@ -353,7 +319,7 @@
 
                                 </div>
 
-                                <!-- <div class="d-flex col-6">
+                                <div class="d-flex col-6">
                                     <div>
                                         R1
                                         <input type="text" class="col-6" style="background: greenyellow;" name="refeq1" value="{% if product.refeq1 %}{{product.refeq1}}{% endif %}">
@@ -370,7 +336,7 @@
                                         R4
                                         <input type="text" class="col-6" style="background: greenyellow;" name="refeq4" value="{% if product.refeq4 %}{{product.refeq4}}{% endif %}">
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
 
@@ -381,12 +347,12 @@
                                 <div class="col-3">
                                     <div class="accordion w-100" id="accordionreps" style="right: 0;">
 
-                  <!-- <button class="btn w-100" type="button" data-toggle="collapse" data-target="#collapsreps" aria-expanded="true" aria-controls="collapsreps">
+                  <button class="btn w-100" type="button" data-toggle="collapse" data-target="#collapsreps" aria-expanded="true" aria-controls="collapsreps">
                     <div>
                       Representants
                     </div>
 
-                  </button> -->
+                  </button>
 
                 <div id="collapsreps" class="collapse" aria-labelledby="headingOne" data-parent="#accordionreps">
                   <select name="updatereps" class="form-select updatereps" multiple="multiple" >
@@ -407,7 +373,7 @@
                                         {% endfor %}
                                     </select>-->
                                 </div>
-                                <!-- <div class="col-4">
+                                <div class="col-4">
                                     <label for="switch">new:</label>
                                     {% if product.isnew %}
                                     <input type="radio" name="switch" value="on" checked> On
@@ -434,25 +400,25 @@
                                     <div class="col-12">
                                         <input type="text" name="updatecoderef" value="{{product.coderef}}" class="form-control">
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
-                            <!-- <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between">
                                 <div>
                                     <small>Designations</small>
                                 </div>
                                 <div>
                                     <button class="btn btn-success" onclick="addcarsinput(event)">+</button>
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="carsholder">
+                            <div class="carsholder">
                                 {% for i in cars %}
                                 <div class="d-flex mb-3">
                                     <input type="text" class="form-control" name="cars" value="{{i}}" style="background: greenyellow;">
                                     <button class="btn btn-danger" onclick="deletecarinput(event)">-</button>
                                 </div>
                                 {% endfor %}
-                            </div> -->
+                            </div>
                             <small for="name">Ref equiv.</small>
                             <textarea type="text" class="form-control mb-3" name="equivalent" value="" style="height: 15em">{{product.equivalent}}</textarea>
                             <button class="border btn btn-success mt-2 w-100" style="    position: sticky;
@@ -538,7 +504,7 @@
                           {% for entry in product.stockin_set.all %}
                           {% endfor %}
                             {% for entry in entries %}
-                            <tr {% if not entry.isinventaire %} onclick="ajaxpage('bonachat{{entry.nbon.id}}', 'Bon achat {{entry.nbon.nbon}}', '/products/bonachatdetails/{{entry.nbon.id}}')" {%endif%}>
+                            <tr {% if not entry.isinventaire %} onclick="createtab('bonachat{{entry.nbon.id}}', 'Bon achat {{entry.nbon.nbon}}', '/products/bonachatdetails/{{entry.nbon.id}}')" {%endif%}>
                                 <td>
                                     {{entry.date|date:"d/m/Y"}}
                                 </td>
@@ -788,7 +754,7 @@
                     alertify.success('Modifier dans le server');
 
                     deletetab('addpdct{{product.id}}')
-                    ajaxpage('addpducts', 'Articles', '/products/stock')
+                    createtab('addpducts', 'Articles', '/products/stock')
                 }else{
                     alertify.error(data.error)
                 }

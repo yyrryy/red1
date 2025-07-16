@@ -271,7 +271,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -465,7 +465,7 @@
                   localStorage.removeItem('pdctsinavoirsupp')
 
                   deletetab('addavoirsupp')
-                  ajaxpage('avoirsupp', 'AvoirFR', '/products/listavoirsupplier')
+                  createtab('avoirsupp', 'AvoirFR', '/products/listavoirsupplier')
 
               }
           })

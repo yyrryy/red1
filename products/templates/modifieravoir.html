@@ -83,6 +83,7 @@ margin: 0;
             <div class="col-4">
               <input type="number" class="form-control" placeholder="Quantité" name="addqty">
               <div class="addstock text-danger"></div>
+              <div class="addsource text-danger"></div>
             </div>
             <div class="col-4">
               <input type="number" class="form-control" placeholder="Prix" name="addprice">
@@ -95,7 +96,7 @@ margin: 0;
               <input hidden readonly type="text" name="addname" class="form-control">
             </div>
             <div class="col-12">
-              <button class="btn btn-outline-secondary" onclick="addrowupdateavoir(event, '{{avoir.id}}')">Ajouter</button>
+              <button class="btn btn-primary" onclick="addrowupdateavoir(event, '{{avoir.id}}')">+ Ajouter</button>
             </div>
           </div>
 
@@ -133,6 +134,7 @@ margin: 0;
                     <td style="padding: 2px 0; font-size: 13px;width: 6%;" >Quantité</td>
                     <td style="padding: 2px 0; font-size: 13px;width: 6%;" >Prix unit.</td>
                     <td style="padding: 2px 0; font-size: 13px;width: 3%;" >Remise</td>
+                    <td style="padding: 2px 0; font-size: 13px;width: 3%;" >Source</td>
                     <!-- <td style="padding: 2px 0; font-size: 13px;width: 6%;" >Prix Net</td> -->
                     <td style="padding: 2px 0; font-size: 13px;">Total</td>
                 </tr>
@@ -163,6 +165,8 @@ margin: 0;
                   <td><input type="number" class="calculate qty" onkeyup="calculate(event)" name="qty" value="{{i.qty}}"></td>
                   <td><input type="number" class="calculate price" onkeyup="calculate(event)" name="price" value="{{i.price}}"></td>
                   <td><input type="number" class="calculate remise" onkeyup="calculate(event)" name="remise" value="{{i.remise}}"></td>
+                  <td>{{i.source}}</td>
+
                   <!-- <td>{{i.product.prixnet}}</td> -->
                   <td class="total">{{i.total}}</td>
                   <input type="hidden" name="productid" value="{{i.product.id}}">
@@ -244,7 +248,7 @@ margin: 0;
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -275,6 +279,7 @@ margin: 0;
     // this reset the select2 value
     // parentdiv.find('.resultsholderbonlivraison').val('').trigger('change')
     // ids of products in bon stored in localstorage
+    let addsource = parentdiv.find('.addsource')
     let bonachatbody = parentdiv.find('tbody')
     let addname=parentdiv.find('[name="addname"]')
     let addqty=parentdiv.find('[name="addqty"]')
@@ -294,6 +299,7 @@ margin: 0;
       addname.val('')
       addremise.val('')
       addprice.val('')
+      addsource.text('')
       alertify.error('Ce produit est deja dans le bon')
       $('.productsavoir{{avoir.id}}').select2('open')
 
@@ -313,6 +319,7 @@ margin: 0;
         <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
         <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
         <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
+        <td style="paddingpx 0; font-size: 13px;" class="source">${addsource.text()}</td>
         <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
         <input type="hidden" name="productid" value="${id}">
 
@@ -325,6 +332,7 @@ margin: 0;
     addname.val('')
     addremise.val('')
     addprice.val('')
+    addsource.text('')
     totals=parentdiv.find('.total')
     totalbon=parentdiv.find('.totalbon')
     var totalSum = 0;
@@ -356,6 +364,7 @@ margin: 0;
         let addremise=parent.find('input[name="addremise"]')
         let addqty=parent.find('input[name="addqty"]')
         parent.find('.addstock').text(stock)
+
         addqty.val('')
         addremise.val('')
         addname.val(`${ref} - ${name}`).attr('data', `${ref}§${name}§${dp}§${stock}§${stockfacture}§${id}§${sellprice}§${remise}§${netprice}§${representprice}`)
@@ -399,6 +408,7 @@ margin: 0;
                 addremise.val(0)
               }else{
 
+                parent.find('.addsource').text(data.source)
                 addprice.val(data.price)
                 addremise.val(data.remise)
               }
@@ -447,6 +457,7 @@ margin: 0;
             let ref = tr.find('.ref').text()
             let price = tr.find('.price').val()
             let remise = tr.find('.remise').val()
+            let source = tr.find('.source').text()
             let total = tr.find('.total').text()
             let productid = tr.find('input[name="productid"]').val()
             let product = {
@@ -455,6 +466,7 @@ margin: 0;
                 'ref': ref,
                 'price': price,
                 'remise': remise,
+                'source': source,
                 'total': total,
                 'productid': productid,
             }
@@ -491,7 +503,7 @@ margin: 0;
                 alertify.success('Bon avoir modifié')
                 // delerte this tab
                 deletetab('addmodifieravoir{{avoir.id}}')
-                ajaxpage('avoircl', 'AvoirCL', '/products/listavoirclient')
+                createtab('avoircl', 'AvoirCL', '/products/listavoirclient')
               }
               else{
                 alertify.error('ERROR')

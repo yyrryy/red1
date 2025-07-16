@@ -93,6 +93,9 @@
     </div>
 </div>
 <script>
+  currentPagejournalvente=1
+  oadingjournalvente=false
+  $('.journalvtableholder').on('scroll', handleScrolljv);
   populateyears()
     function getdatefilter(){
       currentPagejournalvente=1
@@ -162,7 +165,7 @@
 
       const lastRow = document.querySelector('.journalvente-row:last-child');
       const lastRowOffset = lastRow.offsetTop + lastRow.clientHeight;
-      let year=lastRow.getAttribute('year')?lastRow.getAttribute('year'):0
+      let year=$('.jvyear').val()
       let startdate=lastRow.getAttribute('startdate')?lastRow.getAttribute('startdate'):0
       let enddate=lastRow.getAttribute('enddate')?lastRow.getAttribute('enddate'):0
       let term=lastRow.getAttribute('term')?lastRow.getAttribute('term'):0

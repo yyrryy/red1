@@ -140,6 +140,7 @@
                                 <option value="effet">effet</option>
                                 <option value="espece">espece</option>
                                 <option value="avoir">avoir</option>
+                                <option value="verement">verement</option>
                             </select>
                         </div>
                         <div class="col-3">
@@ -202,7 +203,7 @@
 
                     </select> -->
                 </div>
-                <button class="btn text-white w-100" onclick="submitupdatereglementbl(event)" style="background: #00538c;">
+                <button class="btn text-white w-100 submitupdatereglementbl" onclick="submitupdatereglementbl(event)" style="background: #00538c;">
                     Valider
                 </button>
                 <!-- <div class="mb-2">
@@ -249,7 +250,7 @@
                               Date incorrect
                             </small>
                         </div><br>
-                        <!-- <button type="button" name="button" class="btn bg-darkblue text-white" onclick="refreshselectclient(event)">↻</button> -->
+                        <button type="button" name="button" class="btn bg-darkblue text-white" onclick="refreshselectclient(event)">↻</button>
                         <select name="addreglementclientsbl" id="" class="form-select addreglementclientsbl select2client" style="width:100%;">
 
                         </select>
@@ -292,6 +293,7 @@
                                                 <option value="effet">effet</option>
                                                 <option value="espece">espece</option>
                                                 <option value="avoir">avoir</option>
+                                                <option value="verement">verement</option>
                                             </select>
                                         </div>
                                         <div class="col-3">
@@ -492,7 +494,7 @@
 
                             </div>
                         </div>
-                        <!-- <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-tooltip="Bon Nos: {% for bon in i.bons.all %}{{ bon.bon_no }}{% if not forloop.last %}, {% endif %}{% endfor %}" onclick="ajaxpage('regl{{i.id}}tab', 'regl{{i.id}}tab', 'products/viewreglement/{{i.id}}')">
+                        <!-- <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-tooltip="Bon Nos: {% for bon in i.bons.all %}{{ bon.bon_no }}{% if not forloop.last %}, {% endif %}{% endfor %}" onclick="createtab('regl{{i.id}}tab', 'regl{{i.id}}tab', '/products/viewreglement/{{i.id}}')">
                         </button> -->
 
                         <button class="btn btn-success btn-sm" onclick="updatereglementbl('{{i.id}}')" style="font-size: 12px;
@@ -539,6 +541,15 @@
 
 <script>
   populateyears()
+  function yeardatareglbl(){
+      let year=$('[name="yearsreglbl"]').val()
+      if (year != 0){
+          $.get('/products/yeardatareglbl', {'year':year}, (data)=>{
+              $('.reglbltable tbody').html(data.trs)
+              $('.totalreglbl').text(data.total)
+          })
+      }
+  }
 
   // load more bl in regle not woking
   function checkyearreglbl(event){
@@ -572,7 +583,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchclient?target={{target}}',
+          url: '/products/searchclient',
           data: function (params) {
             var query = {
               term: params.term,
@@ -623,7 +634,7 @@
 
         // Format the date as "yyyy-mm-dd"
         var currentDate = yyyy + '-' + mm + '-' + dd;
-        parentdiv.find('.reglements').prepend(`<div class="row align-items-center mt-2"><div class="col-3"> <input type="number" name="mantantreglementclient" onchange="totalreglementbl(event)" class="w-100 notempty" placeholder="Mantant"></div><div class="col-3"> <input type="text" name="npiece" class="w-100 notempty" placeholder="N° piece"></div><div class="col-3"> <select name="modereglementclient" class="w-100 notempty" onchange="checkmodereglement(event)"><option value="cheque">Cheque</option><option value="effet">effet</option><option value="espece">espece</option><option value="avoir">avoir</option></select></div><div class="col-3 d-flex"> <input type="date" name="echeance" class="w-100 notempty" value="${currentDate}"><button class="btn btn-sm bg-danger" onclick="removereglrow(event)"></button></div></div>`)
+        parentdiv.find('.reglements').prepend(`<div class="row align-items-center mt-2"><div class="col-3"> <input type="number" name="mantantreglementclient" onchange="totalreglementbl(event)" class="w-100 notempty" placeholder="Mantant"></div><div class="col-3"> <input type="text" name="npiece" class="w-100 notempty" placeholder="N° piece"></div><div class="col-3"> <select name="modereglementclient" class="w-100 notempty" onchange="checkmodereglement(event)"><option value="cheque">Cheque</option><option value="effet">effet</option><option value="espece">espece</option><option value="avoir">avoir</option><option value="verement">verement</option></select></div><div class="col-3 d-flex"> <input type="date" name="echeance" class="w-100 notempty" value="${currentDate}"><button class="btn btn-sm bg-danger" onclick="removereglrow(event)"></button></div></div>`)
       }
     // load bl in adding reglement
     function loadMoreRecordsreglblcl (clientid, nr)  {
@@ -953,6 +964,7 @@
     }
 
     function updatereglementbl(reglementid){
+      $('.submitupdatereglementbl').removeClass('disabled')
         // activate load more
         $('.listupdatereglblholder').on('scroll', scrollupdateregl);
         loadingupdateblregl=false

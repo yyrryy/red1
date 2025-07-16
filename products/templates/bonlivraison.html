@@ -29,7 +29,7 @@
   </div>
   <button class="btn bg-orange" style="border:1px solid var(--orange);" onclick="forceupdatetab()">↻</button>
 </div>
-  <div class="bonlivraisonparentdiv">
+  <div class="">
          <div class="bg-white rounded shadow p-2 mb-3 data d-flex justify-content-between">
             <div class="col-5">
                 <div class="mb-2 clientselectblholder">
@@ -47,7 +47,7 @@
                         {% endfor %} -->
                     </select>
                 </div>
-                <!-- <div class="mb-2 cerpselectholder">
+                <div class="mb-2 cerpselectholder">
                     <small>Representant:</small> <strong class="text-danger repblname"></strong>
                     <select name="representant" id="" style="width:100%;" class="select2 repsselectsbl form-select notemptylivraison">
                         <option value="">---</option>
@@ -55,7 +55,7 @@
                         <option value="{{i.id}}">{{i.name}}</option>
                         {% endfor %}
                     </select>
-                </div> -->
+                </div>
                 <div class="mb-2">
                     <input type="date" class="form-control datebonbl" name="datebon" placeholder="Date bon">
                 </div>
@@ -64,6 +64,12 @@
                 </div>
                 <div class="mb-2">
                     <input type="text" class="form-control note" name="note" placeholder="Note">
+                </div>
+                <div class="mb-2">
+                    <select class="iscontreselect" name="">
+                      <option value="normal">Normal</option>
+                      <option value="contre">Contre</option>
+                    </select>
                 </div>
             </div>
 
@@ -237,7 +243,6 @@
                 parentdiv.find('.totalbonlivraison').html(totalbonvalue)
                 // Reset the count
                 clicksinbl = 0;
-                removeinlocalstorage('bonlivraison', id)
 
               }
                 , function(){ alertify.error('Cancel')});
@@ -282,7 +287,6 @@
 
         // here is the case if qty is greater than stock
         console.log(addqty.val(), stock)
-        
         if (parseInt(addqty.val())>parseInt(stock)){
           console.log('qty', addqty.val(), 'stock', stock, 'qty > stock', addqty>stock)
 
@@ -313,48 +317,31 @@
             <tr class="itemrow ${stock<=0? "text-danger":"" }" id=${id}>: 2
                 <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelinebl(event, ${id})">${ref}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${name}</td>
-                <td style="paddingpx 0; font-size: 13px;" class="dp">${dp}</td>
-                <td style="padding: 2px 0; font-size: 13px;" class="stock">${stock}</td>
+                <td style="paddingpx 0; font-size: 13px;">${dp}</td>
+                <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
-                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
-                <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="remise" style="height:23px; width:100%;"></td>
+                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
+                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+                <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
                 <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
                 <input type="hidden" name="productid" value="${id}">
 
             </tr>
             `
-            item={
-              'id': id,
-              'qty': addqty.val(),
-              'price': addprice.val(),
-              'remise': addremise.val(),
-              'total': addtotal,
-              'name': name,
-              'ref': ref,
-              'dp': dp,
-              'stock': stock,
-              'clientprice': priceclient,
-              'netprice': netprice
-            }
-            // prepare item to be saved in localstorage
-            
+
             bonachatbody.prepend(tr)
             // delete selected option
             parentdiv.find('.addstock').val('')
-            parentdiv.find('.addstockfacture').val('')
+              parentdiv.find('.addstockfacture').val('')
             addqty.val('')
             addname.val('')
             addremise.val('')
             addprice.val('')
             var totalSum = 0;
             parentdiv.find('.total').each(function() {
-              totalSum += parseFloat($(this).text());
+                totalSum += parseFloat($(this).text());
             });
-            
-            console.log('saving items')
-            savetolocalstorage(item, totalSum, 'bonlivraison')
             parentdiv.find('.totalbon').text(totalSum.toFixed(2))
             parentdiv.find('.resultsholderbonlivraison').select2('open')
           }, function(){
@@ -377,31 +364,19 @@
         <tr class="itemrow ${stock<=0? "text-danger":"" }">: 2
             <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelinebl(event, ${id})">${ref}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${name}</td>
-            <td style="paddingpx 0; font-size: 13px;" class="dp">${dp}</td>
-            <td style="padding: 2px 0; font-size: 13px;" class="stock">${stock}</td>
+            <td style="paddingpx 0; font-size: 13px;">${dp}</td>
+            <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="remise" style="height:23px; width:100%;"></td>
+            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
+            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+            <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
             <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
             <input type="hidden" name="productid" value="${id}">
 
         </tr>
         `
-        item={
-          'id': id,
-          'qty': addqty.val(),
-          'price': addprice.val(),
-          'remise': addremise.val(),
-          'total': addtotal,
-          'name': name,
-          'ref': ref,
-          'dp': dp,
-          'stock': stock,
-          'clientprice': priceclient,
-          'netprice': netprice
-        }
+
         bonachatbody.prepend(tr)
         // delete selected option
         addqty.val('')
@@ -416,8 +391,6 @@
         totals.each(function() {
             totalSum += parseFloat($(this).text());
         });
-        
-        savetolocalstorage(item, totalSum, 'bonlivraison')
         totalbon.text(totalSum.toFixed(2))
         // $('.resultsholderbonlivraison').val('').trigger('change')
         $('.resultsholderbonlivraison').select2('open')
@@ -444,7 +417,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -461,8 +434,8 @@
         },
         minimumInputLength: 1,
         placeholder:'Chercher Produits',
-        // templateResult: formatRepo,
-        // templateSelection: formatRepoSelection,
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection,
       });
         function formatRepo (repo) {
           if (repo.loading) {
@@ -486,7 +459,24 @@
     })
     $('.clientselectbl').on('change', function(){
       parentdiv=$(this).parent().parent().parent()
-      parentdiv.find('.productsholder').removeClass('d-none')
+      if ($(this).val()==''||$('.repsselectsbl').val()==''){
+        $.get('products/getclientrep/'+$(this).val(), function(data){
+          console.log(data)
+          $('.repblname').text(data.name)
+          $('.repsselectsbl').val(data.id).trigger('change')
+        })
+        console.log('check for old unpaid bons')
+        $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
+          if (data.exist){
+            $('.oldbonswarning').removeClass('d-none')
+          }else{
+            $('.oldbonswarning').addClass('d-none')
+          }
+        })
+        parentdiv.find('.productsholder').addClass('d-none')
+        return
+      }else{
+        parentdiv.find('.productsholder').removeClass('d-none')
         console.log('check for old unpaid bons')
         $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
           if (data.exist){
@@ -501,7 +491,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -521,112 +511,31 @@
         templateResult: formatRepo,
         templateSelection: formatRepoSelection,
       });
-        
-      // if ($(this).val()==''||$('.repsselectsbl').val()==''){
-      //   $.get('products/getclientrep/'+$(this).val(), function(data){
-      //     console.log(data)
-      //     $('.repblname').text(data.name)
-      //     //$('.repsselectsbl').val(data.id).trigger('change')
-      //   })
-      //   console.log('check for old unpaid bons')
-      //   $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
-      //     if (data.exist){
-      //       $('.oldbonswarning').removeClass('d-none')
-      //     }else{
-      //       $('.oldbonswarning').addClass('d-none')
-      //     }
-      //   })
-      //   parentdiv.find('.productsholder').addClass('d-none')
-      //   return
-      // }else{
-      //   parentdiv.find('.productsholder').removeClass('d-none')
-      //   console.log('check for old unpaid bons')
-      //   $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
-      //     if (data.exist){
-      //     $('.oldbonswarning').removeClass('d-none')
-      //     }else{
-      //       $('.oldbonswarning').addClass('d-none')
-      //     }
-      //   })
-      //   $('#productsselect2').select2({
+        function formatRepo (repo) {
+          if (repo.loading) {
+            return repo.text;
+          }
 
-
-      //   ajax: {
-      //     type:'get',
-      //     dataType: 'json',
-      //     url: '/products/searchproduct?target={{target}}',
-      //     data: function (params) {
-      //       var query = {
-      //         term: params.term,
-      //       }
-      //       // Query parameters will be ?search=[term]&type=public
-      //       return query;
-      //     },
-      //     proccessresults: function (data) {
-      //         return {
-      //           results:data.results
-      //         }
-      //     },
-      //     cache:true
-      //   },
-      //   minimumInputLength: 1,
-      //   placeholder:'Chercher Produits',
-      //   templateResult: formatRepo,
-      //   templateSelection: formatRepoSelection,
-      // });
-      //   function formatRepo (repo) {
-      //     if (repo.loading) {
-      //       return repo.text;
-      //     }
-
-      //     var $container = $(
-      //       `<strong style="color:${repo.stock>0?"blue":"red"};">${repo.text}</div>`
-      //       );
+          var $container = $(
+            `<strong style="color:${repo.stock>0?"blue":"red"};">${repo.text}</div>`
+            );
 
 
 
-      //       return $container;
-      //   }
+            return $container;
+        }
 
-      //   function formatRepoSelection (repo) {
-      //     return repo.text;
-      //   }
-      //}end else
+        function formatRepoSelection (repo) {
+          return repo.text;
+        }
+      }//end else
 
     })
-    //localStorage.removeItem('pdctsinbonlivraison')
-    //localStorage.setItem('pdctsinbonlivraison', '[]')
+    localStorage.removeItem('pdctsinbonlivraison')
+    localStorage.setItem('pdctsinbonlivraison', '[]')
 
     $(document).ready(function(){
       $('.clientselectbl').select2('open')
-      // get products from localstorage
-      pdcts=JSON.parse(localStorage.getItem('bonlivraison')) || []
-      total=localStorage.getItem('totalbonlivraison') || 0
-      parentdiv=$('.bonlivraisonbody')
-      for (let i=0; i<pdcts.length; i++){
-        item=pdcts[i]
-        let tr = `
-        <tr class="itemrow ${item.stock<=0? "text-danger":"" }" id=${item.id}>
-            <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelinebl(event, ${item.id})">${item.ref}</td>
-            <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${item.name}</td>
-            <td style="paddingpx 0; font-size: 13px;" class="dp">${item.dp}</td>
-            <td style="padding: 2px 0; font-size: 13px;" class="stock">${item.stock}</td>
-            <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${item.clientprice}</td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${item.id})" name="qty" value="${item.qty}" style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${item.id})" name="price" value="${item.price}" step=0.01 style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${item.remise}" class="calculate remise" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${item.id})" name="remise" style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;" class="netprice">${item.netprice}</td>
-            <td style="padding: 2px 0; font-size: 13px;" class="total">${item.total}</td>
-            <input type="hidden" name="productid" value="${item.id}">
-
-        </tr>
-        `
-        parentdiv.prepend(tr)
-      }
-      $('.totalbon').text(total)
-      
-      console.log(pdcts)
-
     })
         // fill today's date in .datebon input
         var dateInput = document.querySelector('.datebonbl');
@@ -722,7 +631,7 @@
 
       $('.submitbonlivraison').on('click', (e)=>{
         parentdiv=$(e.target).parent().parent().parent().parent()
-        if (parentdiv.find('.clientselectbl').val()==null ||parentdiv.find('.clientselectbl').val()=='' || parentdiv.find('.datebonbl').val()=='' ){
+        if (parentdiv.find('.clientselectbl').val()=='' || parentdiv.find('.repsselectsbl').val()==''){
             parentdiv.find('.data').addClass('border border-danger')
             return
         }
@@ -774,6 +683,7 @@
           })
           let clientid = parentdiv.find('.clientselectbl').val()
           let repid = parentdiv.find('.repsselectsbl').val()
+          let iscontre = parentdiv.find('.iscontreselect').val()
           let datebon = parentdiv.find('.datebonbl').val()
           let transport = parentdiv.find('.transport').val()
           let note = parentdiv.find('.note').val()
@@ -804,6 +714,7 @@
                   'transport':transport,
                   'datebon': datebon,
                   'note': note,
+                  'iscontre': iscontre,
                   'products': JSON.stringify(products),
                   'csrfmiddlewaretoken': '{{csrf_token}}'
               },
@@ -811,9 +722,8 @@
                 console.log('sent')
                   // remove list in localstorage
                   localStorage.removeItem('pdctsinbonlivraison')
-                  localStorage.removeItem('bonlivraison')
                   deletetab('addbonlivraison')
-                  ajaxpage('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
+                  createtab('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
 
 
               }
@@ -848,9 +758,9 @@
       //                     <option value="depot">Depot</option>
       //                 </select>
       //             </td>
-      //             <td><input type="number" class="form-control calculate qty" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="qty"></td>
-      //             <td><input type="number" class="form-control calculate price" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="price"></td>
-      //             <td><input type="number" class="form-control calculate remise" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="remise"></td>
+      //             <td><input type="number" class="form-control calculate qty" onkeyup="calculate(event)" name="qty"></td>
+      //             <td><input type="number" class="form-control calculate price" onkeyup="calculate(event)" name="price"></td>
+      //             <td><input type="number" class="form-control calculate remise" onkeyup="calculate(event)" name="remise"></td>
       //             <td class="total"></td>
       //             <input type="hidden" name="productid" value="${id}">
       //             <td><button class="btn btn-danger btn-sm" onclick="removefrombon(this)">X</button></td>
@@ -874,8 +784,8 @@
       //         <td>${name}</td>
       //         <td>${stock}</td>
 
-      //         <td><input type="number" class="form-control calculate qty" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="qty"></td>
-      //         <td><input type="number" class="form-control calculate price" onkeyup="calculate(event); updateinlocalstorage(event, 'bonlivraison', ${id})" name="price"></td>
+      //         <td><input type="number" class="form-control calculate qty" onkeyup="calculate(event)" name="qty"></td>
+      //         <td><input type="number" class="form-control calculate price" onkeyup="calculate(event)" name="price"></td>
       //         <td class="total"></td>
       //         <td><button class="btn btn-danger btn-sm" onclick="removefrombon(this)">X</button></td>
       //     </tr>

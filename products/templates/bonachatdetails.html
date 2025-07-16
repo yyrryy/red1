@@ -9,7 +9,7 @@
     </button>
     {% if not bon.ispaid %}
     {% if not bon.ismanual %}
-    <button class="btn w-100 btn-success" onclick="ajaxpage('addmodifierbonachat{{bon.id}}', 'Modifier Bon achat {{bon.nbon}}', '/products/modifierbonachat/{{bon.id}}')">
+    <button class="btn w-100 btn-success" onclick="createtab('addmodifierbonachat{{bon.id}}', 'Modifier Bon achat {{bon.nbon}}', '/products/modifierbonachat/{{bon.id}}')">
       Modifier
     </button>
     <button class="btn w-100 btn-danger" onclick="deletebonachat('{{bon.id}}')">
@@ -17,15 +17,20 @@
     </button>
     {% endif %}
     {% endif %}
+    {% if bon.ismanual %}
+    <button class="btn w-100 btn-danger" onclick="deletebonachatmanual('{{bon.id}}')">
+      Supprimer manual
+    </button>
+    {% endif %}
     <!-- {% if order.isfacture %}
     <button class="btn w-100 btn-danger" onclick="degenerer(event, {{bon.id}}, 'bonl{{bon.id}}', '/products/bonbonachatdetails/{{bon.id}}')">
       Dégenerer Facture
     </button>
     {% else %}
-    <button class="btn w-100 btn-success" onclick="ajaxpage('generatefacturetab{{bon.id}}', 'Generer Fact.', '/products/generatefacture/{{bon.id}}')">
+    <button class="btn w-100 btn-success" onclick="createtab('generatefacturetab{{bon.id}}', 'Generer Fact.', '/products/generatefacture/{{bon.id}}')">
       Generer Facture
     </button>
-    <button class="btn w-100 btn-secondary" onclick="ajaxpage('modifierbonachat{{bon.id}}', 'Modifier {{bon.nbon}}', '/products/modifierbonachat/{{bon.id}}')">
+    <button class="btn w-100 btn-secondary" onclick="createtab('modifierbonachat{{bon.id}}', 'Modifier {{bon.nbon}}', '/products/modifierbonachat/{{bon.id}}')">
       Modifier
     </button>
     {% endif %} -->
@@ -54,7 +59,7 @@
     <div class="d-flex flex-column postion-relative bonachat{{bon.id}}holder p-3" style="height: 1123px;width: 21cm; page-break-before: always;">
       <!-- header -->
       <div class="">
-        <img src="" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
+        <img src="/media/logos/logo2.jpg" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
 
         <div class="d-flex justify-content-between mt-3">
           <div class="">
@@ -101,10 +106,8 @@
               <td style="width:53%;">Designation</td>
               <td style="width: 5%;">Qté</td>
               <td style="width: 7%;">P.U</td>
-              <td style="width: 7%;">Rem1</td>
-              <td style="width: 5%;">Rem2</td>
-              <td style="width: 5%;">Rem3</td>
-              <td style="width: 5%;">Rem4</td>
+              <td style="width: 7%;">Dvs</td>
+              <td style="width: 5%;">Rem</td>
               <td style="width: 13%;">Mantant</td>
             </tr>
           </thead>
@@ -146,38 +149,19 @@
                   {% endfor %}
               </td>
               <td class="text-center">
-                {% for v in i %}
+                  {% for v in i %}
 
-                {{v.remise1|floatformat:-2}}
-                <br>
-                {% endfor %}
-            </td>
-            <td class="text-center">
-                {% for v in i %}
+                  {{v.devise|floatformat:2}}
+                  <br>
+                  {% endfor %}
+              </td>
+              <td class="text-center">
+                  {% for v in i %}
 
-                {{v.remise2|floatformat:-2}}
-                %
-                <br>
-                {% endfor %}
-            </td>
-
-            <td class="text-center">
-              {% for v in i %}
-
-              {{v.remise3|floatformat:-2}}
-              %
-              <br>
-              {% endfor %}
-          </td>
-
-          <td class="text-center">
-            {% for v in i %}
-
-            {{v.remise4|floatformat:-2}}
-            %
-            <br>
-            {% endfor %}
-        </td>
+                  {{v.remise}}%
+                  <br>
+                  {% endfor %}
+              </td>
               <td class="text-center">
                   {% for v in i %}
 
@@ -219,7 +203,7 @@
     <div class="d-flex flex-column postion-relative bonachat{{bon.id}}holder p-3" style="height: 1123px;width: 21cm; page-break-before: always;">
       <!-- header -->
       <div class="">
-        <img src="" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
+        <img src="/media/logos/logo2.jpg" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
 
         <div class="d-flex justify-content-between mt-3">
           <div class="">
@@ -266,10 +250,8 @@
               <td style="width:53%;">Designation</td>
               <td style="width: 5%;">Qté</td>
               <td style="width: 7%;">P.U</td>
-              <td style="width: 7%;">Rem1</td>
-              <td style="width: 5%;">Rem2</td>
-              <td style="width: 5%;">Rem3</td>
-              <td style="width: 5%;">Rem4</td>
+              <td style="width: 7%;">Dvs</td>
+              <td style="width: 5%;">Rem</td>
               <td style="width: 13%;">Mantant</td>
             </tr>
           </thead>
@@ -312,36 +294,17 @@
               <td class="text-center">
                   {% for v in i %}
 
-                  {{v.remise1|floatformat:-2}}
+                  {{v.devise|floatformat:2}}
                   <br>
                   {% endfor %}
               </td>
               <td class="text-center">
                   {% for v in i %}
 
-                  {{v.remise2|floatformat:-2}}
-                  %
+                  {{v.remise}}%
                   <br>
                   {% endfor %}
               </td>
-
-              <td class="text-center">
-                {% for v in i %}
-
-                {{v.remise3|floatformat:-2}}
-                %
-                <br>
-                {% endfor %}
-            </td>
-
-            <td class="text-center">
-              {% for v in i %}
-
-              {{v.remise4|floatformat:-2}}
-              %
-              <br>
-              {% endfor %}
-          </td>
               <td class="text-center">
                   {% for v in i %}
 
@@ -381,6 +344,13 @@
   function deletebonachat(id){
     alertify.confirm('Supprimer ?', function(){
       $.get('/products/deletebonachat', {'id':id}, (data)=>{
+        deletetab('bonachat{{bon.id}}')
+      })
+    })
+  }
+  function deletebonachatmanual(id){
+    alertify.confirm('Supprimer ?', function(){
+      $.get('/products/deletebonachatmanual', {'id':id}, (data)=>{
         deletetab('bonachat{{bon.id}}')
       })
     })

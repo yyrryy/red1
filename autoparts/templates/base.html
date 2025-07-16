@@ -1047,9 +1047,7 @@
     <script src="{% static 'js/alertify.min.js'%}"></script>
     
     <script>
-       $(document).on("keypress", ":input:not(textarea)", function(event) {
-        return event.keyCode != 13;
-    }); 
+       
     const populateclientfields=(id)=>{
           $.ajax({
               url: "{% url 'products:getclientdata' %}",

@@ -1,7 +1,7 @@
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import Brand, Category, Client, Order, Orderitem, Produit, Client, Model, Mark, Cart, Cartitem, Connectedusers, Commercial, Represent
+from .models import Category, Client, Order, Orderitem, Produit, Client, Mark, Cart, Connectedusers, Represent, Promotion
 import pandas as pd
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -83,19 +83,19 @@ def home(request):
     
     if request.user.groups.all():
         if request.user.groups.first().name=='admin':
-            return redirect(dashboard)
+            return redirect('main:dashboard')
     # print(request.user)
     # print(request.user.groups.first())
     # if request.user.groups.first():
     #     if (request.user.groups.first().name=='salsemen'):
-    #         return redirect(catalog)
+    #         return redirect('main:catalog')
     #     if (request.user.groups.first().name=='accounting'):
-    #         return redirect('main:orders')
+    #         return redirect('main:''main:orders')
     #     if (request.user.groups.first().name=='admin'):
-    #         return redirect('main:orders')
-    # return redirect('main:loginpage')
+    #         return redirect('main:''main:orders')
+    # return redirect('main:''main:loginpage')
     # return render(request, 'main.html', ctx)
-    return redirect(loginpage)
+    return redirect('main:loginpage')
     # this is for the front page
     #return render(request, 'main.html')
 
@@ -113,13 +113,13 @@ def loginpage(request):
     print(request.user.groups.all())
     if request.user.groups.all():
         if (request.user.groups.first().name=='salsemen'):
-            return redirect(catalog)
+            return redirect('main:catalog')
         if (request.user.groups.first().name=='accounting'):
-            return redirect(orders)
+            return redirect('main:orders')
         if (request.user.groups.first().name=='admin'):
-            return redirect(dashboard)
+            return redirect('main:dashboard')
         if (request.user.groups.first().name=='clients'):
-            return redirect(catalog)
+            return redirect('main:catalog')
     if request.method == 'POST':
         username = request.POST.get('username').lower()
         password = request.POST.get('password')
@@ -128,15 +128,15 @@ def loginpage(request):
             login(request, user)
             group=user.groups.all().first().name
             if group == 'salsemen':
-                return redirect(catalog)
+                return redirect('main:catalog')
             elif group=='clients':
-                return redirect(catalog)
+                return redirect('main:catalog')
             elif group == 'accounting':
-                return redirect(orders)
+                return redirect('main:orders')
             elif group == 'admin':
-                return redirect(dashboard)
+                return redirect('main:dashboard')
         else:
-            return redirect(loginpage)
+            return redirect('main:loginpage')
     ctx={
         'title':'SYSTEM LOGIN'
     }
@@ -152,7 +152,7 @@ def editinfoclient(request):
     client.address=request.POST.get('address').strip()
     client.city=request.POST.get('city').strip()
     client.save()
-    return redirect(profile)
+    return redirect('main:profile')
 
 @login_required(login_url='/login')
 @csrf_exempt
@@ -162,7 +162,7 @@ def updatepassword(request):
     user.set_password(request.POST.get('cpass'))
     user.save()
     login(request, user)
-    return redirect(profile)
+    return redirect('main:profile')
 
 
 
@@ -229,47 +229,58 @@ def addcategory(request):
     # get category from request
     category=request.POST.get('category')
     Category(title=category).save()
-    return redirect(create)
+    return redirect('main:create')
 
 def addbrand(request):
     # get category from request
     brand=request.POST.get('brand')
     print(brand)
     Brand(name=brand).save()
-    return redirect(create)
+    return redirect('main:create')
 
 def addmark(request):
     # get category from request
     mark=request.POST.get('mark')
     print(mark)
     Mark(name=mark).save()
-    return redirect(create)
+    return redirect('main:create')
 
 @login_required(login_url='loginpage')
 def addbulk(request):
-    myfile = request.FILES['file']
+    myfile = request.FILES['fileinaddbulk']
+    categoryid=request.POST.get('categoryinaddbulk')
     df = pd.read_excel(myfile)
     df = df.fillna('')
     for d in df.itertuples():
-        try:
-            pr = Produit.objects.get(ref=str(d.ref).lower(), category_id=None if pd.isna(d.category) else d.category)
-            pr.name = d.name.lower()
-            pr.price = round(d.price, 2)
-            pr.image.name=None if pd.isna(d.image) else d.image
-            pr.save()
-        except:
-            # Create a new Produit object if it doesn't exist
-            pr=Produit.objects.create(
-                ref=str(d.ref).lower(),
-                name=d.name.lower(),
-                category_id=None if pd.isna(d.category) else d.category,
-                price=round(d.price, 2),
-                mark_id=None if pd.isna(d.mark) else d.mark,
-            )
-            # if image is not empty assign it
-            pr.image.name=None if pd.isna(d.image) else d.image
-            pr.save()
-    return redirect(create)
+        pr=Produit.objects.create(
+            ref=str(d.ref).lower(),
+            name=d.name.lower(),
+            category_id=categoryid,
+            sellprice=round(d.price, 2),
+            mark_id=None if pd.isna(d.mark) else d.mark,
+        )
+        # try:
+        #     pr = Produit.objects.get(ref=str(d.ref).lower(), category_id=None if pd.isna(d.category) else d.category)
+        #     pr.name = d.name.lower()
+        #     pr.price = round(d.price, 2)
+        #     pr.image.name=None if pd.isna(d.image) else d.image
+        #     pr.save()
+        # except:
+        #     # Create a new Produit object if it doesn't exist
+        #     pr=Produit.objects.create(
+        #         ref=str(d.ref).lower(),
+        #         name=d.name.lower(),
+        #         category_id=None if pd.isna(d.category) else d.category,
+        #         price=round(d.price, 2),
+        #         mark_id=None if pd.isna(d.mark) else d.mark,
+        #     )
+        #     # if image is not empty assign it
+        pr.image.name=None if pd.isna(d.image) else d.image
+        pr.save()
+    return redirect('products:addproductspage')
+    # return JsonResponse({
+    #     'success':True
+    # })
 
 @user_passes_test(tocatalog, login_url='loginpage')
 @login_required(login_url='loginpage')
@@ -295,7 +306,7 @@ def commande(request):
             order=Order.objects.create(client_id=clientid, salseman=request.user.represent, total=cart.total, modpymnt=modpymnt, modlvrsn=modlvrsn, code=str(uuid.uuid4()), isclient=isclient)
         
         for i in cartitems:
-            Orderitem.objects.create(order=order, product=i.product, qty=i.qty, total=i.total)
+            Orderitem.objects.create(order=order, product=i.product, ref=i.product.ref, name=i.product.name, qty=i.qty, total=i.total)
         # return a json res
         cart.delete()
         # send_mail(message='Nouveau commande.', subject=f'Nouveau commande. #{order.id}')
@@ -338,13 +349,39 @@ def dilevered(request, id):
     order=Order.objects.get(pk=id)
     order.isdelivered=True
     order.save()
-    return redirect(orders)
+    return JsonResponse({
+        'success':True
+    })
+def excel(request):
+    # Get the order ID from the query parameters
+    order_id = request.GET.get('id')
+    
+    # Fetch the order and its related items
+    order = Order.objects.get(pk=order_id)
+    orderitems = Orderitem.objects.filter(order=order)
+
+    # Extract only the required fields: ref, name, qty
+    data = orderitems.values('ref', 'name', 'qty')
+
+    # Convert the filtered data to a pandas DataFrame
+    df = pd.DataFrame(list(data))
+
+    # Prepare the HttpResponse with the Excel file content
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="order_{order.id}.xlsx"'
+
+    # Write the DataFrame to the Excel file and send it as a response
+    with pd.ExcelWriter(response, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False)
+
+    return response
+
 
 def paied(request, id):
     order=Order.objects.get(pk=id)
     order.ispaied=True
     order.save()
-    return redirect(orders)
+    return redirect('main:orders')
 
 
 # gets products after clicking on a category
@@ -353,14 +390,14 @@ def paied(request, id):
 def products(request, id):
     # get the products from the db
     c=Mark.objects.get(pk=id)
-    products=Produit.objects.filter(mark_id=id)
+    products=Produit.objects.filter(mark_id=id, isactive=True)
     return render(request, 'products.html', {'products':products, 'title':'Produits de '+str(c), 'category':c})
 
 
 def productscategories(request, id):
     # get the products from the db
     c=Category.objects.get(pk=id)
-    products=Produit.objects.filter(category_id=id)
+    products=Produit.objects.filter(category_id=id, isactive=True)
     return render(request, 'products.html', {'products':products, 'title':'Produits de '+str(c), 'category':c})
 
 @user_passes_test(isadmin, login_url='loginpage')
@@ -387,19 +424,17 @@ def catalog(request):
     constraction=False
     if constraction:
         return render(request, 'constraction.html', {'title':'Under Constraction'})
-    promotions=Produit.objects.filter(isoffer=True)
+    promotions=Promotion.objects.filter(info='active')
     marks = Mark.objects.annotate(
         has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
         total_products=Count('produit')
     )
     categories = Category.objects.all().annotate(
-        has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True)),
+        has_promotion=Exists(Produit.objects.filter(mark_id=OuterRef('pk'), isoffer=True, isactive=True)),
         total_products=Count('produit')
     )
     ctx={
             'categories': categories,
-            'brands':Brand.objects.all(),
-            'models':Model.objects.all(),
             'clients':Client.objects.all(),
             'title':'Catalog',
             'cc':marks,
@@ -412,7 +447,7 @@ def catalog(request):
 def ordersforeach(request):
     # get id of request user
     if request.user.groups.filter(name='salsemen').exists():
-        orders=Order.objects.filter(salseman=request.user.id)
+        orders=Order.objects.filter(salseman=request.user.represent)
     else:
         orders=Order.objects.filter(client=request.user.client)
     delivered=len(orders.filter(isdelivered=True))
@@ -456,7 +491,7 @@ def addclient(request):
 
 def logoutuser(request):
     logout(request)
-    return redirect(loginpage)
+    return redirect('main:loginpage')
 
 
 def aboutus(request):
@@ -476,7 +511,7 @@ def create_product(request):
 
 
     product.save()
-    return redirect('create')
+    return redirect('main:create')
 
 @user_passes_test(tocatalog, login_url='loginpage')
 def cart(request):
@@ -618,8 +653,13 @@ def getpdctfordash(request):
     #         'equivalent':i.equivalent.upper(),
     #     }
     #     res.append(data)
+    ctx={
+        'products':products,
+        'categories':Category.objects.all(),
+        'marks':Mark.objects.all(),
+    }
     return JsonResponse({
-        'products':render(request, 'pdctsdash.html', {'products':products}).content.decode('utf-8'),
+        'products':render(request, 'pdctsdash.html', ctx).content.decode('utf-8'),
         'success':True
     })
     
@@ -627,6 +667,10 @@ def getpdctfordash(request):
 def updateproduct(request):
     pdctid=request.POST.get('pdctid')
     price=request.POST.get('price')
+    activation=request.POST.get('activation')
+    category=request.POST.get('category')
+    mark=request.POST.get('mark')
+    print('activation', activation)
     # offre=request.POST.get('offre')
     # isoffer=request.POST.get('isoffer')=='true'
     image=request.FILES.get('image', None)
@@ -644,6 +688,9 @@ def updateproduct(request):
     product.equivalent=equivalent
     # product.cars=cars
     product.ref=ref
+    product.category_id=category
+    product.mark_id=mark
+    product.active=activation=="on"
     # product.isoffer=isoffer
     # product.offre=offre
     if image:
@@ -680,3 +727,12 @@ def listclients(request):
         'lastcode':codecl
     }
     return render(request, 'listclients.html', ctx)
+
+def getsimilar(request):
+    ref=request.GET.get('ref').lower()
+    regex_pattern = rf'(^|\s){ref.upper()}(\s|$)'
+    products=Produit.objects.filter(isactive=True, equivalent__iregex=regex_pattern)
+    return JsonResponse({
+        'products':render(request, 'similarproducts.html', {'products':products, 'ref':ref.upper()}).content.decode('utf-8'),
+        
+    })

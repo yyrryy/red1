@@ -243,6 +243,8 @@ margin: 0;
       pdcts.push(id)
       localStorage.setItem('pdctsinbonachat'+bonid, JSON.stringify(pdcts))
       let addtotal=(parseFloat(addqty.val()==''?0:addqty.val())*parseFloat(addprice.val()==''?0:addprice.val())).toFixed(2) || 0
+      let netp=(addprice.val()-(addprice.val()*addremise.val()/100)).toFixed(2)
+      addtotal=addqty.val()*netp
       let tr = `
       <tr class="itemrow ${stock<=0? "text-danger":"" }">: 2
           <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelineupdateachat(event, '{{bon.id}}', ${id})">${ref}</td>
@@ -289,7 +291,7 @@ margin: 0;
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -430,7 +432,7 @@ margin: 0;
               if (data.success){
                 alertify.success('Bon Achat modifié')
                 deletetab('addmodifierbonachat{{bon.id}}')
-                ajaxpage('bonachat{{bon.id}}', 'Bon achat {{bon.nbon}}', '/products/bonachatdetails/{{bon.id}}')
+                createtab('bonachat{{bon.id}}', 'Bon achat {{bon.nbon}}', '/products/bonachatdetails/{{bon.id}}')
                 // delerte this tab
                 // deletetab('modifierlivraison{{bon.id}}')
               }

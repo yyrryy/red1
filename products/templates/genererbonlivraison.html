@@ -275,7 +275,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -389,7 +389,7 @@
     //     ajax: {
     //       type:'get',
     //       dataType: 'json',
-    //       url: '/products/searchproduct?target={{target}}',
+    //       url: '/products/searchproduct',
     //       data: function (params) {
     //         var query = {
     //           term: params.term,
@@ -628,7 +628,7 @@
                   $(e.target).addClass('disabled')
                   localStorage.removeItem('pdctsingenbonlivraison{{order.id}}')
                   deletetab('addgenererbonlivraison{{order.id}}')
-                  ajaxpage('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
+                  createtab('addlistbonlivraison', 'list bl', '/products/listbonlivraison')
                   // $('#addbonlivraison').html('')
                   // $('#addbonlivraison').html(data.html)
                   // $('.select2').select2()

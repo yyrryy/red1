@@ -23,9 +23,17 @@
 
     </div>
 
-    <button class="btn btn-success" onclick="ajaxpage('addavoir', '+AvoirCL', '/products/avoirclient')">
+    <button class="btn btn-success" onclick="createtab('addavoir', '+AvoirCL', '/products/avoirclient')">
       +Ajouter
   </button>
+
+  <select name="yearsavcl" class="populateyears" onchange="yeardataavcl()" style="background: #eaeaea;
+  margin: 0 6px 10px;
+  width: 5em;
+  border-radius: 10px;">
+
+
+  </select>
   {% endif %}
   </div>
   <div class="filters mt-2">
@@ -50,7 +58,7 @@
       </thead>
       <tbody class="listavclbody">
         {% for order in bons %}
-          <tr class="ord" orderid="{{order.code}}" ondblclick="ajaxpage('avoir{{order.id}}', 'avoir {{order.no}}', '/products/avoirdetails/{{order.id}}')">
+          <tr class="ord" orderid="{{order.code}}" ondblclick="createtab('avoir{{order.id}}', 'avoir {{order.no}}', '/products/avoirdetails/{{order.id}}')">
             <td>{{ order.no }}</td>
             <td>{{ order.date|date:'d/m/Y' }}</td>
             <td>{{ order.client.name }}</td>
@@ -108,6 +116,16 @@
 
 
 <script>
+  function yeardataavcl(){
+    let year=$('[name="yearsavcl"]').val()
+    if (year != 0){
+        $.get('/products/yeardataavcl', {'year':year}, (data)=>{
+            $('.listavcltable tbody').html(data)
+            //$('.totalreglbl').text(data.total)
+        })
+    }
+  }
+  populateyears()
   function getnotpaid(event) {
     let parentdiv=$(event.target).parent().parent()
     let tbody=parentdiv.find('tbody')

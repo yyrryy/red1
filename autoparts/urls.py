@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('masta/', admin.site.urls),
-    path('', include('main.urls')),
+    path('', include(('main.urls', 'main'), namespace='main')),
     path('blog/', include('blog.urls')),
     path('products/', include(('products.urls', 'products'), namespace='products')),
 ]

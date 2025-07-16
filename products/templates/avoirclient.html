@@ -71,6 +71,7 @@
               <div class="col-3">
                 <input type="number" class="form-control" placeholder="Quantité" name="addqty">
                 <div class="addstock text-danger"></div>
+                <div class="addsource text-danger"></div>
               </div>
               <div class="col-3">
                 <input type="number" class="form-control" placeholder="Prix" name="addprice">
@@ -121,7 +122,7 @@
                   <tr>
                       <td style="padding: 2px 0; font-size: 13px; width: 9%;">REF</td>
                       <td style="padding: 2px 0; font-size: 13px;">Article</td>
-                      <td style="padding: 2px 0; font-size: 13px; width: 9%;">Dernier Pr.</td>
+                      <td style="padding: 2px 0; font-size: 13px; width: 9%;">Source</td>
                       <td style="padding: 2px 0; font-size: 13px;">Stock</td>
                       <td style="padding: 2px 0; font-size: 13px; width: 9%;">Dernier Pr. cli</td>
                       <td style="padding: 2px 0; font-size: 13px;width: 6%;" >Quantité</td>
@@ -170,7 +171,7 @@
         ajax: {
           type:'get',
           dataType: 'json',
-          url: '/products/searchproduct?target={{target}}',
+          url: '/products/searchproduct',
           data: function (params) {
             var query = {
               term: params.term,
@@ -216,6 +217,7 @@
         // $('.avoirclproducts ').val('').trigger('change')
         // ids of products in bon stored in localstorage
         let bonachatbody = parentdiv.find('.bonlivraisonbody')
+        let addsource = parentdiv.find('.addsource')
         let addname=parentdiv.find('[name="addname"]')
         let addqty=parentdiv.find('[name="addqty"]')
         let addprice=parentdiv.find('[name="addprice"]')
@@ -235,6 +237,7 @@
           addname.val('')
           addremise.val('')
           addprice.val('')
+          addsource.text('')
           alertify.error('Ce produit est deja dans le bon')
           $('.avoirclproducts ').select2('open')
 
@@ -255,7 +258,7 @@
         <tr class="itemrow ${stock<=0? "text-danger":"" }">: 2
             <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="checkConsecutiveClicks(event)">${ref}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${name}</td>
-            <td style="paddingpx 0; font-size: 13px;">${dp}</td>
+            <td style="paddingpx 0; font-size: 13px;" class="source">${addsource.text()}</td>
             <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
             <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
@@ -274,6 +277,7 @@
         addname.val('')
         addremise.val('')
         addprice.val('')
+        addsource.text('')
         totals=parentdiv.find('.total')
         totalbon=parentdiv.find('.totalbon')
         var totalSum = 0;
@@ -387,7 +391,7 @@
     //   //   ajax: {
     //   //     type:'get',
     //   //     dataType: 'json',
-    //   //     url: '/products/searchproduct?target={{target}}',
+    //   //     url: '/products/searchproduct',
     //   //     data: function (params) {
     //   //       var query = {
     //   //         term: params.term,
@@ -438,6 +442,8 @@
           }
           console.log($(this).val())
           var [ref, name, dp, stock, stockfacture, id, sellprice, remise, netprice, representprice] = $(this).val().split('§');
+          let addsource=parentdiv.find('.addsource')
+          console.log('>> source', addsource)
           let addname=$(this).parent().parent().find('input[name="addname"]')
           let addprice=$(this).parent().parent().find('input[name="addprice"]')
           let addremise=$(this).parent().parent().find('input[name="addremise"]')
@@ -467,7 +473,7 @@
                   addprice.val(0)
                   addremise.val(0)
                 }else{
-
+                  addsource.text(data.source)
                   addprice.val(data.price)
                   addremise.val(data.remise)
                 }
@@ -515,6 +521,7 @@
               let qty = tr.find('.qty').val()
               let name = tr.find('.name').text()
               let ref = tr.find('.ref').text()
+              let source = tr.find('.source').text()
               let price = tr.find('.price').val()
               let remise = tr.find('.remise').val()
               let total = tr.find('.total').text()
@@ -524,6 +531,7 @@
                   'qty': qty,
                   'name': name,
                   'ref': ref,
+                  'source': source,
                   'price': price,
                   'remise': remise,
                   'total': total,
@@ -554,8 +562,6 @@
               'products': JSON.stringify(products),
               'csrfmiddlewaretoken': '{{csrf_token}}'
           },
-          console.log(data)
-          console.log(products)
           $('.loadingscreen').removeClass('d-none')
           $.ajax({
               url: "{% url 'products:addavoirclient' %}",
@@ -575,7 +581,7 @@
                 $('.loadingscreen').addClass('d-none')
                   alertify.success('Bon avoir creé')
                   deletetab('addavoir')
-                  ajaxpage('avoircl', 'AvoirCL', '/products/listavoirclient')
+                  createtab('avoircl', 'AvoirCL', '/products/listavoirclient')
                   // remove list in localstorage
                   // $('#addavoir').html('')
                   // $('#addavoir').html(data.html)

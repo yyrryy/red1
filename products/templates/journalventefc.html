@@ -22,6 +22,7 @@
             <option value="2024">2024</option> -->
 
         </select>
+        <button type="button" class="bi bi-download" name="button" onclick="downloadjvfc()"></button>
     </div>
 
 
@@ -94,6 +95,21 @@
 </div>
 <script>
   populateyears()
+  function downloadjvfc(){
+    year=$('.jvfcyear').val()
+    let url = `/products/exceljvc?year=${year}`;
+    var iframe = $('<iframe>', {
+      id: 'download-frame',
+      src: url,
+      style: 'display: none;',
+    }).appendTo('body');
+
+    // Remove the iframe after download
+    iframe.on('load', function () {
+        iframe.remove();
+    });
+
+  }
   currentPagejournalventefc=1
   calculatetotalsjvfc()
 
@@ -170,7 +186,7 @@
 
       const lastRow = document.querySelector('.journalventefc-row:last-child');
       const lastRowOffset = lastRow.offsetTop + lastRow.clientHeight;
-      let year=lastRow.getAttribute('year')?lastRow.getAttribute('year'):0
+      let year=$('.jvfcyear').val()
       let startdate=lastRow.getAttribute('startdate')?lastRow.getAttribute('startdate'):0
       let enddate=lastRow.getAttribute('enddate')?lastRow.getAttribute('enddate'):0
       let term=lastRow.getAttribute('term')?lastRow.getAttribute('term'):0

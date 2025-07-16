@@ -80,11 +80,15 @@
     $('.searchinpulistjournalachar').on("change", function() {
         var filterValue = $(this).val().toLowerCase();
         let year=$('.jachyear').val()
-        $.get('/products/searchforjach', {'term':filterValue.trim(), 'year':year}, (data)=>{
+        if (filterValue!=""){
+          $('.listjournalachat tbody').addClass('blurred')
+          $.get('/products/searchforjach', {'term':filterValue.trim(), 'year':year}, (data)=>{
             $('.listjournalachat tbody').html(data.trs)
             $('.totaljach').text(data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '))
             $('.totalqtyjach').text(data.totalqty)
-        })
+            $('.listjournalachat tbody').removeClass('blurred')
+          })
+        }
     });
     function getdatefilterjach(){
         currentPagejournalventefc=1
