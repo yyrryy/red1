@@ -145,9 +145,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-STATICFILES_DIRS = [
-    join(BASE_DIR, "autoparts/static"),
-]
+STATIC_ROOT = BASE_DIR / "static"    # ✅ For production
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
