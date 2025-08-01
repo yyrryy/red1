@@ -99,7 +99,7 @@
       loadingjournalvente=false
         datefrom=$('.jvdatefrom').val()
         dateto=$('.jvdateto').val()
-        $.get('products/filterjvdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
+        $.get('/products/filterjvdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
             $('.journalvtable tbody').html(data.trs)
             $('.totaltotaljv').text(data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '))
             $('.totalqtyjv').text(data.totalqty)
@@ -179,7 +179,7 @@
         $('.journalvtableholder').on('scroll', handleScrolljv);
         year=$(event.target).val()
         if (year != ''){
-            $.get('products/yeardatajournalv', {'year':year}, (data)=>{
+            $.get('/products/yeardatajournalv', {'year':year}, (data)=>{
                 console.log(data)
                 $('.journalvtable tbody').html(data.trs)
                 $('.totaltotaljv').text(data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '))

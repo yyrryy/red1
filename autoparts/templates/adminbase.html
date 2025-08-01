@@ -24,6 +24,9 @@
     <link href="{% static 'css/tabulator.min.css'%}" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <style>
+      body{
+        font-family: Arial, sans-serif;
+      }
     button{
       border-bottom:5px solid black;
     }
@@ -1058,12 +1061,68 @@ a .uil {
                     <ul class="nav nav-tabs bg-darkblue" id="myTabs" role="tablist" style="width: 100%; overflow-y: hidden;">
 
                       <li class="nav-item">
-
-                        </li>
+                      
+                      </li>
                       <li class="nav-item" id="maintabbutton">
-                        <a class="nav-link active bi bi-house" data-toggle="tab" href="#maintab"></a></li>
+                        <a class="nav-link active bi bi-house" data-toggle="tab" href="#maintab"></a>
+                      </li>
+                      <li class="nav-item">
+                        <button class="nav-link bi bi-plus-circle-fill" onclick="createtab('maintab', 'Nouveau', '/products/maintab')"></button>
+                      </li>
+                      <li>
+                        <!-- dropdown -->
+                        <button class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Produits</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#" onclick="createtab('addpducts', 'ARTICLES', '/products/stock')">List Produits</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('add', '+ ARTICLE', '/products/addproductspage')">+ Ajouter un article</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addjournalachat', 'JOURN ACHAT', '/products/journalachat')">Journal Achat</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addjournalachatfc', 'JOURN ACHAT FC', '/products/journalachatfc')">Journal Achat FC</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addjournalvente', 'JOURN VENTE', '/products/journalvente')">Journal Ventes</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addjournalventefc', 'JOURNAL VENTE FC', '/products/journalventefc')">Journal Ventes FC</a>
+                        </div>
+
+                      </li>
+
+                      <li>
+                        <!-- ventes dropdown -->
+                        <button class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ventes</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonlivraison', 'BON LIVRAISON', '/products/listbonlivraison')">List bons livraison</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistfactures', 'FACTURES', '/products/listfactures')">List des Factures</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonachat', 'BON ACHAT', '/products/listbonachat')">List Bons achat</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementbl', 'REGL BL', '/products/listreglementbl')">Reglement clients</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementfc', 'REGLEMENT FACTURE', '/products/listreglementfc')">Reglement FC</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementsupp', 'REGLEMENT FOURNISSEUR', '/products/listreglementsupp')">Reglement Fournisseur</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('avoircl', 'AVOIR CLIENT', '/products/listavoirclient')">List Avoir clients</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('avoirsupp', 'AVOIR FOURNISSEUR', '/products/listavoirsupplier')">Avoir Fournisseurs</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('echeancetab', 'ECHEANCES', '/products/listecheance')">Echeances</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('connectedtab', 'CONNECT', '/products/listeconnected')">Connecté</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('notificationstab', 'Notifications', '/products/listnotifications')">Notifications</a>
+                          <a class="dropdown-item" href="/catalogpage" target="_blank">Catalog</a>
+                        </div>
+                      </li>
+
+                      <!-- client dropdown -->
+                      <li>
+                        <button class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonlivraison', 'BON LIVRAISON', '/products/listbonlivraison')">List bons livraison</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistfactures', 'FACTURES', '/products/listfactures')">List des Factures</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonachat', 'BON ACHAT', '/products/listbonachat')">List Bons achat</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementbl', 'REGL BL', '/products/listreglementbl')">Reglement clients</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementfc', 'REGLEMENT FACTURE', '/products/listreglementfc')">Reglement FC</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementsupp', 'REGLEMENT FOURNISSEUR', '/products/listreglementsupp')">Reglement Fournisseur</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('avoircl', 'AVOIR CLIENT', '/products/listavoirclient')">List Avoir clients</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('avoirsupp', 'AVOIR FOURNISSEUR', '/products/listavoirsupplier')">Avoir Fournisseurs</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('echeancetab', 'ECHEANCES', '/products/listecheance')">Echeances</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('connectedtab', 'CONNECT', '/products/listeconnected')">Connecté</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('notificationstab', 'Notifications', '/products/listnotifications')">Notifications</a>
+                          <a class="dropdown-item" href="/catalogpage" target="_blank">Catalog</a>
+                        </div>
+                      </li>
 
                     </ul>
+
                     <!-- <button class="nav-btn next-btn">&gt;</button>
                     <button class="nav-btn prev-btn">&lt;</button> -->
                   </div>
@@ -2913,48 +2972,57 @@ function printbonachat(bonid){
     function createtab(id, title, url) {
       $('.deletetabholder').attr('onclick', `deletetab(${id})`)
       $('.loadingscreen').toggleClass('d-none')
-        tab=$(`#${id}`)
-        // check if tab already created
-        if (tab.length){
-          tabbtn=$('a[href="#'+id+'"]')
-          $('.tab-pane').removeClass('active show')
-          $('.nav-link').removeClass('active')
-          tabbtn.addClass('active')
-          tab.addClass('active show')
-          $('.loadingscreen').toggleClass('d-none')
-          updatetab(id, url)
-          document.title=title+' - SYSTEM ADMIN'
-          return
-        }
-        document.title=title+' - SYSTEM ADMIN'
-        // Create tab link with close button
-        var tabLink = $(`
-        <a class="nav-link d-flex justify-content-between p-2" data-toggle="tab" href="#${id}" >
-          <div style="width: max-content;" onclick="updatetab('${id}', '${url}')">${title}</div>
-          <span aria-hidden="true" class="ms-3 rounded-pill" style="padding:0 5px;" onclick="deletetab('${id}')">&times;</span>
-        </a>
-        `);
+      $.get(url, (data) => {
+        $('.loadingscreen').toggleClass('d-none')
 
-        // Append tab link to tabs list
-        var tabListItem = $(`<li class="nav-item d-flex justify-content-between ${id}" style="border-left:1px solid gray;"></li>`).append(tabLink);
-        $('#maintabbutton').after(tabListItem);
+          $(`#maintab`).html(data)
+          // $('.select2').select2();
+          // if ($('.productstable').length){
 
-        // Load content
-        var tabContent = $('<div class="tab-pane fade" id="' + id + '">Loading...</div>');
-        $('#myTabsContent').append(tabContent);
-        $.get(url, (data) => {
-          $('.loadingscreen').toggleClass('d-none')
+          // }
+      })
+        // tab=$(`#${id}`)
+        // // check if tab already created
+        // if (tab.length){
+        //   tabbtn=$('a[href="#'+id+'"]')
+        //   $('.tab-pane').removeClass('active show')
+        //   $('.nav-link').removeClass('active')
+        //   tabbtn.addClass('active')
+        //   tab.addClass('active show')
+        //   $('.loadingscreen').toggleClass('d-none')
+        //   updatetab(id, url)
+        //   document.title=title+' - SYSTEM ADMIN'
+        //   return
+        // }
+        // document.title=title+' - SYSTEM ADMIN'
+        // // Create tab link with close button
+        // var tabLink = $(`
+        // <a class="nav-link d-flex justify-content-between p-2" data-toggle="tab" href="#${id}" >
+        //   <div style="width: max-content;" onclick="updatetab('${id}', '${url}')">${title}</div>
+        //   <span aria-hidden="true" class="ms-3 rounded-pill" style="padding:0 5px;" onclick="deletetab('${id}')">&times;</span>
+        // </a>
+        // `);
 
-            $(`#${id}`).html(data)
-            // $('.select2').select2();
-            // if ($('.productstable').length){
+        // // Append tab link to tabs list
+        // var tabListItem = $(`<li class="nav-item d-flex justify-content-between ${id}" style="border-left:1px solid gray;"></li>`).append(tabLink);
+        // $('#maintabbutton').after(tabListItem);
 
-            // }
-        })
+        // // Load content
+        // var tabContent = $('<div class="tab-pane fade" id="' + id + '">Loading...</div>');
+        // $('#myTabsContent').append(tabContent);
+        // $.get(url, (data) => {
+        //   $('.loadingscreen').toggleClass('d-none')
 
-        // Show the newly created tab
-        tabLink.tab('show');
-        // updatetab(id, url)
+        //     $(`#${id}`).html(data)
+        //     // $('.select2').select2();
+        //     // if ($('.productstable').length){
+
+        //     // }
+        // })
+
+        // // Show the newly created tab
+        // tabLink.tab('show');
+        // // updatetab(id, url)
         // Handle tab close button
 
     }

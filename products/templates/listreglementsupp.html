@@ -579,7 +579,7 @@ function submitupdatereglementsupp(event){
         tbody.html('')
         console.log(date, mantant)
         // get regl data
-        $.get('products/getreglementsupp/'+reglementid, {
+        $.get('/products/getreglementsupp/'+reglementid, {
 
             }, function(data){
                 $('.submitupdatereglementsupp').removeClass('disabled')

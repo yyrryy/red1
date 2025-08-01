@@ -341,7 +341,7 @@
         return
       }
       // get client rep
-      $.get('products/getclientrep/'+$(this).val(), function(data){
+      $.get('/products/getclientrep/'+$(this).val(), function(data){
         $('.repsavclselects').val(data.id).trigger('change')
       })
     })

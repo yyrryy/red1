@@ -84,7 +84,7 @@
         $('.listjournalachatholder').on('scroll', handleScrolljachfc)
         datefrom=$('.jachfcdatefrom').val()
         dateto=$('.jachfcdateto').val()
-        $.get('products/filterjachfcdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
+        $.get('/products/filterjachfcdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
             console.log(data)
             $('.listjournalachatfc tbody').html(data.trs)
             $('.totaljachfc').text(data.total?data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '):0)
@@ -98,7 +98,7 @@
         $('.journalvfctableholder').on('scroll', handleScrolljachfc);
         year=$(event.target).val()
         if (year != '0'){
-            $.get('products/yeardatajachfc', {'year':year}, (data)=>{
+            $.get('/products/yeardatajachfc', {'year':year}, (data)=>{
                 console.log(data)
                 $('.listjournalachatfc tbody').html(data.trs)
                 $('.totaljachfc').text(data.total?data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '):0)

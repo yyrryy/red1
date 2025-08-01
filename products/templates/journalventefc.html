@@ -133,7 +133,7 @@
 
         datefrom=$('.jvfcdatefrom').val()
         dateto=$('.jvfcdateto').val()
-        $.get('products/filterjvfcdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
+        $.get('/products/filterjvfcdate', {'datefrom':datefrom, 'dateto':dateto}, (data)=>{
 
             $('.journalvfctable tbody').html(data.trs)
             $('.totaljvfc').text(data.total?data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '):0)
@@ -147,7 +147,7 @@
         $('.journalvfctableholder').on('scroll', handleScrolljvfc);
         year=$(event.target).val()
         if (year != '0'){
-            $.get('products/yeardatajournalvfc', {'year':year}, (data)=>{
+            $.get('/products/yeardatajournalvfc', {'year':year}, (data)=>{
 
                 $('.journalvfctable tbody').html(data.trs)
                 $('.totaljvfc').text(data.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' '))

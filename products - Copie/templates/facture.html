@@ -434,7 +434,7 @@
         return
       }else{
         parentdiv.find('.productsfactureholder').removeClass('d-none')
-        $.get('products/getclientrep/'+$(this).val(), function(data){
+        $.get('/products/getclientrep/'+$(this).val(), function(data){
           $('.repsselectsfacture').val(data.id).trigger('change')
         })
       }

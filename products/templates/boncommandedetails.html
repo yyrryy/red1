@@ -293,7 +293,7 @@
     if (password==''){
       alertify.error('Password')
     }else{
-      $.get('products/makeitemsent', {
+      $.get('/products/makeitemsent', {
         'orderitemid':orderitemid,
         'password':password
       }, (data)=>{

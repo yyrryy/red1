@@ -985,7 +985,7 @@
         tbody.html('')
         console.log(date, mantant)
         // get regl data
-        $.get('products/getreglementbl/'+reglementid, {
+        $.get('/products/getreglementbl/'+reglementid, {
 
             }, function(data){
                 $('.searchinputlistreglblupdate').attr('clientid', data.clientid)

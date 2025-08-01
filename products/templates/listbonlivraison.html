@@ -460,7 +460,7 @@
     let parentdiv=$(event.target).parent().parent().parent()
     let tbody=parentdiv.find('tbody')
     $.get(
-      'products/getcontrenonpaid',
+      '/products/getcontrenonpaid',
       (data)=>{
         console.log(tbody)
         $('.listblbody').removeClass('blurred')

@@ -435,7 +435,7 @@
         return
       }else{
         parentdiv.find('.productsholder').removeClass('d-none')
-        //$.get('products/getclientrep/'+$(this).val(), function(data){
+        //$.get('/products/getclientrep/'+$(this).val(), function(data){
         //  $('.repsselectsbl').val(data.id).trigger('change')
         //})
         $('#productsselect2').select2({
@@ -488,7 +488,7 @@
       parentdiv=$(this).parent().parent().parent()
       parentdiv.find('.productsholder').removeClass('d-none')
         console.log('check for old unpaid bons')
-        $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
+        $.get('/products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
           if (data.exist){
           $('.oldbonswarning').removeClass('d-none')
           }else{
@@ -523,13 +523,13 @@
       });
         
       // if ($(this).val()==''||$('.repsselectsbl').val()==''){
-      //   $.get('products/getclientrep/'+$(this).val(), function(data){
+      //   $.get('/products/getclientrep/'+$(this).val(), function(data){
       //     console.log(data)
       //     $('.repblname').text(data.name)
       //     //$('.repsselectsbl').val(data.id).trigger('change')
       //   })
       //   console.log('check for old unpaid bons')
-      //   $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
+      //   $.get('/products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
       //     if (data.exist){
       //       $('.oldbonswarning').removeClass('d-none')
       //     }else{
@@ -541,7 +541,7 @@
       // }else{
       //   parentdiv.find('.productsholder').removeClass('d-none')
       //   console.log('check for old unpaid bons')
-      //   $.get('products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
+      //   $.get('/products/checkoldunpaidbons', {"clientid":$(this).val()}, (data)=>{
       //     if (data.exist){
       //     $('.oldbonswarning').removeClass('d-none')
       //     }else{
