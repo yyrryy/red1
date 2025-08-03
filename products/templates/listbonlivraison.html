@@ -67,8 +67,8 @@
     </div>
     {% if not facturesection %}
     <div class="d-flex">
-      <div style="color: white; background:red; cursor: pointer; padding: 7px; border-radius: 12px;" title="BON 3 MOIS" onclick="getnotpaid(event)">{{depasser}}
-      </div>
+      <!-- <div style="color: white; background:red; cursor: pointer; padding: 7px; border-radius: 12px;" title="BON 3 MOIS" onclick="getnotpaid(event)">{{depasser}}
+      </div> -->
       <div>
         <button style="
         border: 1px solid;
@@ -80,12 +80,12 @@
       </div>
     </div>
 
-    <div>
-      <input style="width: 20em;
+    <!--<div>
+       <input style="width: 20em;
     background: #c3e6ff;
     border-radius: 11px;
     margin-bottom: 9px;" placeholder="TRODO" onchange="window.open(`https://www.trodo.fr/catalogsearch/result?q=${$(this).val()}&searchby=name`, '_blank')">
-    </div>
+    </div> -->
     {% endif %}
     <div>
       <select name="yearsbl" onchange="yeardatabl()" class="populateyears">
