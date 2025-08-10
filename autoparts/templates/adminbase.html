@@ -818,7 +818,7 @@ a .uil {
     <a id="button"></a>
     <div class="site">
 
-      <button class="bi bi-list text-white btn bg-darkblue" style="position: absolute; bottom: 0; z-index: 999;" onclick="extendtabs()"></button>
+      <!-- <button class="bi bi-list text-white btn bg-darkblue" style="position: absolute; bottom: 0; z-index: 999;" onclick="extendtabs()"></button> -->
         <!-- site__body -->
 
         <!-- screen loader -->
@@ -958,7 +958,9 @@ a .uil {
                       <label class="for-dropdown" for="dropdown">Stock</label>
                       <div class="section-dropdown">
                         <a href="#" onclick="createtab('addpducts', 'ARTICLES', '/products/stock')">List Produits</a>
-                        <a href="#" onclick="createtab('add', '+ ARTICLE', '/products/addproductspage')">+ Ajouter un article</a>
+                        <a href="/products/addproductspage" target="_blank">+ Ajouter un article</a>
+                        <a href="#" class="tab-link" data-target="Alert" onclick="createtab('ctg', 'CATEGORIES', '/products/categoriespage')">Categories</a>
+                        <a href="#" class="tab-link" data-target="Alert" onclick="createtab('ctg', 'CATEGORIES', '/products/marquespage')">Marques</a>
                         <a href="#" onclick="createtab('addjournalachat', 'JOURN ACHAT', '/products/journalachat')">Journal Achat</a>
                         <a href="#" onclick="createtab('addjournalachatfc', 'JOURN ACHAT FC', '/products/journalachatfc')">Journal Achat FC</a>
                         <a href="#" onclick="createtab('addjournalvente', 'JOURN VENTE', '/products/journalvente')">Journal Ventes</a>
@@ -1063,18 +1065,23 @@ a .uil {
                       <li class="nav-item">
                       
                       </li>
-                      <li class="nav-item" id="maintabbutton">
+                      <!-- <li class="nav-item" id="maintabbutton">
                         <a class="nav-link active bi bi-house" data-toggle="tab" href="#maintab"></a>
                       </li>
                       <li class="nav-item">
                         <button class="nav-link bi bi-plus-circle-fill" onclick="createtab('maintab', 'Nouveau', '/products/maintab')"></button>
-                      </li>
+                      </li> -->
                       <li>
                         <!-- dropdown -->
-                        <button class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Produits</button>
+                        <button class="nav-link" type="button" onclick="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Produits</button>
+                        
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#" onclick="createtab('addpducts', 'ARTICLES', '/products/stock')">List Produits</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('add', '+ ARTICLE', '/products/addproductspage')">+ Ajouter un article</a>
+
+                        <a class="dropdown-item" href="/products/addproductspage" target="_blank">+ Ajouter un article</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('add', '+ ARTICLE', '/products/categoriespage')">Categories</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('add', '+ ARTICLE', '/products/marquespage')">Marques</a>
+                          
                           <a class="dropdown-item" href="#" onclick="createtab('addjournalachat', 'JOURN ACHAT', '/products/journalachat')">Journal Achat</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addjournalachatfc', 'JOURN ACHAT FC', '/products/journalachatfc')">Journal Achat FC</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addjournalvente', 'JOURN VENTE', '/products/journalvente')">Journal Ventes</a>
@@ -1085,7 +1092,7 @@ a .uil {
 
                       <li>
                         <!-- ventes dropdown -->
-                        <button class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ventes</button>
+                        <button class="nav-link" type="button" onclick="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Ventes</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                           <a class="dropdown-item" href="#" onclick="createtab('addlistbonlivraison', 'BON LIVRAISON', '/products/listbonlivraison')">List bons livraison</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistfactures', 'FACTURES', '/products/listfactures')">List des Factures</a>
@@ -1104,20 +1111,32 @@ a .uil {
 
                       <!-- client dropdown -->
                       <li>
-                        <button class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client</button>
+                        <button class="nav-link" onclick="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Client</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonlivraison', 'BON LIVRAISON', '/products/listbonlivraison')">List bons livraison</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('addlistfactures', 'FACTURES', '/products/listfactures')">List des Factures</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('addlistbonachat', 'BON ACHAT', '/products/listbonachat')">List Bons achat</a>
+                          
+                          <a class="dropdown-item" href="#" onclick="createtab('addclientstab', 'CLIENTS', '/products/clientspage')">List clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistreglementbl', 'REGL BL', '/products/listreglementbl')">Reglement clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistreglementfc', 'REGLEMENT FACTURE', '/products/listreglementfc')">Reglement FC</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('situation client', 'REGLEMENT FACTURE', '/products/situationclblfc')">Situation clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistreglementsupp', 'REGLEMENT FOURNISSEUR', '/products/listreglementsupp')">Reglement Fournisseur</a>
                           <a class="dropdown-item" href="#" onclick="createtab('avoircl', 'AVOIR CLIENT', '/products/listavoirclient')">List Avoir clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('avoirsupp', 'AVOIR FOURNISSEUR', '/products/listavoirsupplier')">Avoir Fournisseurs</a>
                           <a class="dropdown-item" href="#" onclick="createtab('echeancetab', 'ECHEANCES', '/products/listecheance')">Echeances</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('connectedtab', 'CONNECT', '/products/listeconnected')">Connecté</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('notificationstab', 'Notifications', '/products/listnotifications')">Notifications</a>
-                          <a class="dropdown-item" href="/catalogpage" target="_blank">Catalog</a>
+                          
+                        </div>
+                      </li>
+
+                      <li>
+                        <button class="nav-link" onclick="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Fournisseurs</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                          
+                          <a class="dropdown-item" href="#" onclick="createtab('addclientstab', 'CLIENTS', '/products/supplierspage')">List Fournisseur</a>
+                          
+                          <a class="dropdown-item" href="#" onclick="createtab('situation client', 'REGLEMENT FACTURE', '/products/situationsupplier')">Situation Frn</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('addlistreglementsupp', 'REGLEMENT FOURNISSEUR', '/products/listreglementsupp')">Reglement Fournisseur</a>
+                          
+                          <a class="dropdown-item" href="#" onclick="createtab('avoirsupp', 'AVOIR FOURNISSEUR', '/products/listavoirsupplier')">Avoir Fournisseurs</a>
+                          
                         </div>
                       </li>
 
@@ -1627,6 +1646,11 @@ a .uil {
     <script src="{% static 'js/main.js'%}"></script>
     <script src="{% static 'js/alertify.min.js'%}"></script>
     <script>
+      $('.dropdown-item').on('click', function (e) {
+        e.preventDefault();
+        $(this).closest('.dropdown-menu').removeClass('show');
+        $(this).parent().parent().find('.nav-link').removeClass('active');
+      });
     function populateyears(){
       console.log('>> populating years')
       const $select = $('.populateyears');
@@ -2811,6 +2835,12 @@ function printbonachat(bonid){
         }
     }
     function updatetab(id, url){
+      $.get(url, (data) => {
+          
+
+          $(`#maintab`).html(data)
+            //$('.select2').select2();
+        })
       currentPage = 1;
       loadingproducts = false;
       currentPagelistbl=1;
@@ -2837,21 +2867,6 @@ function printbonachat(bonid){
       currentPagefcregl=1
       loadingfcregl = false;
       document.title=id+' - SYSTEM ADMIN'
-      if (id != 'recevoir' && !id.includes('modifierlivraison') && !id.includes('add')){
-        $('.loadingscreen').toggleClass('d-none')
-
-        console.log("update tab")
-        tab=$(`#${id}`)
-        tab.find('script').remove()
-        tab.html('')
-        $.get(url, (data) => {
-          $('.loadingscreen').toggleClass('d-none')
-
-            tab.html(data)
-            //$('.select2').select2();
-        })
-
-      }
       // $('.resultsholderbonlivraison').select2({
       //   minimumInputLength: 1,
       //   placeholder:'Chercher Produits',

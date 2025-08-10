@@ -83,7 +83,7 @@ def home(request):
     
     if request.user.groups.all():
         if request.user.groups.first().name=='admin':
-            return redirect('main:dashboard')
+            return redirect('products:system')
     # print(request.user)
     # print(request.user.groups.first())
     # if request.user.groups.first():
@@ -95,7 +95,7 @@ def home(request):
     #         return redirect('main:''main:orders')
     # return redirect('main:''main:loginpage')
     # return render(request, 'main.html', ctx)
-    return redirect('main:loginpage')
+    return redirect('products:system')
     # this is for the front page
     #return render(request, 'main.html')
 

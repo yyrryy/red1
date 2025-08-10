@@ -35,19 +35,24 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydb',
+        'USER': 'postgres',
+        'PASSWORD': 'gadwad123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 # if DEBUG:
-# else:
+# els
+# e:
 #     ALLOWED_HOSTS = ['146.190.226.136', 'gzenaya.com', 'www.gzenaya.com']
 #     DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'myproject',
 #         'USER': 'myprojectuser',
-#         'PASSWORD': 'gadwad123.',
+#         'PASSWORD': 'gadwad123',
 #         'HOST': 'localhost',
 #         'PORT': '',
 #     }

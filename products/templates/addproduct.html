@@ -1,4 +1,41 @@
+{% load global_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un article</title>
+    <style>
+      @media print {
+         .livraison-holder {
+             height: 27.5cm; /* Slightly less than the maximum printable height */
+             width: 21cm; /* Full width of A4 */
+             border: 1px solid black; /* For debugging and visibility */
+             page-break-after: always; /* Ensures each div starts on a new page */
+             box-sizing: border-box; /* Include padding and border in the element's total width and height */
+         }
 
+         /* Reset margins and paddings for printing */
+         body {
+             margin: 0;
+             padding: 0;
+         }
+         td > div{
+           margin:4px;
+         }
+
+         /* Optional: If you need to adjust margins more precisely */
+         @page {
+             margin: 0; /* Remove any default margins */
+         }
+     }
+    </style>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquerySpellingNumber.js"></script>
+    <link href="/static/css/minified.css" rel="stylesheet" />
+</head>
+<body>
 <div class="bg-white rounded p-2 shadow">
     <div class="text-white rounded h3 d-flex align-items-center justify-content-between bg-darkblue">
         <button class="btn bg-orange" style="border:1px solid var(--orange);" onclick="deletetab()">x</button>
@@ -13,17 +50,31 @@
             <strong>Erreur!</strong> Cette reference existe deja dans cette categorie
         </div>
         <div class="row mb-5">
-            <div class="col-2">
+            <div class="col-3">
                 <small>REF (*)</small>
                 <input type="text" class="form-control checkref" name="refinadd" placeholder="" required>
             </div>
-            <div class="col-2">
+            <div class="col-5">
                 <small>Nom Article(*)</small>
                 <input type="text" class="form-control" name="nameinadd">
             </div>
             <div class="col-2">
-                <small>Categorie</small>
-                <select name="categoryinadd" class="form-select select" required>
+                <small>Block</small>
+                <input type="text" class="form-control" name="blockinadd">
+            </div>
+            <!-- <div class="col-2">
+                <small>Quantité jeux</small>
+                <input type="number" class="form-control" name="qtyjeuinadd" required>
+            </div> -->
+            <div class="col-2">
+                <small>Min.stock</small>
+                <input type="number" class="form-control" name="minstockinadd" required>
+            </div>
+            <div class="col-3">
+                <small>Categorie (*)</small><br>
+                <select name="categoryinadd" class="form-select select2" style="width: 100%;" required>
+                    <option value="">--</option>
+
                     {% for i in categories %}
                     <option value="{{i.id}}">
                         {{i.name}}
@@ -32,8 +83,8 @@
                 </select>
             </div>
             <div class="col-2">
-                <small>Marque</small> <br>
-                <select name="marqueinadd" class="form-select select" required style="width:100%;">
+                <small>Marque (*)</small> <br>
+                <select name="marqueinadd" class="form-select select2" required style="width:100%;">
                     <option value="">--</option>
                     {% for i in marques %}
                     <option value="{{i.id}}">
@@ -43,27 +94,6 @@
                 </select>
             </div>
             <div class="col-2">
-                <small>Logo</small> <br>
-                <select name="logoinadd" class="form-select select" required style="width:100%;">
-                    <option value="">--</option>
-                    {% for i in carlogos %}
-                    <option value="{{i.id}}">
-                        {{i.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        <div class="row mb-5">
-            <div class="col-2">
-                <small>Image</small>
-                <input type="file" class="form-control" name="imageinadd" accept="image/jpeg, image/jpg" required>
-            </div>
-            <div class="col-2">
-                <small>Classement</small>
-                <input type="text" class="form-control" name="codeinadd">
-            </div>
-            <div class="col-2">
                 <small>Prix vents brut</small>
                 <input type="number" step="0.01" class="form-control" name="sellpriceinadd" required>
             </div>
@@ -71,112 +101,121 @@
                 <small>Remise</small>
                 <input type="number" step="0.01" name="remiseinadd" class="form-control">
             </div>
-            <!-- <div class="col-2">
-                <small>Fournisseur</small>
-                <select name="supplier" class="form-select select2">
-                    {% for i in suppliers %}
-                    <option value="{{i.id}}">
-                        {{i.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div> -->
-        </div>
-        <!-- <div class="row mb-5">
-            <div class="col-2">
-                <small>Stock principal</small>
-                <input type="number" class="form-control" name="stock1" required>
-            </div>
-            <div class="col-2">
-                <small>Stock depot</small>
-                <input type="number" name="stock2" class="form-control">
-            </div>
-            <div class="col-2">
-                <small>Minimum stock</small>
-                <input type="number" class="form-control" name="minstock">
-            </div>
-        </div> -->
-        <div class="row mb-5">
             
-            <!-- <div class="col-2">
-                <small>Prix achat</small>
-                <input type="number" step="0.01" class="form-control" name="buyprice" required>
-            </div> -->
-            
-            
+            <div class="col-3">
+                <small>Unité</small>
+                <input name="unite" id="" class="form-control">
+            </div>
+            <div class="mt-2">
+                <small>Equivalents:</small>
+                <textarea class="form-control" name="equivinadd" style="height: 97px;"></textarea>
+            </div>
+
+            <div class="mt-2">
+                <small>Voitures:</small>
+                <textarea class="form-control" name="carsinadd" style="height: 97px;"></textarea>
+            </div>
         </div>
 
 
-        <div class="row mb-5">
-            <div class="col-2">
-                <small>Block</small>
-                <input type="text" class="form-control" name="blockinadd">
-            </div>
-            <div class="col-2">
-                <small>Diametre</small>
-                <input type="text" class="form-control" name="diametreinadd">
-            </div>
-            <div class="col-2">
-                <small>Repr. Prix</small>
-                <input type="number" name="reppriceinadd" class="form-control" step="0.01">
-            </div>
-            <div class="col-2">
-                <small>Ref equiv.</small>
-                <input type="text" class="form-control" name="equivinadd">
-                    
-                
-            </div>
-            
-        </div>
+       
 
 
-        <div class="row mb-5">
-            
-            <div class="col-4">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <small>Designation</small>
-                    </div>
-                    <div>
-                        <button class="btn btn-success" onclick="addcarsinput(event)">+</button>
-                    </div>
-                </div>
-                <div class="carsholder">
-
-                    <div class="d-flex mb-2">
-                        <input type="text" class="form-control" name="carsinadd"><button class="btn btn-danger" onclick="deletecarinput(event)">-</button>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="col-2">
-                <small>Representants</small>
-                <select class="select" name="commercialsprixinadd" multiple="multiple" style="width:100%;">
-                    {% for i in commercials %}
-                    <option value="{{i.id}}">
-                        {{i.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-2">
-                <small>Code</small>
-                <input type="text" class="form-control" name="coderefinadd">
-            </div>
-            
-        </div>
+        
 
         <button class="btn btn-primary disabled submitbtn">
             + Ajouter
         </button>
     </form>
+    <hr class="mt-5">
+    <!-- add category -->
+    <!-- <div class="row">
+        <div class="col-6">
+            <strong>Ajouter une category</strong>
+            <div class=" d-flex">
+                <input type="text" class="form-control" placeholder="Category">
+                <button class="btn btn-success" onclick="addcategory(event)">+</button>
+                
+            </div>
+        </div>
+        
+        <div class="col-6">
+            <strong>Ajouter une marque</strong>
+            <div class=" d-flex">
+                <input type="text" class="form-control" placeholder="Marque">
+                <button class="btn btn-success" onclick="addmark(event)">+</button>
+                
+            </div>
+        </div>
+
+    </div> -->
 </div>
 
-{% block js %}
-<script>
-    $(function(){
-     $('.select').select2()
-    })
+<script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'js/select2.min.js'%}"></script>
+    <script src="{% static 'js/type.min.js'%}"></script>
+    <script src="{% static 'js/number.js'%}"></script>
+    <script src="{% static 'js/main.js'%}"></script>
+    <script src="{% static 'js/alertify.min.js'%}"></script>
+    <script>
+    $('.select2').select2()
+    function addmark(event){
+        event.preventDefault()
+        var marque = $(event.target).prev().val()
+        if (marque==''){
+            alertify.error('Veuillez remplir le champ')
+            return
+        }
+        $.ajax({
+            url: '{% url "products:createmarque" %}',
+            type: 'POST',
+            data: {
+                'marquename': marque,
+                'csrfmiddlewaretoken': '{{csrf_token}}'
+            },
+            success: function(data){
+                if (data.success){
+                    alertify.success('Marque ajoutée avec success')
+                    //$('[name="marqueinadd"]').append(`<option value="${data.id}">${marque}</option>`)
+                    $('[name="marqueinadd"]').append(`<option value="${data.id}">${marque}</option>`)
+                    // Trigger Select2 to refresh and show the new option
+                    //$('[name="marqueinadd"]').trigger('change')
+                    $(event.target).prev().val('')
+                }else{
+                    alertify.error(data.error)
+                }
+            }
+        })
+    }
+    function addcategory(event){
+        event.preventDefault()
+        var category = $(event.target).prev().val()
+        if (category==''){
+            alertify.error('Veuillez remplir le champ')
+            return
+        }
+        $.ajax({
+            url: '{% url "products:createcategory" %}',
+            type: 'POST',
+            data: {
+                'categoryname': category,
+                'csrfmiddlewaretoken': '{{csrf_token}}'
+            },
+            success: function(data){
+                console.log(data)
+                if (data.success){
+                    alertify.success('Categorie ajoutée avec success')
+                    $('[name="categoryinadd"]').append(`<option value="${data.id}">${category}</option>`)
+                    $(event.target).prev().val('')
+                }else{
+                    alertify.error(data.error)
+                }
+            }
+        })
+    }
+    $(document).on("keypress", ":input:not(textarea)", function(event) {
+        return event.keyCode != 13;
+    }); 
     $('.submitbtn').on('click', function(e) {
         e.preventDefault();
         if ($('[name="refinadd"]').val()=='' || $('[name="nameinadd"]').val()=='' || $('[name="marqueinadd"]').val()=='' || $('[name="categoryinadd"]').val()==''){
@@ -185,6 +224,7 @@
         }
         $(e.target).addClass('disabled')
         var formData = new FormData($('.addoneproductform')[0]);
+        formData.append('target', '{{target}}')
         console.log($('[name="commercialsprixinadd"]').val())
         $.ajax({
             url: '{% url "products:addoneproduct" %}',
@@ -198,9 +238,12 @@
                 if (data.success) {
                     
                     alertify.success('Produit ajouté avec success');
-                    alertify.success('Ajouter le Produit dans le server');
-                    deletetab('add')
-                    createtab('addpducts', 'Articles', '/products/stock')
+                    // resetform
+                    //$('.addoneproductform').trigger('reset');
+                    location.reload();
+                    //ajaxpage('addpducts', 'Articles', '/products/stock?target={{target}}')
+                    // we dont want to reload the page !important
+                    //ajaxpage('add', '+ Article', '/products/addproductspage?target={{target}}')
                     
                 } else {
                     alertify.error(data.error);
@@ -230,8 +273,11 @@
                     $('.existerror').removeClass('d-none');
                     $('.submitbtn').addClass('disabled');
                 } else {
+                    console.log(data)
                     $('.existerror').addClass('d-none');
                     $('.submitbtn').removeClass('disabled');
+                    $('[name=nameinadd]').val(data.name)
+                    $('[name=equivinadd]').val(data.equiv)
                 }
             }
         });
@@ -243,4 +289,6 @@
     });
 
 </script>
-{% endblock %}
+</body>
+</html>
+<!-- End Path: products/templates/addproduct.html -->

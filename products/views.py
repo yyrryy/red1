@@ -87,52 +87,53 @@ def createcategory(request):
 
     # get image file
     image=request.FILES.get('categoryimage')
-    # create category
-    try:
-        res=req.get('http://domain.com/products/createcategory', {
-
-            'name':name,
-            'code':code,
-            'affichage':affichage,
-            'hideclient':hideclient,
-            'commercialexcluded':commercialexcluded,
-            # get image file
-            'image':category.image.url.replace('/media/', '') if category.image else ''
-        })
-        res.raise_for_status()
-    except req.exceptions.RequestException as e:
-        print('Error in request:', e)
-        return JsonResponse({
-            'success':False,
-            'error':'Error in request to the server'
-        })
     category=Category.objects.create(name=name, image=image, code=code, affichage=affichage, masqueclients=hideclient)
+    # create category
+    # try:
+    #     res=req.get('http://domain.com/products/createcategory', {
+
+    #         'name':name,
+    #         'code':code,
+    #         'affichage':affichage,
+    #         'hideclient':hideclient,
+    #         'commercialexcluded':commercialexcluded,
+    #         # get image file
+    #         #'image':category.image.url.replace('/media/', '') if category.image else ''
+    #     })
+    #     res.raise_for_status()
+    # except req.exceptions.RequestException as e:
+    #     print('Error in request:', e)
+    #     return JsonResponse({
+    #         'success':False,
+    #         'error':'Error in request to the server'
+    #     })
+    
     if len(commercialexcluded) > 0:
         category.excludedrep.set(reps)
     ctx={
         'categories':Category.objects.all().order_by('code'),
         'title':'Categories'
     }
-    print({
+    # print({
 
-        'name':name,
-        'code':code,
-        'affichage':affichage,
-        'hideclient':hideclient,
-        'commercialexcluded':commercialexcluded,
-        # get image file
-        'image':category.image.url.replace('/media/', '') if category.image else ''
-    })
-    req.get('http://domain.com/products/createcategory', {
+    #     'name':name,
+    #     'code':code,
+    #     'affichage':affichage,
+    #     'hideclient':hideclient,
+    #     'commercialexcluded':commercialexcluded,
+    #     # get image file
+    #     'image':category.image.url.replace('/media/', '') if category.image else ''
+    # })
+    # req.get('http://domain.com/products/createcategory', {
 
-        'name':name,
-        'code':code,
-        'affichage':affichage,
-        'hideclient':hideclient,
-        'commercialexcluded':commercialexcluded,
-        # get image file
-        'image':category.image.url.replace('/media/', '') if category.image else ''
-    })
+    #     'name':name,
+    #     'code':code,
+    #     'affichage':affichage,
+    #     'hideclient':hideclient,
+    #     'commercialexcluded':commercialexcluded,
+    #     # get image file
+    #     'image':category.image.url.replace('/media/', '') if category.image else ''
+    # })
     return JsonResponse({
         'html':render(request, 'categories.html', ctx).content.decode('utf-8')
     })
@@ -180,7 +181,7 @@ def marquespage(request):
         'title':'List des marques',
         'commercials':Represent.objects.all()
     }
-    return render(request, 'marques.html', ctx)
+    return render(request, 'marquesadmin.html', ctx)
 
 def createmarque(request):
     name=request.POST.get('marquename')
@@ -194,13 +195,13 @@ def createmarque(request):
     mrq=Mark.objects.create(name=name, image=image, masqueclients=hideclient)
     if len(commercialexcluded) > 0:
         mrq.excludedrep.set(reps)
-    req.get('http://domain.com/products/createmarque', {
-        'name':name,
-        'hideclient':hideclient,
-        'commercialexcluded':commercialexcluded,
-        # get image file
-        'image':mrq.image.url.replace('/media/', '') if mrq.image else ''
-    })
+    # req.get('http://domain.com/products/createmarque', {
+    #     'name':name,
+    #     'hideclient':hideclient,
+    #     'commercialexcluded':commercialexcluded,
+    #     # get image file
+    #     'image':mrq.image.url.replace('/media/', '') if mrq.image else ''
+    # })
     return JsonResponse({
         'success':True
     })
