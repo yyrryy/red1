@@ -414,8 +414,8 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html', ctx)
 
-@user_passes_test(tocatalog, login_url='loginpage')
-@login_required(login_url='loginpage')
+#@user_passes_test(tocatalog, login_url='loginpage')
+#@login_required(login_url='loginpage')
 def catalog(request):
     # categories = Category.objects.annotate(
     #     has_promotion=Exists(Produit.objects.filter(category_id=OuterRef('pk'), isoffer=True)),
