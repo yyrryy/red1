@@ -1,7 +1,7 @@
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-from .models import Category, Client, Order, Orderitem, Produit, Client, Mark, Cart, Connectedusers, Represent, Promotion
+from .models import Category, Client, Order, Orderitem, Produit, Client, Mark, Cart, Connectedusers, Represent, Promotion, Cartitems
 import pandas as pd
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
@@ -70,16 +70,16 @@ def isadmin(user):
 # Create your views here.
 def home(request):
     # print(request.user)
-    # print(request.user.groups.first())
-    # if request.user.groups.first():
-    #     if (request.user.groups.first().name=='salsemen'):
-    #         return redirect(catalog)
-    #     if (request.user.groups.first().name=='accounting'):
-    #         return redirect(orders)
-    #     if (request.user.groups.first().name=='admin'):
-    #         return redirect(orders)
+    print(request.user.groups.first())
+    if request.user.groups.first():
+        if (request.user.groups.first().name=='salsemen'):
+            return redirect(catalog)
+        if (request.user.groups.first().name=='accounting'):
+            return redirect(orders)
+        if (request.user.groups.first().name=='admin'):
+            return redirect('products:system')
     
-    # return redirect(loginpage)
+    return redirect('main:loginpage')
     
     if request.user.groups.all():
         if request.user.groups.first().name=='admin':
@@ -95,7 +95,7 @@ def home(request):
     #         return redirect('main:''main:orders')
     # return redirect('main:''main:loginpage')
     # return render(request, 'main.html', ctx)
-    return redirect('products:system')
+    
     # this is for the front page
     #return render(request, 'main.html')
 
@@ -117,7 +117,7 @@ def loginpage(request):
         if (request.user.groups.first().name=='accounting'):
             return redirect('main:orders')
         if (request.user.groups.first().name=='admin'):
-            return redirect('main:dashboard')
+            return redirect('product:system')
         if (request.user.groups.first().name=='clients'):
             return redirect('main:catalog')
     if request.method == 'POST':
@@ -134,7 +134,7 @@ def loginpage(request):
             elif group == 'accounting':
                 return redirect('main:orders')
             elif group == 'admin':
-                return redirect('main:dashboard')
+                return redirect('products:system')
         else:
             return redirect('main:loginpage')
     ctx={
@@ -298,7 +298,7 @@ def commande(request):
     #totalremise=request.POST.get('totalremise', 0)
     cart=Cart.objects.filter(user=request.user).first()
     if cart:
-        cartitems=Cartitem.objects.filter(cart=cart)
+        cartitems=Cartitems.objects.filter(cart=cart)
         if isclient:
             order=Order.objects.create(client_id=clientid,total=cart.total, modpymnt=modpymnt, modlvrsn=modlvrsn, code=str(uuid.uuid4()), isclient=isclient)
         else:
@@ -515,7 +515,7 @@ def create_product(request):
 
 @user_passes_test(tocatalog, login_url='loginpage')
 def cart(request):
-    cartitems=Cartitem.objects.filter(cart__user=request.user)
+    cartitems=Cartitems.objects.filter(cart__user=request.user)
     print('>>>>>', cartitems)
     ctx={
         'title':'Panier',
@@ -560,8 +560,8 @@ def getcartitems(request):
     item=[]
     cart=Cart.objects.filter(user=request.user).first()
     if cart:
-        length=len(Cartitem.objects.filter(cart=cart))
-        item=list(Cartitem.objects.filter(cart=cart).values())
+        length=len(Cartitems.objects.filter(cart=cart))
+        item=list(Cartitems.objects.filter(cart=cart).values())
     return JsonResponse({
         'length':length,
         'items':item
@@ -572,32 +572,32 @@ def addtocart(request):
     qty=request.GET.get('qty')
     product=Produit.objects.get(pk=productid)
     print(qty, product)
-    total=round(float(qty)*float(product.price), 2)
+    total=round(float(qty)*float(product.sellprice), 2)
     print(total, product)
     user=request.user
     cart=Cart.objects.filter(user=user).first()
     
     if cart:
         print('>>>>cart already')
-        cartitem=Cartitem.objects.filter(cart=cart, product=product).first()
+        cartitem=Cartitems.objects.filter(cart=cart, product=product).first()
         if cartitem:
             return JsonResponse({
                 'success':False
             })
         else:
-            Cartitem.objects.create(cart=cart, product=product, qty=qty, total=total)
+            Cartitems.objects.create(cart=cart, product=product, qty=qty, total=total)
             cart.total+=total
         cart.save()
         
     else:
         cart=Cart.objects.create(user=user, total=total)
-        Cartitem.objects.create(cart=cart, product=product, qty=qty, total=total)
+        Cartitems.objects.create(cart=cart, product=product, qty=qty, total=total)
     return JsonResponse({
         'success':True
     })
     
 def edititemincart(request):
-    cartitem=Cartitem.objects.get(pk=request.GET.get('cartitemid'))
+    cartitem=Cartitems.objects.get(pk=request.GET.get('cartitemid'))
     qty=request.GET.get('qty')
     total=round(float(cartitem.product.price)*float(qty), 2)
     cart=cartitem.cart
@@ -613,7 +613,7 @@ def edititemincart(request):
     })
 
 def removeitemincart(request):
-    cartitem=Cartitem.objects.get(pk=request.GET.get('cartitemid'))
+    cartitem=Cartitems.objects.get(pk=request.GET.get('cartitemid'))
     cart=cartitem.cart
     cart.total-=cartitem.total
     cart.save()

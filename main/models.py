@@ -44,6 +44,8 @@ class Produit(models.Model):
     block=models.CharField(max_length=500, null=True, default=None)
     # code = classement
     code=models.CharField(max_length=500, null=True)
+    #this iniqcide will be used to match local products with server products
+    uniqcode=models.CharField(max_length=500, null=True)
     coderef=models.CharField(max_length=500, null=True, default=None)
     #price
     buyprice= models.FloatField(default=None, null=True, blank=True)

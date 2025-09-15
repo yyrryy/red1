@@ -320,6 +320,10 @@ def system(request):
     }
     return render(request, 'admindashboard.html', ctx)
 def addoneproduct(request):
+    lastid=0 # zero cause we will add one
+    if Produit.objects.last():
+        lastid=Produit.objects.last().id
+    uniqcode=f'pdct{lastid+1}'
     ref=request.POST.get('refinadd').lower().strip().replace('§', '-').replace("'", '')
     name=request.POST.get('nameinadd').strip()
     category=request.POST.get('categoryinadd')
@@ -361,7 +365,8 @@ def addoneproduct(request):
     #         'block':block,
     #         'carlogos_id':logo,
     #         'stocktotal':0,
-    #         'stockfacture':0
+    #         'stockfacture':0,
+    #         'uniqcode':uniqcode
     #     })
     #     res.raise_for_status()
 
@@ -374,6 +379,7 @@ def addoneproduct(request):
         # create product
     product=Produit.objects.create(
         ref=ref,
+        uniqcode=uniqcode,
         name=name,
         buyprice=buyprice,
         diametre=diametre,
@@ -394,7 +400,7 @@ def addoneproduct(request):
         carlogos_id=logo,
         stocktotal=0,
         stockfacture=0,
-        isactive=False
+        isactive=True
     )
     # if image:
     #     image=product.image.url.replace('/media/', '')
@@ -564,10 +570,10 @@ def updateproduct(request):
     print('>>end ',product)
     print('>>>>>>>>>>>>>> equivalent>',equivalent)
 
-    res=req.get('http://domain.com/products/updateproduct', data)
-    print('>>>>>>', res)
-    if not res.status_code == 200:
-            print('Error message:', res.text)
+    # res=req.get('http://domain.com/products/updateproduct', data)
+    # print('>>>>>>', res)
+    # if not res.status_code == 200:
+    #         print('Error message:', res.text)
     print('>>>>>>', request.POST.getlist('cars'))
     # req.get('http://domain.com/products/updatepdctdata', {
     #     'password':'gadwad123',
