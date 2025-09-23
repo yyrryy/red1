@@ -476,7 +476,6 @@ def viewoneproduct(request, id):
 
 def updateproduct(request):
     ref=request.POST.get('ref').lower().strip().replace('§', '-').replace("'", '')
-    print('>> ref', ref)
     productid=request.POST.get('productid')
     product=Produit.objects.filter(ref=ref).exclude(pk=productid).first()
     if product:
@@ -487,7 +486,6 @@ def updateproduct(request):
     image=request.FILES.get('image') or None
     new=request.POST.get('switch')
     near=True if  request.POST.get('nearswitch') == 'on' else False
-    logo=request.POST.get('updatepdctlogo', None)
     selected_reps = request.POST.getlist('updatereps')
     remise=request.POST.get('remise')
     sellprice=request.POST.get('sellprice')
@@ -509,7 +507,8 @@ def updateproduct(request):
             i.cart.total=newtotal
             i.cart.save()
     equivalent=' '.join(i.upper() for i in request.POST.get('equivalent').split())
-    product.carlogos_id=logo
+    logos = request.POST.getlist('updatepdctlogo')  # because it's multiple
+    product.carlogos.set(logos)
     if new=='on':
       product.isnew=True
     else:

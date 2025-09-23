@@ -229,12 +229,12 @@
                                 </div>
                                 <div class="col-3">
                                     <small for="name">Voiture logo. </small> <br>
-                                    <select name="updatepdctlogo" id="" class="select2" style="width:100%;">
-                                        <option value="{{product.carlogos.id}}">
-                                            {{product.carlogos.name.upper}}
-                                        </option>
+                                    <select multiple name="updatepdctlogo" id="" class="select2" style="width:100%;">
+                                        
                                         {% for i in carlogos %}
-                                        <option value="{{i.id}}">{{i.name.upper}}</option>
+                                            <option value="{{ i.id }}" {% if i in product.carlogos.all %}selected{% endif %}>
+                                                {{ i.name.upper }}
+                                            </option>
                                         {% endfor %}
                                     </select>
 

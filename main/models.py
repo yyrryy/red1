@@ -90,7 +90,7 @@ class Produit(models.Model):
     # n_chasis=models.CharField(max_length=50, null=True)
     # minstock is used to indicate the quantity being shipped now
     minstock=models.IntegerField(default=None, null=True, blank=True)
-    carlogos=models.ForeignKey(Carlogos, default=None, blank=True, null=True, on_delete=models.CASCADE)
+    carlogos=models.ManyToManyField(Carlogos, default=None, blank=True)
     # min cmmand
     isnew=models.BooleanField(default=False)
     # use min to indicate the quantity commandé

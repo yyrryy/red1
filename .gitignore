@@ -7,5 +7,5 @@ db.*
 __pycache__
 migrations
 logs.txt
-
+media_root/
 autoparts/static/images
