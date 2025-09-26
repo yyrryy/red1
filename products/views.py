@@ -397,7 +397,7 @@ def addoneproduct(request):
         code=code,
         repsprice=commercialsprix,
         block=block,
-        carlogos_id=logo,
+        #carlogos_id=logo,
         stocktotal=0,
         stockfacture=0,
         isactive=True
