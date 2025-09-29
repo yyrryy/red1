@@ -145,7 +145,7 @@ class Produit(models.Model):
 
     def getcars(self):
         try:
-            return json.loads(self.cars)
+            return self.cars.split(',')
         except:
             return []
     # brand=models.CharField(max_length=25, default=None)

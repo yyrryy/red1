@@ -528,7 +528,7 @@ def updateproduct(request):
     product.remise=remise
     product.prixnet=netprice
     product.name=request.POST.get('name').replace('§', '-')
-    product.cars=json.dumps(request.POST.getlist('cars'))
+    product.cars=request.POST.get('cars')
     product.ref=ref
     product.category_id=request.POST.get('category')
     product.mark_id=request.POST.get('marque')

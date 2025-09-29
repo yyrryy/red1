@@ -411,14 +411,9 @@
                                 </div>
                             </div>
 
-                            <div class="carsholder">
-                                {% for i in cars %}
-                                <div class="d-flex mb-3">
-                                    <input type="text" class="form-control" name="cars" value="{{i}}" style="background: greenyellow;">
-                                    <button class="btn btn-danger" onclick="deletecarinput(event)">-</button>
-                                </div>
-                                {% endfor %}
-                            </div>
+                            <small for="name">Voitures.</small>
+                            <textarea type="text" class="form-control mb-3" name="cars" value="" style="height: 15em">{{product.cars}}</textarea>
+                            
                             <small for="name">Ref equiv.</small>
                             <textarea type="text" class="form-control mb-3" name="equivalent" value="" style="height: 15em">{{product.equivalent}}</textarea>
                             <button class="border btn btn-success mt-2 w-100" style="    position: sticky;
