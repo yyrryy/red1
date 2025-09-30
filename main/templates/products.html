@@ -140,22 +140,19 @@
                   </div> -->
                   <div class="product-card__image">
                     <div class="image image--type--product position-relative">
-                      {% if i.mark.image %} <div style="position: absolute;left: 0;">
+                      {% if i.mark.image %} <div style="position: absolute;left: 0;z-index: 999;">
                         <img src="{{i.mark.image.url}}" width="70" style="width:70px;">
                       </div>{% endif %}  
                       <a href="#" class="image__body">
-                        <img style="max-height: 320px;" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" alt="">
+                        <img style="max-height: 250px;" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" loading="lazy" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" onclick="displayimage(event, '{% if i.image %}{{i.image.url}}{% endif %}')" imgsrc="{% if i.image %}{{i.image.url}}{% endif %}">
                       </a>
                     </div>
                   </div>
                   <div class="product-card__info">
-                    <div class="product-card__meta">
-                      <span class="product-card__meta-title">REF:</span>
-                      <strong>{{i.ref.upper}}</strong>
-                    </div>
+                    
                     <div class="product-card__name">
                       <div>
-                        <a href="product-full.html">{{i.ref.upper}} - {{i.name}}</a>
+                        {{i.ref.upper}} - {{i.name}}
                       </div>
                     </div>
                     <div class="product-card__rating d-flex justify-content-between align-items-center">
@@ -172,7 +169,11 @@
                     </div>
                   </div>
                   <div class="product-card__footer">
-                    <div class="d-block w-100 text-primary" style="font-weight: bold;"> 
+                    <!-- <div class="product-card__meta">
+                      <span class="product-card__meta-title">REF:</span>
+                      <strong>{{i.ref.upper}}</strong>
+                    </div> -->
+                    <div class="d-block w-100 text-primary p-2" style="font-weight: bold;"> 
                       
                       <div class="d-flex justify-content-between">
                         <div>Pr Brut TTC</div>
@@ -182,7 +183,7 @@
                         <div>Remise</div>
                         <div>{{i.remise|floatformat:2}}</div>
                       </div>
-                      <div class="d-flex justify-content-between">
+                      <div class="d-flex justify-content-between" style="color: orange;">
                         <div>Pr Net</div>
                         <div>{{i.prixnet|floatformat:2}}</div>
                       </div>

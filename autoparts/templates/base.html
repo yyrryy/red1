@@ -1047,7 +1047,10 @@
     <script src="{% static 'js/alertify.min.js'%}"></script>
     
     <script>
-       
+       function displayimage(event, imgsrc){
+            $('.imgproductmodal').attr('src', imgsrc)
+            //$('#imagedisplaymodal').modal('show')
+        }
     const populateclientfields=(id)=>{
           $.ajax({
               url: "{% url 'products:getclientdata' %}",
