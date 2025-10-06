@@ -114,7 +114,7 @@
     <div class="block-split__item block-split__item-content col-auto mt-3">
       <div class="block">
         <div class="products-view">
-          <div class="products-view__list products-list products-list--grid--4 position-relative" data-layout="list" data-with-features="false">
+          <div class="products-view__list products-list products-list--grid--3 position-relative" data-layout="list" data-with-features="false">
   
           <!-- title holder -->
           
@@ -142,7 +142,7 @@
                     <div class="image image--type--product position-relative">
                       {% if i.mark.image %} <div style="position: absolute;left: 0;z-index: 999;">
                         <img src="{{i.mark.image.url}}" width="70" style="width:70px;">
-                      </div>{% endif %}  
+                      </div>{% endif %}
                       <a href="#" class="image__body">
                         <img style="max-height: 250px;" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" onclick="displayimage(event, '{% if i.image %}{{i.image.url}}{% endif %}')" imgsrc="{% if i.image %}{{i.image.url}}{% endif %}">
                       </a>
