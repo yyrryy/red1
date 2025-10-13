@@ -161,15 +161,15 @@ def updatecategory(request):
         'categories':Category.objects.all().order_by('code'),
         'title':'Categories'
     }
-    req.get('http://domain.com/products/updatecategory', {
-        'id':id,
-        'image':category.image.url.replace('/media/', '') if category.image else '',
-        'hideclient':hideclient,
-        'commercialexcluded':commercialexcluded,
-        'name':request.POST.get('updatecategoryname'),
-        'code':request.POST.get('updatecategorycode'),
-        'affichage':request.POST.get('updatecategoryaffichage'),
-    })
+    # req.get('http://domain.com/products/updatecategory', {
+    #     'id':id,
+    #     'image':category.image.url.replace('/media/', '') if category.image else '',
+    #     'hideclient':hideclient,
+    #     'commercialexcluded':commercialexcluded,
+    #     'name':request.POST.get('updatecategoryname'),
+    #     'code':request.POST.get('updatecategorycode'),
+    #     'affichage':request.POST.get('updatecategoryaffichage'),
+    # })
     return JsonResponse({
         'html':render(request, 'categories.html', ctx).content.decode('utf-8')
     })
