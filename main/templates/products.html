@@ -58,7 +58,7 @@
 </div>
 
 <div class="row">
-  <div class="col-2 rounded p-2 categorytitle  border border-2 bg-white">
+  <div style="position: fixed; height: 100%; right: 0;" class="col-1 rounded p-2 categorytitle  border border-2 bg-white">
     <!-- <div class="d-flex justify-content-between align-items-center">
       <a href="/catalog" class="bi bi-arrow-left me-2 btn text-primary">Catalog</a>
       <div>
@@ -70,7 +70,7 @@
       
     </div> -->
     <input type="text" placeholder="Chercher dans {{category|upper}}" aria-describedby="button-addon1" class="form-control border bg-light" id="searchbox">
-    <div class="layout-switcher__list  bg-whitex ">
+    <div class="layout-switcher__list  bg-white d-flex flex-column">
       <a href="/catalog" class="btn border me-2">
         ←
       </a>
@@ -108,7 +108,7 @@
       {% endif %}
   </div>
   
-  <div class="col-10" style="height: 80vh; overflow-y: scroll;">
+  <div class="col-11">
     
     <!-- products holder -->
     <div class="block-split__item block-split__item-content col-auto mt-3">
@@ -144,7 +144,7 @@
                         <img src="{{i.mark.image.url}}" width="70" style="width:70px;">
                       </div>{% endif %} -->
                       <a href="#" class="image__body">
-                        <img style="max-height: 250px;width: 640px;" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" onclick="displayimage(event, '{% if i.image %}{{i.image.url}}{% endif %}')" imgsrc="{% if i.image %}{{i.image.url}}{% endif %}">
+                        <img style="max-height: 250px" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" onclick="displayimage(event, '{% if i.image %}{{i.image.url}}{% endif %}')" imgsrc="{% if i.image %}{{i.image.url}}{% endif %}">
                       </a>
                     </div>
                   </div>
