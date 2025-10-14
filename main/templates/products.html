@@ -140,11 +140,18 @@
                   </div> -->
                   <div class="product-card__image">
                     <div class="image image--type--product position-relative">
-                      <!-- {% if i.mark.image %} <div style="position: absolute;left: 0;z-index: 999;">
-                        <img src="{{i.mark.image.url}}" width="70" style="width:70px;">
-                      </div>{% endif %} -->
+                      <!--  -->
                       <a href="#" class="image__body">
-                        <img style="max-height: 250px" class="image__tag" src="{% if i.image %}{{i.image.url}}{%endif%}" style="width: 100%;" data-toggle="modal" data-target="#imagedisplaymodal" class="imagedisplaybtn" onclick="displayimage(event, '{% if i.image %}{{i.image.url}}{% endif %}')" imgsrc="{% if i.image %}{{i.image.url}}{% endif %}">
+                        <img 
+                        style="max-height: 250px; width: 100%;" 
+                        class="image__tag imagedisplaybtn" 
+                        src="{% if i.image %}{{ i.image.url }}{% endif %}" 
+                        data-toggle="modal" 
+                        data-target="#imagedisplaymodal" 
+                        onclick="displayimage(event, '{% if i.image %}{{ i.image.url }}{% endif %}')"
+                        imgsrc="{% if i.image %}{{ i.image.url }}{% endif %}"
+                      >
+                      
                       </a>
                     </div>
                   </div>

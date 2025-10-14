@@ -1047,10 +1047,14 @@
     <script src="{% static 'js/alertify.min.js'%}"></script>
     
     <script>
-       function displayimage(event, imgsrc){
-            $('.imgproductmodal').attr('src', imgsrc)
-            //$('#imagedisplaymodal').modal('show')
-        }
+      
+      function displayimage(event, imgsrc) {
+          event.preventDefault(); // 🔒 Prevents page from jumping to top
+          event.stopPropagation(); // 🛑 Stops any parent event (if inside a link/button)
+          
+          $('.imgproductmodal').attr('src', imgsrc);
+          $('#imagedisplaymodal').modal('show'); // Uncomment this to show the modal
+      }
     const populateclientfields=(id)=>{
           $.ajax({
               url: "{% url 'products:getclientdata' %}",
