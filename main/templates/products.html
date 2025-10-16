@@ -165,7 +165,7 @@
                     </div>
                     <div class="product-card__rating d-flex justify-content-between align-items-center">
                       <div class="disponible" style="border-radius: 50%; width: 20px; height: 20px; background: {% if i.stocktotal <= 0%}red{%elif i.stocktotal <= 0 %}orange{%else%}green{%endif%};"></div>
-                      {% if i.mark.image %} <img src="{{i.mark.image.url}}" alt=""> {%endif%}
+                      
                       <div class="d-flex"> {% for c in i.carlogos.all  %} {% if c.image %} <img src="{{c.image.url}}" style="width:50px;"> {% endif %} {% endfor %} </div>
                     </div>
                     <div class="d-flex justify-content-between p-2">
@@ -183,7 +183,7 @@
                       <strong>{{i.ref.upper}}</strong>
                     </div> -->
                     <div class="d-block w-100 text-primary p-2" style="font-weight: bold;"> 
-                      
+                      {% if i.mark.image %} <img src="{{i.mark.image.url}}" alt=""> {%endif%}
                       <div class="d-flex justify-content-between">
                         <div>Pr Brut TTC</div>
                         <div>{{i.sellprice|floatformat:2}}</div>
