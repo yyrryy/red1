@@ -398,7 +398,16 @@ def productscategories(request, id):
     # get the products from the db
     c=Category.objects.get(pk=id)
     products=Produit.objects.filter(category_id=id, isactive=True).order_by('code')
-    return render(request, 'products.html', {'products':products, 'title':'Produits de '+str(c), 'category':c})
+    nextctg = Category.objects.filter(code__gt=c.code).order_by('code').first()
+    previousctg = Category.objects.filter(code__lt=c.code).order_by('-code').first()
+    return render(request, 'products.html', 
+    {
+        'products':products, 
+        'title':'Produits de '+str(c), 
+        'category':c,
+        'nextctg':nextctg,
+        'previousctg':previousctg,
+    })
 
 @user_passes_test(isadmin, login_url='loginpage')
 @login_required(login_url='loginpage')

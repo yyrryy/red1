@@ -1,3 +1,3 @@
 import os
-os.system("py manage.py makemigrations")
-os.system("py manage.py migrate")
+os.system("python3 manage.py makemigrations")
+os.system("python3 manage.py migrate")
