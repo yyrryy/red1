@@ -173,7 +173,7 @@
                       </div>
                     </div>
                     <div>
-                      {%if i.refeq1%}{{i.refeq1}}<br>>{%endif%}{%if i.refeq2%}{{i.refeq2}}<br>>{%endif%}{%if i.refeq3%}{{i.refeq3}}<br>>{%endif%}{%if i.refeq1%}{{i.refeq4}}{%endif%} 
+                      {%if i.refeq1%},<strong>{{i.refeq1}}</strong><br>>{%endif%}{%if i.refeq2%},<strong>{{i.refeq2}}</strong><br>>{%endif%}{%if i.refeq3%},<strong>{{i.refeq3}}</strong><br>>{%endif%}{%if i.refeq1%},<strong>{{i.refeq4}}</strong>{%endif%} 
                     </div>
                     <div class="product-card__rating d-flex justify-content-between align-items-center">
                       <div class="disponible" style="border-radius: 50%; width: 20px; height: 20px; background: {% if i.stocktotal <= 0%}red{%elif i.stocktotal <= 0 %}orange{%else%}green{%endif%};"></div>
