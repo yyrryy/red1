@@ -402,8 +402,8 @@
 
 
     // finish
-    $('.repsselectsbl').on('change', function(){
-      if ($(this).val()==''||$('.clientselectbl').val()==''){
+    $('.clientselectbl').on('change', function(){
+      if ($(this).val()==''){
         parentdiv.find('.productsholder').addClass('d-none')
         return
       }else{
