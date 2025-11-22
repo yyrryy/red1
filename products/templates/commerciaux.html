@@ -52,8 +52,8 @@
                 <input type="number" name="repphone2" class="form-control mb-2" placeholder="phone2">
                 <input type="text" name="repregion" class="form-control mb-2" placeholder="Region">
                 <hr>
-                <input type="text" name="repusername" class="form-control mb-2 checkusername" placeholder="Username">
-                <input type="text" name="reppassword" class="form-control mb-2" placeholder="Password">
+                <!-- <input type="text" name="repusername" class="form-control mb-2 checkusername" placeholder="Username">
+                <input type="text" name="reppassword" class="form-control mb-2" placeholder="Password"> -->
                 <button type="submit" class="btn btn-outline-success w-100 submitaddrepbtn">
                     Envoyer
                 </button>
@@ -128,7 +128,8 @@
     })
     $('.submitaddrepbtn').on('click', function(event){
         event.preventDefault()
-        if ($('[name="repname"]').val()=="" || $('[name="repphone"]').val()=="" || $('[name="repregion"]').val()=="" || $('[name="repusername"]').val()=="" || $('[name="reppassword"]').val()==""){
+        // if ($('[name="repname"]').val()=="" || $('[name="repphone"]').val()=="" || $('[name="repregion"]').val()=="" || $('[name="repusername"]').val()=="" || $('[name="reppassword"]').val()==""){
+        if ($('[name="repname"]').val()=="" || $('[name="repphone"]').val()=="" || $('[name="repregion"]').val()==""){
             $('#addrepform').css('border', '1px solid red')
             return
         }

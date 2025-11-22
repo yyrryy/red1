@@ -45,7 +45,7 @@
 
                     </select>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-3" hidden>
                             <input type="number" class="form-control" placeholder="Devise" name="adddevise">
 
                           </div>
@@ -60,11 +60,11 @@
                           <div class="col-3">
                             <input type="number" class="form-control" placeholder="Remise" name="addremise">
                           </div>
+                          <button class="btn btn-info col-3" onclick="addrowbonachat(event)">Ajouter</button>
                           <div class="col-12">
                             <input hidden readonly type="text" name="addname" class="form-control">
                           </div>
                           <div class="col-12">
-                            <button class="btn btn-outline-secondary" onclick="addrowbonachat(event)">Ajouter</button>
                           </div>
                     </div>
                 </div>

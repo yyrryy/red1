@@ -9,7 +9,7 @@ def get_local_ip():
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
     finally:
-        s.close() 
+        s.close()
     return ip
 
 ip = get_local_ip()

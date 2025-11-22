@@ -1033,17 +1033,17 @@ def addcommercial(request):
         #     'repinfo':repinfo
         # })
         # request.raise_for_status()
-        user=User.objects.create_user(username=repusername, password=reppassword)
+        #user=User.objects.create_user(username=repusername, password=reppassword)
         # Get or create the group
-        group, created = Group.objects.get_or_create(name="salsemen")
+        #group, created = Group.objects.get_or_create(name="salsemen")
 
         # Add the user to the group
-        user.groups.add(group)
+        #user.groups.add(group)
 
         # Save the user
-        user.save()
+        #user.save()
         Represent.objects.create(
-            user=user,
+            #user=user,
             name=repname,
             phone=repphone,
             region=repregion,
@@ -1060,7 +1060,8 @@ def addcommercial(request):
         return JsonResponse({
             'success':True
         })
-    except:
+    except Exception as e:
+        print('>>> error', e)
         return JsonResponse({
             'success':False,
             'message': 'ERROR CONEXION'
