@@ -30,5 +30,5 @@ copy "%BACKUP_FILE%" %EXTERNAL_SSD_DRIVE%
 copy "%BACKUP_FILE%" %EXTERNAL2%
 copy "%BACKUP_FILE%" %EXTERNAL3%
 echo Copy completed.
-
+pause
 endlocal
