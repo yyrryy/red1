@@ -1075,7 +1075,7 @@ a .uil {
                         <!-- dropdown -->
                         <button class="nav-link" type="button" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Produits</button>
                         
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#" onclick="createtab('addpducts', 'ARTICLES', '/products/stock')">List Produits</a>
 
                         <a style="display: block;
@@ -1101,7 +1101,7 @@ a .uil {
                       <li onmouseleave="$(this).find('.dropdown-menu').removeClass('show'),$(this).find('.nav-link').removeClass('active')">
                         <!-- ventes dropdown -->
                         <button class="nav-link" type="button" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Les Ventes</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                          
                           <a class="dropdown-item" href="#" onclick="createtab('addbonlivraison', '+livraison', '/products/bonlivraison')">+ bons livraison</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistbonlivraison', 'BON LIVRAISON', '/products/listbonlivraison')">List bons livraison</a>
@@ -1114,7 +1114,7 @@ a .uil {
                       <li onmouseleave="$(this).find('.dropdown-menu').removeClass('show'),$(this).find('.nav-link').removeClass('active')">
                         <!-- les Achats dropdown -->
                         <button class="nav-link" type="button" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">les Achats</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                           
                           <a class="dropdown-item" href="#" onclick="createtab('addrecevoir', '+Achat', '/products/recevoir')">+ Bon achat</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistbonachat', 'BON ACHAT', '/products/listbonachat')">List Bons achat</a>
@@ -1128,12 +1128,12 @@ a .uil {
                       <!-- client dropdown -->
                       <li onmouseleave="$(this).find('.dropdown-menu').removeClass('show'),$(this).find('.nav-link').removeClass('active')">
                         <button class="nav-link" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Client</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                           
                           <a class="dropdown-item" href="#" onclick="createtab('addclientstab', 'CLIENTS', '/products/clientspage')">List clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistreglementbl', 'REGL BL', '/products/listreglementbl')">Reglement clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('addlistreglementfc', 'REGLEMENT FACTURE', '/products/listreglementfc')">Reglement FC</a>
-                          <a class="dropdown-item" href="#" onclick="createtab('situation client', 'REGLEMENT FACTURE', '/products/situationclblfc')">Situation clients</a>
+                          <a class="dropdown-item" href="#" onclick="createtab('situation client', 'REGLEMENT FACTURE', '/products/situationcl')">Situation clients</a>
                           
                           <a class="dropdown-item" href="#" onclick="createtab('avoircl', 'AVOIR CLIENT', '/products/listavoirclient')">List Avoir clients</a>
                           <a class="dropdown-item" href="#" onclick="createtab('avoirsupp', 'AVOIR FOURNISSEUR', '/products/listavoirsupplier')">Avoir Fournisseurs</a>
@@ -1144,7 +1144,7 @@ a .uil {
 
                       <li onmouseleave="$(this).find('.dropdown-menu').removeClass('show'),$(this).find('.nav-link').removeClass('active')">
                         <button class="nav-link" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Fournisseurs</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                           
                           <a class="dropdown-item" href="#" onclick="createtab('addclientstab', 'CLIENTS', '/products/supplierspage')">List Fournisseur</a>
                           
@@ -1158,14 +1158,16 @@ a .uil {
 
                       <li onmouseleave="$(this).find('.dropdown-menu').removeClass('show'),$(this).find('.nav-link').removeClass('active')">
                         <!-- ventes dropdown -->
-                        <button class="nav-link" type="button" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Les Representants</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <button class="nav-link" type="button" onclick="createtab('addreplist', 'REPRESENTANTS', '/products/commercialspage')">Les Representants</button>
+                        
+                        <!-- <button class="nav-link" type="button" onmouseover="$('.dropdown-menu').removeClass('show'),$('.nav-link').removeClass('active'),$(this).parent().find('.dropdown-menu').toggleClass('show'),$(this).toggleClass('active')">Les Representants</button>
+                        <div style="z-index: 999999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                           <a class="dropdown-item" onclick="createtab('addreplist', 'REPRESENTANTS', '/products/commercialspage')">
                             List des commercials
                           </a>
-                        </div>
+                        </div> -->
                       </li>
-
+                      <button class="nav-link" type="button" onclick="createtab('Configuration', 'Configuration', '/products/settings')">Configuration</button>
                       <a class="nav-link" href="/catalog" target="_blank">CATALOGUE</a>
 
                     </ul>

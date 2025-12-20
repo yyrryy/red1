@@ -856,3 +856,15 @@ class EtudeItem(models.Model):
     marge=models.CharField(max_length=500, default='--', null=True, blank=True)
     tdt=models.CharField(max_length=500, default='--', null=True, blank=True)
     tcharges=models.CharField(max_length=500, default='--', null=True, blank=True)
+
+class Setting(models.Model):
+    name=models.CharField(max_length=500, default=None, null=True, blank=True)
+    ice=models.CharField(max_length=500, default=None, null=True, blank=True)
+    rc=models.CharField(max_length=500, default=None, null=True, blank=True)
+    idfiscal=models.CharField(max_length=500, default=None, null=True, blank=True)
+    cnss=models.CharField(max_length=500, default=None, null=True, blank=True)
+    address=models.CharField(max_length=500, default=None, null=True, blank=True)
+    serverip=models.CharField(max_length=500, default=None, null=True, blank=True)
+    logo=models.ImageField(upload_to='logos/', null=True, blank=True)
+    logoheadfacture=models.ImageField(upload_to='logos/', null=True, blank=True)
+    logobodyfacture=models.ImageField(upload_to='logos/', null=True, blank=True)
