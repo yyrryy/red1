@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from main.models import Produit, Mark, Category, Supplier, Stockin, Itemsbysupplier, Client, Represent, Order, Orderitem, Clientprices, Bonlivraison, Facture, Outfacture, Livraisonitem, PaymentClientbl, PaymentClientfc,  PaymentSupplier, Bonsregle, Returnedsupplier, Avoirclient, Returned, Avoirsupplier, Orderitem, Carlogos, Ordersnotif, Connectedusers, Promotion, UserSession, Refstats, Notavailable, Cart, Wich, wishlist, Notification, Modifierstock, Cartitems, Notesrepresentant, Achathistory, Excelecheances, Tva, Damagedproducts, Etude, YearEndStock
+from main.models import Produit, Mark, Category, Supplier, Stockin, Itemsbysupplier, Client, Represent, Order, Orderitem, Clientprices, Bonlivraison, Facture, Outfacture, Livraisonitem, PaymentClientbl, PaymentClientfc,  PaymentSupplier, Bonsregle, Returnedsupplier, Avoirclient, Returned, Avoirsupplier, Orderitem, Carlogos, Ordersnotif, Connectedusers, Promotion, UserSession, Refstats, Notavailable, Cart, Wich, Wishlist, Notification, Modifierstock, Cartitems, Notesrepresentant, Achathistory, Excelecheances, Tva, Damagedproducts, Etude, YearEndStock, Setting
 from django.contrib.auth import logout
 from django.http import JsonResponse, HttpResponse
 import openpyxl
@@ -878,16 +878,29 @@ def updatestockinv(request):
     })
 
 def getconnected(request):
-    res=req.get('http://domain.com/products/getconnectedusers')
-    return JsonResponse(json.loads(res.text))
+    serverip = Setting.objects.only('serverip').first()
+    serverip = serverip.serverip if serverip else None
+    if serverip:
+        res=req.get(f'http://{serverip}/products/getconnectedusers')
+        return JsonResponse(json.loads(res.text))
+    return JsonResponse([], safe=False)
 def getusercart(request):
     userid=request.GET.get('userid')
-    res=req.get('http://domain.com/getitemsincart?userid='+userid)
-    return JsonResponse(json.loads(res.text))
-def getitemsinwishlist(request):
+    serverip = Setting.objects.only('serverip').first()
+    serverip = serverip.serverip if serverip else None
+    if serverip:
+        res=req.get(f'http://{serverip}/getitemsincart?userid='+userid)
+        return JsonResponse(json.loads(res.text))
+    return JsonResponse([], safe=False)
+    
+def getitemsinWishlist(request):
     userid=request.GET.get('userid')
-    res=req.get('http://domain.com/getitemsinwishlist?userid='+userid)
-    return JsonResponse(json.loads(res.text))
+    serverip = Setting.objects.only('serverip').first()
+    serverip = serverip.serverip if serverip else None
+    if serverip:
+        res=req.get(f'http://{serverip}/getitemsinWishlist?userid='+userid)
+        return JsonResponse(json.loads(res.text))
+    return JsonResponse([], safe=False)
 def initpage(request):
     return render(request, 'initpage.html')
 
@@ -962,3 +975,53 @@ def getstockyear(request):
     print('>>', date.year)
     pdcts=YearEndStock.objects.filter(date__year=date.year)
     return render(request, 'stockyeartrs.html', {'products':pdcts})
+def addmark(request):
+    name=request.POST.get('marque')
+    if Mark.objects.filter(name=name).exists():
+        return JsonResponse({
+            'exist':True,
+            'error':'deja exist'
+        })
+    m=Mark.objects.create(name=name)
+    serverip = Setting.objects.only('serverip').first()
+    serverip = serverip.serverip if serverip else None
+    mrq=Mark.objects.create(name=name)
+    if serverip:
+        req.post(f'http://{serverip}/products/createmarque', {
+            'name':name,
+        })
+    return JsonResponse({
+        'success':True,
+        'id':m.id,
+        'name':name
+    })
+
+def addcategory(request):
+    name=request.POST.get('category')
+    if Category.objects.filter(name=name).exists():
+        return JsonResponse({
+            'exist':True,
+            'error':'deja exist'
+        })
+    m=Category.objects.create(name=name)
+    serverip = Setting.objects.only('serverip').first()
+    serverip = serverip.serverip if serverip else None
+    if serverip:
+        try:
+            res=req.post(f'http://{serverip}/products/createcategory', {
+                'name':name,
+                # get image file
+            })
+            res.raise_for_status()
+        except Exception as e:
+            return JsonResponse({
+                'success':False,
+                'error':'Error in request to the server'
+            })
+        
+    return JsonResponse({
+        'success':True,
+        'id':m.id,
+        'name':name
+    })
+

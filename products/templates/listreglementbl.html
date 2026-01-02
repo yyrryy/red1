@@ -452,7 +452,15 @@
           </thead>
           <tbody>
                {% for i in reglements %}
-               <tr class="reglbl-row" style={% if i.mode != 'espece' and i.echance == today %}"background: yellow;"{% elif i.mode != 'espece' and i.echance < today %}"color:red" {% endif %} >
+               <tr class="reglbl-row"
+               {% if not i.ispaid and i.mode != 'espece' and i.mode != 'avoir' %}
+                   {% if i.echance == today %}
+                       style="background: yellow;"
+                   {% elif i.echance < today %}
+                       style="background: red;"
+                   {% endif %}
+               {% endif %}
+                >
                      <td>
                           {{i.mode}} <br>
                           <!-- <select name="updatemodereglbl{{i.id}}" id=""></select> -->
@@ -1173,7 +1181,8 @@
             bons:JSON.stringify(selectedValues),
             csrfmiddlewaretoken: '{{ csrf_token }}'
             }, function(data){
-                forceupdatetab('addlistreglementbl', '/products/listreglementbl')
+                createtab('addlistreglementbl', 'REGL BL', '/products/listreglementbl')
+                // forceupdatetab('addlistreglementbl', '/products/listreglementbl')
                 alertify.success('Reglement ajouté')
         })
     })

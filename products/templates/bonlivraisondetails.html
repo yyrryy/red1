@@ -57,8 +57,10 @@
     <div class="mt-2">
       Contre/normal
       <select class="updateiscontreselect" name="" onchange="updateiscontrebon(event, '{{order.id}}')">
-        <option value="normal">Normal</option>
-        <option value="contre" {% if order.iscontre %}selected{%endif%} >Contre</option>
+          <option value="Simple" {% if order.paymenttype == "Simple" %}selected{%endif%}>Simple</option>
+          <option value="Espece" {% if order.paymenttype == "Espece" %}selected{%endif%}>Espece</option>
+          <option value="Cheque" {% if order.paymenttype == "Cheque" %}selected{%endif%}>Cheque</option>
+          <option value="Traite" {% if order.paymenttype == "Traite" %}selected{%endif%}>Traite</option>
       </select>
     </div>
     <strong>Reglements:</strong>
@@ -171,7 +173,7 @@
               <td style="white-space: nowrap;">
                   {% for v in i %}
 
-                  {{v.name.upper|slice:'45'}}
+                  {{v.name.upper|slice:'45'}} {%if v.product.mark%}{{v.product.mark}}{%endif%}
                   <br>
                   {% endfor %}
               </td>
@@ -300,7 +302,7 @@
                 <td style="white-space: nowrap;">
                   {% for v in i %}
 
-                  {{v.name.upper|slice:'45'}}
+                  {{v.name.upper|slice:'45'}} {%if v.product.mark%}{{v.product.mark}}{%endif%}
                   <br>
                   {% endfor %}
               </td>

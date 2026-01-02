@@ -53,7 +53,7 @@ class Produit(models.Model):
     sellprice=models.FloatField(default=None, null=True, blank=True)
     sellpricebrut=models.FloatField(default=None, null=True, blank=True)
     coutmoyen=models.FloatField(default=None, null=True, blank=True)
-    remise=models.IntegerField(default=35, null=True, blank=True)
+    remise=models.IntegerField(default=0, null=True, blank=True)
     #checkprice= models.FloatField(default=None, null=True, blank=True)
     prixnet=models.FloatField(default=None, null=True, blank=True)
     devise=models.FloatField(default=None, null=True, blank=True)
@@ -69,7 +69,7 @@ class Produit(models.Model):
     stockdepot=models.IntegerField(default=None, null=True, blank=True)
     stocktotal=models.IntegerField(default=None, null=True, blank=True)
     stockinitial=models.IntegerField(default=0, null=True, blank=True)
-    stockfacture=models.IntegerField(default=None, null=True, blank=True)
+    stockfacture=models.IntegerField(default=0, null=True, blank=True)
     stockbon=models.IntegerField(default=None, null=True, blank=True)
     # stock=models.BooleanField(default=True)
     # add equivalent in refs
@@ -115,6 +115,8 @@ class Produit(models.Model):
         # Custom sorting key function
         parts = [part.isdigit() and int(part) or part for part in re.split(r'(\d+)', self.code)]
         return parts
+    def totalofstock(self):
+        return 0 if self.ref=='divers' else self.stocktotal*self.buyprice
 
     def getprofit(self):
         try:
@@ -167,7 +169,7 @@ class YearEndStock(models.Model):
     sellprice=models.FloatField(default=None, null=True, blank=True)
     sellpricebrut=models.FloatField(default=None, null=True, blank=True)
     coutmoyen=models.FloatField(default=None, null=True, blank=True)
-    remise=models.IntegerField(default=35, null=True, blank=True)
+    remise=models.IntegerField(default=0, null=True, blank=True)
     #checkprice= models.FloatField(default=None, null=True, blank=True)
     prixnet=models.FloatField(default=None, null=True, blank=True)
     devise=models.FloatField(default=None, null=True, blank=True)
@@ -345,6 +347,7 @@ class Order(models.Model):
 
 class Bonlivraison(models.Model):
     iscontre=models.BooleanField(default=False)
+    paymenttype=models.CharField(max_length=50, null=True, default='simple')
     commande=models.ForeignKey(Order, on_delete=models.SET_NULL, default=None, null=True, blank=True)
     date = models.DateTimeField(default=datetime.datetime.now, blank=True, null=True)
     client=models.ForeignKey(Client, on_delete=models.SET_NULL, default=None, null=True, blank=True)
@@ -657,7 +660,9 @@ class Returnedsupplier(models.Model):
 
 
 class Ordersnotif(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    length=models.IntegerField(default=0)
+    # catch the orders json from server
+    orders=models.JSONField(default=list, null=True, blank=True)
     isread=models.BooleanField(default=False)
 
 class Connectedusers(models.Model):
@@ -731,8 +736,8 @@ class Wich(models.Model):
     def __str__(self) -> str:
         if self.user:
             return self.user.username
-#wishlist items
-class wishlist(models.Model):
+#Wishlist items
+class Wishlist(models.Model):
     wich=models.ForeignKey(Wich, on_delete=models.CASCADE, default=None, null=True, blank=True)
     product=models.ForeignKey(Produit, on_delete=models.CASCADE, default=None)
     qty=models.IntegerField(default=None, null=True, blank=True)
