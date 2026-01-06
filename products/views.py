@@ -98,7 +98,6 @@ def createcategory(request):
                 'hideclient':hideclient,
                 'commercialexcluded':commercialexcluded,
                 # get image file
-                'image':category.image.url.replace('/media/', '') if category.image else ''
             }, files=files)
             res.raise_for_status()
         except req.exceptions.RequestException as e:
@@ -816,7 +815,7 @@ def addsupply(request):
     for i in json.loads(products):
         devise=0 if i['devise']=='' else i['devise']
         product=Produit.objects.get(pk=i['productid'])
-        remise=0 if i['remise']=='' else int(i['remise'])
+        remise=0 if i['remise']=='' else float(i['remise'])
         buyprice=0 if i['price']=='' else i['price']
         netprice=round(float(buyprice)-(float(buyprice)*float(remise)/100), 2)
         if isfacture:
@@ -3311,7 +3310,7 @@ def listboncommnd(request):
                 date=o['date'],
                 total=o['total'],
                 note=o['note'],
-                client=Client.objects.get(pk=o['client']),
+                client=Client.objects.get(code=o['clientcode']),
                 salseman=Represent.objects.get(pk=o['salsemanid']),
                 order_no=o['order_no'],
                 isclientcommnd=o['isclientcommnd'],
@@ -5640,7 +5639,6 @@ def notifyadmin(request):
             # get the number of commands in server not yet sent to local server
             res=req.get(f'http://{serverip}/products/getcommandnumber')
             length=json.loads(res.text)['length']
-            print('length', length!=0, length)
             if length!=0:
                 Ordersnotif.objects.create(length=json.loads(res.text)['length'], orders=json.loads(res.text)['orders'])
                 return JsonResponse({
@@ -9642,7 +9640,7 @@ def getitemsforlistbl(request):
     brands = [{'id': mark.id if mark.id else None, 'name': mark.name if mark.name else None, 'image':mark.image.url if mark.image else '/media/default.png'} for mark in unique_brands]
     categories = [{'id': category.id, 'name': category.name, 'image':category.image.url if category.image else '/media/default.png'} for category in unique_categories]
     trs=[f'''<tr class="productsbrand{i.mark.id if i.mark else ''}">
-    <td><img src={i.image.url if i.image else ''}></td>
+    <td><img style="width:50%" src={i.image.url if i.image else ''}></td>
     <td>{i.ref.upper()}</td>
     <td>{i.name.upper()}</td>
     <td style="color: #ff6409;
@@ -10474,7 +10472,7 @@ def bonlivraisonprint(request, id):
     orderitems=Livraisonitem.objects.filter(bon=order, isfacture=False).order_by('product__name')
     reglements=PaymentClientbl.objects.filter(bons__in=[order])
     orderitems=list(orderitems)
-    orderitems=[orderitems[i:i+38] for i in range(0, len(orderitems), 38)]
+    orderitems=[orderitems[i:i+41] for i in range(0, len(orderitems), 41)]
     ctx={
         'title':f'Bon de livraison {order.bon_no}',
         'order':order,
@@ -11295,12 +11293,14 @@ def getetatblfc(request):
             current = datetime(current.year, current.month + 1, 1)
     print('>> region: ', region, months)
     if region == '':
-        clients = Client.objects.filter(represent_id=rep).order_by('city').exclude(diver=True).exclude(name__istartswith='.').exclude(name__istartswith='test')
+        clients = Client.objects.filter(represent_id=rep).order_by('code').exclude(diver=True).exclude(name__istartswith='.').exclude(name__istartswith='test')
     else:
-        clients = Client.objects.filter(represent_id=rep, region=region).order_by('city').exclude(diver=True).exclude(name__istartswith='.').exclude(name__istartswith='test')
+        clients = Client.objects.filter(represent_id=rep, region=region).order_by('code').exclude(diver=True).exclude(name__istartswith='.').exclude(name__istartswith='test')
     print('>> clients', clients)
     serialized_data = []
     #client=Client.objects.get(pk=3758)
+    totalsoldbl=0
+    totalsoldfc=0
     for clientindex, client in enumerate(clients):
         sitdata=0
         client_data = {'client_name': client.name, 'client_id': client.id, 'client_code': client.code, 'client_city': client.city, 'client_region': client.region, 'client_moderegl': client.moderegl, 'client_represent': client.represent.name, 'monthly_data': [], 'totalsituation': 0, 'soldfc':client.soldfacture, 'soldbl':client.soldbl}
@@ -11425,9 +11425,11 @@ def getetatblfc(request):
 
             # Calculate total situation for the client
         client_data['totalsituationfc'] = round(total_factures - total_avoirfc - total_reglfc, 2)
+        totalsoldfc+=round(total_factures - total_avoirfc - total_reglfc, 2)
         # Calculate total situation for the client
         client_data['totalsituation'] = round(total_bons - total_avoirs - total_regls, 2)
         serialized_data.append(client_data)
+        totalsoldbl+=round(total_bons - total_avoirs - total_regls, 2)
 
         # Define start and end months for the date range
         # sitdata=0
@@ -11499,8 +11501,13 @@ def getetatblfc(request):
         # client_data['totalsituation'] = round(total_factures - total_avoirs - total_regls, 2)
         # serialized_data.append(client_data)
 
+
+    print('>>> soldbl', totalsoldbl)
+    print('>>> soldfc', totalsoldfc)
     return JsonResponse({
-        'trs':render(request, 'etatblfctrs.html', {'data': serialized_data, 'months': months, 'monthtostart': start_date_str, 'monthtoend': end_date_str}).content.decode('utf-8')
+        'trs':render(request, 'etatblfctrs.html', {'data': serialized_data, 'months': months, 'monthtostart': start_date_str, 'monthtoend': end_date_str, 'totalsoldbl':totalsoldbl, 'totalsoldfc':totalsoldfc}).content.decode('utf-8'),
+        'totalsoldbl':totalsoldbl,
+        'totalsoldfc':totalsoldfc,
     })
 
 

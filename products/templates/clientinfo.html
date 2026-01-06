@@ -1,4 +1,5 @@
 {% load global_tags %}
+<h1 class="bg-dark border-radius">{{client.name}}</h1>
 <div class="row">
     <div class="col-3">
         <div class="bg-white p-2">
@@ -318,6 +319,7 @@
         });
     }
     function createclientaccount(event){
+        $(event.target).addClass('disabled btn-loading')
         parentdiv=$(event.target).parent().parent().parent()
         var username = parentdiv.find('input[name="clientusername"]').val();
         var password = parentdiv.find('input[name="clientpassword"]').val();
