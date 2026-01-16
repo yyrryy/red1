@@ -159,16 +159,14 @@
                     
                     <div class="product-card__name">
                       <div >
-                        <strong class="badge bg-primary" style="font-size: 17px;">{{i.ref.upper}}</strong>
-                        <strong>
-                        {% if i.refeq1 %}
-                        {{i.refeq1}}
+                        <strong class="badge bg-primary" style="font-size: 17px;">{{i.ref.upper}}{% if i.refeq1 %} <br>
+                        {{i.refeq1}}<br>
                         {% endif %}
-                      </strong><br>
-                      <strong>
                         {% if i.refeq2 %}
-                        {{i.refeq2}}
+                        {{i.refeq2}}<br>
                         {%endif%}
+                        <strong>
+                        
                       </strong>
                         - {{i.name}} {%if i.diametre%}<span class="text-primary">{{i.diametre}}</span>{%endif%}
                       </div>
