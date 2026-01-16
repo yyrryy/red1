@@ -165,9 +165,10 @@
                       </div>
                     </div>
                     <div>
-                      test1 <br>
-                      test1 <br>
-                      test1 <br>
+                      {% if i.refeq1%}
+                      {{refeq1}} <br>
+                      {% if i.refeq2%}
+                      {{refeq2}} <br>
                     </div>
                     <div class="product-card__rating d-flex justify-content-between align-items-center">
                       <div class="disponible" style="border-radius: 50%; width: 20px; height: 20px; background: {% if i.stocktotal <= 0%}red{%elif i.stocktotal <= 0 %}orange{%else%}green{%endif%};"></div>
