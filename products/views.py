@@ -3321,7 +3321,7 @@ def listboncommnd(request):
     current_time = datetime.now().strftime('%H:%M:%S')
     # serverip = Setting.objects.only('serverip').first()
     # serverip = serverip.serverip if serverip else None
-    ordersnotif=Ordersnotif.objects.first()
+    ordersnotif=Ordersnotif.objects.filter(isread=False).first()
     if ordersnotif:
         # means ther is order
         orders=ordersnotif.orders
@@ -3362,7 +3362,9 @@ def listboncommnd(request):
 
             # 5. Bulk insert
             Orderitem.objects.bulk_create(order_items)
-        Ordersnotif.objects.all().delete()
+        ordersnotif.isread=True
+        ordersnotif.save()
+        #Ordersnotif.objects.all().delete()
     orders=Order.objects.filter(date__year=thisyear).order_by('-id')[:50]
     ctx={
         'title':'List des bon commnd',
@@ -5656,9 +5658,7 @@ def updatebonavoirsupp(request):
 
 
 def notifyadmin(request):
-    serverip= Setting.objects.only('serverip').first()
-    serverip=serverip.serverip if serverip else None
-    notification=Ordersnotif.objects.first()
+    notification=Ordersnotif.objects.filter(isread=False).first()
     if notification:
         return JsonResponse({
             'length':notification.length,
@@ -5682,12 +5682,6 @@ def notifyadmin(request):
             })
     return JsonResponse({
         'length':0,
-    })
-    oldnotif=Ordersnotif.objects.filter(isread=True)
-    oldnotif.delete()
-    newnotif=Ordersnotif.objects.filter(isread=False)
-    return JsonResponse({
-        "length": newnotif.count(),
     })
 
 def disablenotif(request):
