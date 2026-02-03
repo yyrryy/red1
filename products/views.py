@@ -5663,6 +5663,8 @@ def notifyadmin(request):
         return JsonResponse({
             'length':notification.length,
         })
+    serverip= Setting.objects.only('serverip').first()
+    serverip=serverip.serverip if serverip else None
     if serverip:
         try:
             # get the number of commands in server not yet sent to local server
