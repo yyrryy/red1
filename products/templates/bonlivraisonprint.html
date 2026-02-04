@@ -49,25 +49,25 @@
     <!-- last iteration -->
     <div class="px-2 d-flex flex-column postion-relative livraison{{order.id}}holder" style="height: 1123px;width: 21cm; page-break-before: always;">
       <!-- header -->
-      <div class="mt-5">
-        <div class="d-flex justify-content-between p-2">
+      <div class="mt-5 p-2">
+        <div class="d-flex justify-content-between mb-3">
           <img src="/media/logos/logo2.jpg" alt="" style="width: 40%; visibility: hidden;" class="bllogo">
-          <div style="border: 1px solid; padding: 2px; width: 25em;">
+          <div style="border: 1px solid; width: 25em;">
             <div>{{order.client.name.upper}}</div>
             <div>{{order.client.city.upper}}</div>
           </div>
         </div>
 
-        <div class="d-flex justify-content-between mt-2 p-2">
-          <div class="p-2 rounded" style="border: 1px solid;">
+        <div style="border: 1px solid;">
+          <div>
+            <strong>Bon livraison N°: {{ bon_no }}</strong> <br>
             <strong>Date: {{ order.date|date:"d/m/Y" }}</strong>
           </div>
-          <div class="p-2 rounded" style="border: 1px solid;">
-            <strong>Bon livraison N°: {{ bon_no }}</strong>
+          <!-- <div class="p-2 rounded" style="border: 1px solid;">
           </div>
           <div class="p-2 rounded" style="border: 1px solid;">
             <strong>Code: {{order.client.code.upper}}</strong>
-          </div>
+          </div> -->
         </div>
 
 
