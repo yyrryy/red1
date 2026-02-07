@@ -236,14 +236,16 @@ def createmarque(request):
     serverip = Setting.objects.only('serverip').first()
     serverip = serverip.serverip if serverip else None
     mrq=Mark.objects.create(name=name, image=image, masqueclients=hideclient)
+    files = {}
+    if image:
+        files['image'] = image  
     if serverip:
-        req.get(f'http://{serverip}/products/createmarque', {
+        req.post(f'http://{serverip}/products/createmarque', {
             'name':name,
             'hideclient':hideclient,
             'commercialexcluded':commercialexcluded,
             # get image file
-            'image':mrq.image.url.replace('/media/', '') if mrq.image else ''
-        })
+        }, files=files)
     if len(commercialexcluded) > 0:
         mrq.excludedrep.set(reps)
     return JsonResponse({
