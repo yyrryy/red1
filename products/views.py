@@ -10497,6 +10497,7 @@ def tsgs(request):
 def bonlivraisonprint(request, id):
     order=Bonlivraison.objects.get(pk=id)
     orderitems=Livraisonitem.objects.filter(bon=order, isfacture=False).order_by('product__name')
+    totalarticles = len(orderitems)
     reglements=PaymentClientbl.objects.filter(bons__in=[order])
     orderitems=list(orderitems)
     orderitems=[orderitems[i:i+41] for i in range(0, len(orderitems), 41)]
@@ -10505,7 +10506,7 @@ def bonlivraisonprint(request, id):
         'order':order,
         'bon_no':order.bon_no.replace('BL', ''),
         'orderitems':orderitems,
-        'totalarticles':len(orderitems)
+        'totalarticles':totalarticles
     }
     return render(request, 'bonlivraisonprint.html', ctx)
 
