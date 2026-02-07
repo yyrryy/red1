@@ -10505,8 +10505,6 @@ def bonlivraisonprint(request, id):
         'order':order,
         'bon_no':order.bon_no.replace('BL', ''),
         'orderitems':orderitems,
-        'reglements':reglements,
-        'reps':Represent.objects.all()
     }
     return render(request, 'bonlivraisonprint.html', ctx)
 

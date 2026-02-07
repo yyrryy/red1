@@ -146,9 +146,12 @@
         </table>
         <!-- footer total -->
         <div class="d-flex justify-content-between">
-          <small>
+          <div>
             page: {{forloop.counter}}/{{orderitems|length}}
-          </small>
+          </div>
+          <div>
+            Articles: {{orderitems|length}}
+          </div>
           <div class="text-center d-flex justify-content-between" style="font-size: 13px; width:14em; border: 1px solid;">
             <div>Total</div>
             <div style="font-size: 16px; margin-right: 13px;">
