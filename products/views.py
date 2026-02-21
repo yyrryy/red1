@@ -4681,7 +4681,8 @@ def createlogo(request):
     }
     return JsonResponse({
         'html':render(request, 'carlogos.html', ctx).content.decode('utf-8')
-    })ef updatelogo(request):
+    })
+def updatelogo(request):
     image=request.FILES.get('updatelogoimage') or None
     id=request.POST.get('id')
     carlogo=Carlogos.objects.get(pk=id)
