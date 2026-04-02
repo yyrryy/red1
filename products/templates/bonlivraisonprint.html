@@ -85,7 +85,7 @@
           visibility: hidden;
           ">
         <table class="table table-bordered blitems" style="font-size: 13px; border-color: black;">
-          <thead style="background: #c9c9c967; font-size: 10px;
+          <thead style="background: #c9c9c967; font-size: 14px;
         font-weight: 800;" class="text-center">
             <tr>
               <td>Ref</td>
@@ -108,7 +108,7 @@
               <td style="white-space: nowrap; padding:3px">
                   {% for v in i %}
 
-                  {{v.product.name.upper|slice:'65'}} {%if v.product.mark%}{{v.product.mark}}{%endif%} {%if v.product.diametre%}{{v.product.diametre}}{%endif%}
+                  {{v.product.name.upper|slice:'45'}} {%if v.product.mark%}{{v.product.mark}}{%endif%} {%if v.product.diametre%}{{v.product.diametre}}{%endif%}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
@@ -229,7 +229,7 @@
               <td style="white-space: nowrap; padding:3px">
                   {% for v in i %}
 
-                  {{v.product.name.upper|slice:'65'}} {%if v.product.mark%}{{v.product.mark}}{%endif%} {%if v.product.diametre%}{{v.product.diametre}}{%endif%}
+                  {{v.product.name.upper|slice:'45'}} {%if v.product.mark%}{{v.product.mark}}{%endif%} {%if v.product.diametre%}{{v.product.diametre}}{%endif%}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
