@@ -5,3 +5,8 @@ interface
 affichage
 multiple prix in one case
 GZENAYA AE
+
+
+seperate commande and reliqua when article has 10 in stock and client commande 5, 5 should be in commande and 5 in reliquat
+button to select reliquat product when creating bon livraison
+affichage representant

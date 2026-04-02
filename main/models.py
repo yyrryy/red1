@@ -569,7 +569,7 @@ class Livraisonitem(models.Model):
     product=models.ForeignKey(Produit, on_delete=models.CASCADE, default=None, null=True)
     remise=models.CharField(max_length=100, null=True, default=None)
     ref=models.CharField(max_length=100, null=True, default=None)
-    name=models.CharField(max_length=100, null=True, default=None)
+    name=models.CharField(max_length=9000, null=True, default=None)
     qty=models.IntegerField()
     # this total represents the revenue of this product
     price=models.FloatField(default=0.00)

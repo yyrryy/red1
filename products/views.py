@@ -927,7 +927,6 @@ def addbonlivraison(request):
             for i in json.loads(products):
                 product=Produit.objects.get(pk=i['productid'])
                 product.stocktotal=int(product.stocktotal)-int(i['qty'])
-                product.save()
                 Livraisonitem.objects.create(
                     bon=order,
                     remise=i['remise'],
@@ -940,6 +939,7 @@ def addbonlivraison(request):
                     client_id=clientid,
                     date=datebon
                 )
+                # product.save()
                 uniqcides.append([product.uniqcode, product.stocktotal])
     # after the loop, we will have the uniqcides of the products in the list, a function in a tread
     serverip = Setting.objects.only('serverip').first()
@@ -2267,7 +2267,7 @@ def updatebonlivraison(request):
         product=Produit.objects.get(pk=i['productid'])
         product.stocktotal=int(product.stocktotal)-qty
 
-        product.save()
+        #product.save()
 
         # create new livraison items
         Livraisonitem.objects.create(
