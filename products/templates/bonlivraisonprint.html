@@ -108,7 +108,7 @@
               <td style="white-space: nowrap; padding:3px">
                   {% for v in i %}
 
-                  {{v.product.name.upper|slice:'35'}}
+                  {{v.product.name.upper|slice:'35'}} {%if v.product.mark%}{{v.product.mark}}{%endif%}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
@@ -229,7 +229,7 @@
               <td style="white-space: nowrap; padding:3px">
                   {% for v in i %}
 
-                  {{v.product.name.upper|slice:'25'}}
+                  {{v.product.name.upper|slice:'35'}} {%if v.product.mark%}{{v.product.mark}}{%endif%}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
