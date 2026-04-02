@@ -208,11 +208,11 @@
           visibility: hidden;
           ">
         <table class="table table-bordered blitems" style="font-size: 13px; border-color: black;">
-          <thead style="background: #5b5b5b; font-size: 10px;
-        font-weight: 800; color: white;" class="text-center">
-            <tr style="height: 30px; font-size: 16px;">
+          <thead style="background: #c9c9c967; font-size: 10px;
+        font-weight: 800;" class="text-center">
+            <tr>
               <td style="width:15%;">Ref</td>
-              <td style="width:57%;">Designation</td>
+              <td style="width:60%;">Designation</td>
               <td style="width: 5%;">Qté</td>
               <td style="width: 7%;">P.U</td>
               <td style="width: 3%;">Rem</td>
@@ -221,45 +221,45 @@
           </thead>
           <tbody>
             <tr>
-              <td style="height: 194mm;white-space: nowrap; padding:3px">
+              <td style="height: 215mm;white-space: nowrap; padding:3px">
                   {% for v in i %}
 
                   {{v.product.ref.upper}}
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
-                  </td>
-                <td style="white-space: nowrap; padding:3px">
+              </td>
+              <td style="white-space: nowrap; padding:3px">
                   {% for v in i %}
 
                   {{v.product.name.upper|slice:'65'}} {%if v.product.mark%}{{v.product.mark}}{%endif%} {%if v.product.diametre%}{{v.product.diametre}}{%endif%}
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
               </td>
               <td class="text-center">
                   {% for v in i %}
 
                   {{v.qty}}
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
               </td>
               <td class="text-center">
                   {% for v in i %}
 
                   {{v.price|floatformat:2}}
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
               </td>
               <td class="text-center">
                   {% for v in i %}
                   0
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
               </td>
               <td class="text-center">
                   {% for v in i %}
 
                   {{v.total|floatformat:2|intspace}}
-                  <hr style="margin: 4px;opacity: 0;">
+                  <hr style="margin:0; padding:0;opacity: 1;">
                   {% endfor %}
               </td>
 
@@ -267,6 +267,24 @@
           </tbody>
 
         </table>
+        <!-- footer total -->
+        <div class="d-flex justify-content-between">
+          <small>
+            page: {{forloop.counter}}/{{orderitems|length}}
+          </small>
+          <div class="text-center d-flex justify-content-between" style="background: #aeaeae8c;
+          font-size: 13px; width:14em;">
+            <div>Total</div>
+            <div style="font-size: 16px; margin-right: 13px;">
+              <strong>
+                {{order.total|floatformat:2|intspace}}
+              </strong>
+            </div>
+          </div>
+
+
+        </div>
+
       </div>
 
       <!-- livraison footer -->
