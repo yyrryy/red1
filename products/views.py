@@ -10499,7 +10499,7 @@ def bonlivraisonprint(request, id):
     totalarticles = len(orderitems)
     reglements=PaymentClientbl.objects.filter(bons__in=[order])
     orderitems=list(orderitems)
-    orderitems=[orderitems[i:i+35] for i in range(0, len(orderitems), 35)]
+    orderitems=[orderitems[i:i+10] for i in range(0, len(orderitems), 10)]
     ctx={
         'title':f'Bon de livraison {order.bon_no}',
         'order':order,
