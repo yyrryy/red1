@@ -274,6 +274,10 @@
         console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
         pdcts=JSON.parse(localStorage.getItem('pdctsinbonlivraison')) || []
         console.log(id, pdcts, pdcts.includes(id))
+        if (addprice.val()<=dp){
+          alertify.error('Le prix doit être supérieur à prix achat')
+          return
+        }
         if (pdcts.includes(id)){
           parentdiv.find('.addstock').val('')
           parentdiv.find('.addstockfacture').val('')
@@ -563,6 +567,7 @@
           if ($(this).val()==''){
               return
           }
+
           var [ref, name, dp, stock, stockfacture, id, sellprice, remise, netprice, representprice] = $(this).val().split('§');
           let repswithprice=[]
           let addname=$(this).parent().parent().find('input[name="addname"]')
