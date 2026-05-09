@@ -54,7 +54,9 @@
           <img src="/media/logos/logo2.jpg" alt="" style="width: 30%;" class="bllogo">
           <div style="border: 1px solid; width: 25em; text-align: center;">
             <div>CLIENT: {{order.client.name.upper}}</div> <br>
-            <div>{{order.client.city.upper}}</div>
+            <div>{{order.client.city.upper}}</div><br>
+            <div>Transport: {{order.note}}</div><br>
+            <div>({{order.paymenttype}})</div>
           </div>
         </div>
 
@@ -145,7 +147,7 @@
               </td>
               <td class="text-center">
                   {% for v in i %}
-                  0
+                  {{v.remise}}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
@@ -193,7 +195,9 @@
           <img src="/media/logos/logo2.jpg" alt="" style="width: 30%;" class="bllogo">
           <div style="border: 1px solid; width: 25em; text-align: center;">
             <div>CLIENT: {{order.client.name.upper}}</div> <br>
-            <div>{{order.client.city.upper}}</div>
+            <div>{{order.client.city.upper}}</div><br>
+            <div>Transport: {{order.note}}</div><br>
+            <div>({{order.paymenttype}})</div>
           </div>
         </div>
 
@@ -267,7 +271,7 @@
               </td>
               <td class="text-center">
                   {% for v in i %}
-                  0
+                  {{v.remise}}
                   <hr style="margin:4px; opacity: 0;">
                   {% endfor %}
               </td>
