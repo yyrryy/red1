@@ -248,10 +248,10 @@ margin: 0;
     console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
     pdcts=JSON.parse(localStorage.getItem(`pdctsinbonlivraison${bonid}`))
     console.log(id, pdcts, pdcts.includes(id))
-    if (addprice.val()<=dp){
-          alertify.error('Le prix doit être supérieur à prix achat')
-          return
-        }
+    // if (addprice.val()<=dp){
+    //       alertify.error('Le prix doit être supérieur à prix achat')
+    //       return
+    //     }
     if (pdcts.includes(id)){
       addqty.val('')
       addname.val('')
