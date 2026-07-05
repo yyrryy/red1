@@ -25,7 +25,7 @@ from collections import defaultdict
 import calendar
 from django.db.models.functions import TruncDay
 import uuid
-from .funcs import updatestockinremoteserver
+from .funcs import updatestockinremoteserver, createorders
 from threading import Thread
 
 today = timezone.now().date()
@@ -436,7 +436,6 @@ def addoneproduct(request):
             res.raise_for_status()
 
         except req.exceptions.RequestException as e:
-            print('>>> error', e)
             return JsonResponse({
                 'success':False,
                 'error':f'error {e}'
@@ -3323,50 +3322,50 @@ def listboncommnd(request):
     current_time = datetime.now().strftime('%H:%M:%S')
     # serverip = Setting.objects.only('serverip').first()
     # serverip = serverip.serverip if serverip else None
-    ordersnotif=Ordersnotif.objects.filter(isread=False).first()
-    if ordersnotif:
-        # means ther is order
-        orders=ordersnotif.orders
-        # items=data['items']
-        #print('orders', orders, 'items', items)
-        for o in orders:
-            # 1. Create order
-            order = Order.objects.create(
-                date=o['date'],
-                total=o['total'],
-                note=o['note'],
-                client=Client.objects.get(code=o['clientcode']),
-                salseman=Represent.objects.get(pk=o['salsemanid']),
-                order_no=o['order_no'],
-                isclientcommnd=o['isclientcommnd'],
-            )
+    # ordersnotif=Ordersnotif.objects.filter(isread=False).first()
+    # if ordersnotif:
+    #     # means ther is order
+    #     orders=ordersnotif.orders
+    #     # items=data['items']
+    #     #print('orders', orders, 'items', items)
+    #     for o in orders:
+    #         # 1. Create order
+    #         order = Order.objects.create(
+    #             date=o['date'],
+    #             total=o['total'],
+    #             note=o['note'],
+    #             client=Client.objects.get(code=o['clientcode']),
+    #             salseman=Represent.objects.get(pk=o['salsemanid']),
+    #             order_no=o['order_no'],
+    #             isclientcommnd=o['isclientcommnd'],
+    #         )
 
-            items = o['items']
+    #         items = o['items']
 
-            # 2. Collect uniqcodes
-            uniqcodes = [item['uniqcode'] for item in items]
+    #         # 2. Collect uniqcodes
+    #         uniqcodes = [item['uniqcode'] for item in items]
 
-            # 3. Fetch products in ONE query
-            produits = Produit.objects.filter(uniqcode__in=uniqcodes)
-            produit_map = {p.uniqcode: p for p in produits}
+    #         # 3. Fetch products in ONE query
+    #         produits = Produit.objects.filter(uniqcode__in=uniqcodes)
+    #         produit_map = {p.uniqcode: p for p in produits}
 
-            # 4. Prepare Orderitem objects
-            order_items = [
-                Orderitem(
-                    order=order,
-                    product=produit_map[item['uniqcode']],
-                    qty=item['qty'],
-                    price=item['price'],
-                    total=item['total'],
-                )
-                for item in items
-            ]
+    #         # 4. Prepare Orderitem objects
+    #         order_items = [
+    #             Orderitem(
+    #                 order=order,
+    #                 product=produit_map[item['uniqcode']],
+    #                 qty=item['qty'],
+    #                 price=item['price'],
+    #                 total=item['total'],
+    #             )
+    #             for item in items
+    #         ]
 
-            # 5. Bulk insert
-            Orderitem.objects.bulk_create(order_items)
-        ordersnotif.isread=True
-        ordersnotif.save()
-        #Ordersnotif.objects.all().delete()
+    #         # 5. Bulk insert
+    #         Orderitem.objects.bulk_create(order_items)
+    #     ordersnotif.isread=True
+    #     ordersnotif.save()
+    #     #Ordersnotif.objects.all().delete()
     orders=Order.objects.filter(date__year=thisyear).order_by('-id')[:50]
     ctx={
         'title':'List des bon commnd',
@@ -5659,11 +5658,11 @@ def updatebonavoirsupp(request):
 
 
 def notifyadmin(request):
-    notification=Ordersnotif.objects.filter(isread=False).first()
-    if notification:
-        return JsonResponse({
-            'length':notification.length,
-        })
+    # notification=Ordersnotif.objects.filter(isread=False).first()
+    # if notification:
+    #     return JsonResponse({
+    #         'length':notification.length,
+    #     })
     serverip= Setting.objects.only('serverip').first()
     serverip=serverip.serverip if serverip else None
     if serverip:
@@ -5672,14 +5671,22 @@ def notifyadmin(request):
             res=req.get(f'http://{serverip}/products/getcommandnumber')
             length=json.loads(res.text)['length']
             if length!=0:
+                # creeate orders here
+                orders = json.loads(res.text)['orders']
+                Thread(target=createorders, args=(orders,)).start()
                 Ordersnotif.objects.create(length=json.loads(res.text)['length'], orders=json.loads(res.text)['orders'])
                 return JsonResponse({
                     'length':json.loads(res.text)['length'],
                     #'orders':json.loads(res.text)['orders']
                 })
+            else:
+                return JsonResponse({
+                    'length':0,
+                })
             res.raise_for_status()
         except req.exceptions.RequestException as e:
-            print('Error notifying admin on server:', e)
+            with open('error.log', 'a') as f:
+                f.write(f'Error notifying admin on server: {e}\n')
             return JsonResponse({
                 'length':0,
             })
@@ -11967,3 +11974,48 @@ def commandfromserver(request):
         'success':True
     })
 
+
+def initpage(request):
+    setting=Setting.objects.first()
+    ctx={
+        'title':'Configuration'
+    }
+    if setting:
+        ctx['setting']=setting
+    return render(request, 'initpage.html', ctx)
+
+
+def saveconfiguration(request):
+    name=request.POST.get('name')
+    gmail=request.POST.get('gmail')
+    address=request.POST.get('address')
+    phone=request.POST.get('phone')
+    fix=request.POST.get('fix')
+    cnss=request.POST.get('cnss')
+    ice=request.POST.get('ice')
+    idfiscal=request.POST.get('id_fiscal')
+    print("eee", idfiscal)
+    pt=request.POST.get('pt')
+    rc=request.POST.get('rc')
+    #logo zill be logoheadfacture
+    logo=request.FILES.get('logo')
+    settings=Setting.objects.first()
+    if settings:
+        settings.name=name
+        settings.gmail=gmail
+        settings.fix=fix
+        settings.ice=ice
+        settings.cnss=cnss
+        settings.address=address
+        settings.pt=pt
+        settings.rc=rc
+        settings.idfiscal=idfiscal
+        settings.phone=phone
+        if logo:
+            settings.logoheadfacture=logo
+        settings.save()
+    else:
+        Setting.objects.create(name=name, ice=ice, gmail=gmail, address=address, pt=pt, rc=rc, idfiscal=idfiscal, phone=phone, logoheadfacture=logo, cnss=cnss, fix=fix)
+    return JsonResponse({
+        'success':True
+    })
