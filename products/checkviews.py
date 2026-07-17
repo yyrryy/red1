@@ -1025,3 +1025,7 @@ def addcategory(request):
         'name':name
     })
 
+def lowstockproducts(request):
+    products=Produit.objects.filter(stocktotal__lte=F('minstock')).order_by('category__name')
+    print('>>> low stock products', products)
+    return render(request, 'lowstockproducts.html', {'products':products})
