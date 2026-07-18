@@ -5,11 +5,31 @@
     </div>
     <button class="btn bg-orange" style="border:1px solid var(--orange);" onclick="forceupdatetab('addlistbonachat', '/products/listbonachat?facture={% if facturesection %}1{% endif %}')">↻</button>
 </div>
+<div class="d-flex justify-content-between align-items-center bg-darkblue text-white p-2">
+    <p class="m-0">Filtere par</p>
+    <div>
+        <select class="form-select form-select-sm" id="filtercategory" onchange="filterlowstockproducts()">
+            <option value="">Catégories</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <select class="form-select form-select-sm" id="filterfournisseur" onchange="filterlowstockproducts()">
+            <option value="">Fournisseirs</option>
+            {% for f in suppliers %}
+            <option value="{{ f.id }}">{{ f.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
 <table class="table table-striped table-bordered table-sm">
     <thead>
         <tr>
             <th>Réf</th>
             <th>Catégorie</th>
+            <th>Fournisseur</th>
             <th>Marque</th>
             <th>Stock</th>
             <th>Min stock</th>
@@ -20,12 +40,30 @@
         <tr>
             <td>{{ product.ref }}</td>
             <td>{{ product.category.name }}</td>
+            <td>{{ product.supplier.name }}</td>
             <td>{{ product.mark }}</td>
             <td>{{ product.stocktotal }}</td>
             <td>{{ product.minstock }}</td>
         </tr>
         {% endfor %}
 </table>
+<script>
+    // function filterlowstockproducts will filter the products by category and supplier in the UI not by sending request to the server
+    function filterlowstockproducts() {
+        category=$('#filtercategory').val();
+        fournisseur=$('#filterfournisseur').val();
+        $('table tbody tr').each(function() {
+            var row = $(this);
+            var rowCategory = row.find('td:nth-child(2)').text();
+            var rowFournisseur = row.find('td:nth-child(3)').text();
+            if ((category === "" || rowCategory === category) && (fournisseur === "" || rowFournisseur === fournisseur)) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+</script>
 
 
 
