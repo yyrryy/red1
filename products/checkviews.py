@@ -1027,5 +1027,7 @@ def addcategory(request):
 
 def lowstockproducts(request):
     products=Produit.objects.filter(stocktotal__lte=F('minstock')).order_by('category__name')
+    categories = Category.objects.all()
+    suppliers = Supplier.objects.all()
     print('>>> low stock products', products)
-    return render(request, 'lowstockproducts.html', {'products':products})
+    return render(request, 'lowstockproducts.html', {'products':products, 'categories': categories, 'suppliers': suppliers})

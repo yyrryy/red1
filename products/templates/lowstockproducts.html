@@ -39,8 +39,8 @@
         {% for product in products %}
         <tr>
             <td>{{ product.ref }}</td>
-            <td>{{ product.category.name }}</td>
-            <td>{{ product.supplier.name }}</td>
+            <td data-category_id="{{ product.category.id }}">{{ product.category.name }}</td>
+            <td data-fournisseur_id="{{ product.supplier.id }}">{{ product.supplier.name }}</td>
             <td>{{ product.mark }}</td>
             <td>{{ product.stocktotal }}</td>
             <td>{{ product.minstock }}</td>
@@ -52,14 +52,28 @@
     function filterlowstockproducts() {
         category=$('#filtercategory').val();
         fournisseur=$('#filterfournisseur').val();
+        console.log('filterlowstockproducts', category, fournisseur);
         $('table tbody tr').each(function() {
             var row = $(this);
-            var rowCategory = row.find('td:nth-child(2)').text();
-            var rowFournisseur = row.find('td:nth-child(3)').text();
-            if ((category === "" || rowCategory === category) && (fournisseur === "" || rowFournisseur === fournisseur)) {
+            var rowCategory = row.find('td:nth-child(2)').data('category_id');
+            var rowFournisseur = row.find('td:nth-child(3)').data('fournisseur_id');
+            if (category === "" && fournisseur !== "") {
                 row.show();
+                if (rowFournisseur != fournisseur) {
+                    row.hide();
+                }
+            } else if (category !== "" && fournisseur === "") {
+                row.show();
+                if (rowCategory != category) {
+                    row.hide();
+                }
+            } else if (category !== "" && fournisseur !== "") {
+                row.show();
+                if (rowCategory != category || rowFournisseur != fournisseur) {
+                    row.hide();
+                }
             } else {
-                row.hide();
+                row.show();
             }
         });
     }
