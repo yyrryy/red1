@@ -1572,13 +1572,13 @@ def listbonlivraison(request):
     # Query for Bonlivraison objects that have a 'date' field earlier than three months ago
     depasser = Bonlivraison.objects.filter(date__lt=three_months_ago, ispaid=False, total__gt=0).count()
     # get only the last 100 orders of the current year
-    bons= Bonlivraison.objects.filter(date__year=timezone.now().year).order_by('-bon_no')[:50]
+    bons= Bonlivraison.objects.filter(date__year=timezone.now().year).order_by('-date')[:50]
     if facture:
         specific_date = datetime(2024, 11, 7).date()
         bons = Bonlivraison.objects.filter(
             Q(date__date=specific_date) | Q(date__date__lt=specific_date, isfacture=True) & ~Q(total__gt=0),
             date__year=timezone.now().year
-        ).order_by('-bon_no')[:50]
+        ).order_by('-date')[:50]
 
     total=Bonlivraison.objects.filter(date__year=timezone.now().year).aggregate(Sum('total')).get('total__sum')
     ctx={
@@ -4123,9 +4123,9 @@ def filterbldate(request):
     print(startdate, enddate)
     startdate = datetime.strptime(startdate, '%Y-%m-%d')
     enddate = datetime.strptime(enddate, '%Y-%m-%d')
-    bons=Bonlivraison.objects.filter(date__range=[startdate, enddate]).order_by('-bon_no')[:50]
+    bons=Bonlivraison.objects.filter(date__range=[startdate, enddate]).order_by('-date')[:50]
     if facture:
-        bons=Bonlivraison.objects.filter(date__range=[startdate, enddate], isfacture=True).order_by('-bon_no')[:50]
+        bons=Bonlivraison.objects.filter(date__range=[startdate, enddate], isfacture=True).order_by('-date')[:50]
     trs=''
     for i in bons:
         trs+=f'''
@@ -6638,15 +6638,15 @@ def loadlistbl(request):
                 )
         print(startdate, enddate)
         if startdate=='0' and enddate=='0':
-            bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-bon_no')[start:end]
+            bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-date')[start:end]
             if facture:
-                bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year, isfacture=True).exclude(total__gt=0).order_by('-bon_no')[start:end]
-            total=round(Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+                bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year, isfacture=True).exclude(total__gt=0).order_by('-date')[start:end]
+            total=round(Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
         else:
-            bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-bon_no')[start:end]
+            bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-date')[start:end]
             if facture:
-                bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate], isfacture=True).exclude(total__gt=0).order_by('-bon_no')[start:end]
-            total=round(Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+                bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate], isfacture=True).exclude(total__gt=0).order_by('-date')[start:end]
+            total=round(Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
         for i in bons:
             trs+=f'''
             <tr
@@ -6701,9 +6701,9 @@ def loadlistbl(request):
     if startdate != '0' and enddate != '0':
         startdate = datetime.strptime(startdate, '%Y-%m-%d')
         enddate = datetime.strptime(enddate, '%Y-%m-%d')
-        bons=Bonlivraison.objects.filter(date__range=[startdate, enddate]).order_by('-bon_no')[start:end]
+        bons=Bonlivraison.objects.filter(date__range=[startdate, enddate]).order_by('-date')[start:end]
         if facture:
-            bons=Bonlivraison.objects.filter(date__range=[startdate, enddate], isfacture=True).exclude(total__gt=0).order_by('-bon_no')[start:end]
+            bons=Bonlivraison.objects.filter(date__range=[startdate, enddate], isfacture=True).exclude(total__gt=0).order_by('-date')[start:end]
         total=round(Bonlivraison.objects.filter(date__range=[startdate, enddate]).aggregate(Sum('total'))['total__sum'] or 0, 2)
         for i in bons:
             trs+=f'''
@@ -6757,15 +6757,15 @@ def loadlistbl(request):
             'has_more': len(bons) == per_page
         })
     if year=="0":
-        bons= Bonlivraison.objects.filter(date__year=thisyear).order_by('-bon_no')[start:end]
+        bons= Bonlivraison.objects.filter(date__year=thisyear).order_by('-date')[start:end]
         if facture:
-            bons= Bonlivraison.objects.filter(date__year=thisyear, isfacture=True).exclude(total__gt=0).order_by('-bon_no')[start:end]
-        total=round(Bonlivraison.objects.filter(date__year=thisyear).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+            bons= Bonlivraison.objects.filter(date__year=thisyear, isfacture=True).exclude(total__gt=0).order_by('-date')[start:end]
+        total=round(Bonlivraison.objects.filter(date__year=thisyear).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
     else:
-        bons= Bonlivraison.objects.filter(date__year=year).order_by('-bon_no')[start:end]
+        bons= Bonlivraison.objects.filter(date__year=year).order_by('-date')[start:end]
         if facture:
-            bons= Bonlivraison.objects.filter(date__year=year, isfacture=True).exclude(total__gt=0).order_by('-bon_no')[start:end]
-        total=round(Bonlivraison.objects.filter(date__year=year).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+            bons= Bonlivraison.objects.filter(date__year=year, isfacture=True).exclude(total__gt=0).order_by('-date')[start:end]
+        total=round(Bonlivraison.objects.filter(date__year=year).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
 
     for i in bons:
         trs+=f'''
@@ -6968,7 +6968,7 @@ def searchforlistbl(request):
     # we dont need this
     if(term==''):
 
-        bons=Bonlivraison.objects.filter(date__year=year).order_by('-bon_no')[:50]
+        bons=Bonlivraison.objects.filter(date__year=year).order_by('-date')[:50]
         total=round(Bonlivraison.objects.filter(date__year=year).aggregate(Sum('total'))['total__sum'] or 0, 2)
         trs=''
         for i in bons:
@@ -7063,15 +7063,15 @@ def searchforlistbl(request):
             )
     print(startdate, enddate)
     if startdate=='0' and enddate=='0':
-        bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-bon_no')[:50]
+        bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-date')[:50]
         if facture:
-            bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year, isfacture=True).order_by('-bon_no')[:50]
-        total=round(Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+            bons=Bonlivraison.objects.filter(q_objects).filter(date__year=year, isfacture=True).order_by('-date')[:50]
+        total=round(Bonlivraison.objects.filter(q_objects).filter(date__year=year).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
     else:
-        bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-bon_no')[:50]
+        bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-date')[:50]
         if facture:
-            bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate], isfacture=True).order_by('-bon_no')[:50]
-        total=round(Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-bon_no').aggregate(Sum('total'))['total__sum'] or 0, 2)
+            bons=Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate], isfacture=True).order_by('-date')[:50]
+        total=round(Bonlivraison.objects.filter(q_objects).filter(date__range=[startdate, enddate]).order_by('-date').aggregate(Sum('total'))['total__sum'] or 0, 2)
     trs=''
     for i in bons:
         trs+=f'''

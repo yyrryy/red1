@@ -737,7 +737,7 @@ def make_product_new(request):
     })
 
 def getbonswhite(request):
-    bons=Bonlivraison.objects.filter(isdelivered=False).order_by('-bon_no')
+    bons=Bonlivraison.objects.filter(isdelivered=False).order_by('-date')
     return JsonResponse({
     'html':render(request, 'bllist.html', {'bons':bons, 'notloading':True}).content.decode('utf-8'),
     })
