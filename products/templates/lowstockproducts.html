@@ -1,5 +1,4 @@
 <div class="text-white rounded h3 d-flex align-items-center justify-content-between bg-darkblue">
-    <button class="btn bg-orange" style="border:1px solid var(--orange);" onclick="deletetab('listbonachat')">x</button>
     <div>
         Repture de stock
     </div>
@@ -23,6 +22,9 @@
             {% endfor %}
         </select>
     </div>
+    <div>
+        <button class="btn btn-sm text-white bi bi-download" onclick="printTable()">Imprimer</button>
+    </div>
 </div>
 <table class="table table-striped table-bordered table-sm">
     <thead>
@@ -33,6 +35,7 @@
             <th>Marque</th>
             <th>Stock</th>
             <th>Min stock</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -44,10 +47,26 @@
             <td>{{ product.mark }}</td>
             <td>{{ product.stocktotal }}</td>
             <td>{{ product.minstock }}</td>
+            <td>
+                <button class="btn btn-sm btn-danger" onclick="$(this).closest('tr').remove()">Supprimer</button>
+            </td>
         </tr>
         {% endfor %}
 </table>
 <script>
+    // print table in a new window
+    function printTable() {
+        table = document.querySelector('table').outerHTML;
+        var newWin = window.open('about:blank', '', 'width=900,height=900');
+        newWin.document.write("<html><head><link rel='stylesheet' type='text/css' href='/static/css/bootstrap.css'><title>Repture de stock</title></head><body>");
+        newWin.document.write("<h1>Repture de stock</h1>");
+        newWin.document.write(table);
+        newWin.document.write("</body></html>");
+        newWin.focus();
+        
+        
+        
+    }
     // function filterlowstockproducts will filter the products by category and supplier in the UI not by sending request to the server
     function filterlowstockproducts() {
         category=$('#filtercategory').val();
