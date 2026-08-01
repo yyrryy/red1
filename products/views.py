@@ -3322,7 +3322,11 @@ def listboncommnd(request):
     current_time = datetime.now().strftime('%H:%M:%S')
     # serverip = Setting.objects.only('serverip').first()
     # serverip = serverip.serverip if serverip else None
-    # ordersnotif=Ordersnotif.objects.filter(isread=False).first()
+    ord=Ordersnotif.objects.filter(isread=False).first()
+    if ord:
+        ord.isread=True
+        ord.save()
+    
     # if ordersnotif:
     #     # means ther is order
     #     orders=ordersnotif.orders
@@ -5658,7 +5662,7 @@ def updatebonavoirsupp(request):
 
 
 def notifyadmin(request):
-    # notification=Ordersnotif.objects.filter(isread=False).first()
+    notification=Ordersnotif.objects.filter(isread=False).first()
     # if notification:
     #     return JsonResponse({
     #         'length':notification.length,
@@ -5675,21 +5679,25 @@ def notifyadmin(request):
                 orders = json.loads(res.text)['orders']
                 Thread(target=createorders, args=(orders,)).start()
                 Ordersnotif.objects.create(length=json.loads(res.text)['length'], orders=json.loads(res.text)['orders'])
-                return JsonResponse({
-                    'length':json.loads(res.text)['length'],
-                    #'orders':json.loads(res.text)['orders']
-                })
-            else:
-                return JsonResponse({
-                    'length':0,
-                })
+            #     return JsonResponse({
+            #         'length':json.loads(res.text)['length'],
+            #         #'orders':json.loads(res.text)['orders']
+            #     })
+            # else:
+            #     return JsonResponse({
+            #         'length':0,
+            #     })
             res.raise_for_status()
         except req.exceptions.RequestException as e:
             with open('error.log', 'a') as f:
                 f.write(f'Error notifying admin on server: {e}\n')
-            return JsonResponse({
-                'length':0,
-            })
+            # return JsonResponse({
+            #     'length':0,
+            # })
+    if notification:
+        return JsonResponse({
+            'length':notification.length
+        })
     return JsonResponse({
         'length':0,
     })
