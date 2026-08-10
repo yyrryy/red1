@@ -30,6 +30,7 @@
     <thead>
         <tr>
             <th>Réf</th>
+            <th>designation</th>
             <th>Catégorie</th>
             <th>Fournisseur</th>
             <th>Marque</th>
@@ -42,6 +43,7 @@
         {% for product in products %}
         <tr>
             <td>{{ product.ref }}</td>
+            <td>{{ product.name }}</td>
             <td data-category_id="{{ product.category.id }}">{{ product.category.name }}</td>
             <td data-fournisseur_id="{{ product.supplier.id }}">{{ product.supplier.name }}</td>
             <td>{{ product.mark }}</td>
