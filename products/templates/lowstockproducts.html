@@ -71,30 +71,23 @@
     }
     // function filterlowstockproducts will filter the products by category and supplier in the UI not by sending request to the server
     function filterlowstockproducts() {
-        category=$('#filtercategory').val();
-        fournisseur=$('#filterfournisseur').val();
+        var category = $('#filtercategory').val();
+        var fournisseur = $('#filterfournisseur').val();
         console.log('filterlowstockproducts', category, fournisseur);
+        
         $('table tbody tr').each(function() {
             var row = $(this);
-            var rowCategory = row.find('td:nth-child(2)').data('category_id');
-            var rowFournisseur = row.find('td:nth-child(3)').data('fournisseur_id');
-            if (category === "" && fournisseur !== "") {
+            var rowCategory = row.find('td:nth-child(3)').data('category_id');     // ✅ Fixed
+            var rowFournisseur = row.find('td:nth-child(4)').data('fournisseur_id'); // ✅ Fixed
+            
+            // Compare as strings since .val() returns string
+            var categoryMatch = (category === "" || String(rowCategory) === String(category));
+            var fournisseurMatch = (fournisseur === "" || String(rowFournisseur) === String(fournisseur));
+            
+            if (categoryMatch && fournisseurMatch) {
                 row.show();
-                if (rowFournisseur != fournisseur) {
-                    row.hide();
-                }
-            } else if (category !== "" && fournisseur === "") {
-                row.show();
-                if (rowCategory != category) {
-                    row.hide();
-                }
-            } else if (category !== "" && fournisseur !== "") {
-                row.show();
-                if (rowCategory != category || rowFournisseur != fournisseur) {
-                    row.hide();
-                }
             } else {
-                row.show();
+                row.hide();
             }
         });
     }
