@@ -401,6 +401,21 @@
                                         <input type="text" name="updatecoderef" value="{{product.coderef}}" class="form-control">
                                     </div>
                                 </div>
+                                {% if not product.supplier%}
+                                <div class="col-3">
+                                    <small>
+                                        Fournisseur
+                                    </small>
+                                    <div class="col-12">
+                                        <select name="updatesupplier" class="form-control">
+                                            <option value="">-- Select Fournisseur --</option>
+                                            {% for supplier in suppliers %}
+                                                <option value="{{supplier.id}}" {% if product.supplier and product.supplier.id == supplier.id %}selected{% endif %}>{{supplier.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div>

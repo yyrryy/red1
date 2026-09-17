@@ -534,7 +534,8 @@ def viewoneproduct(request, id):
         'reps':Represent.objects.all(),
         'repswithprice':commercial_prices,
         'today':timezone.now().date(),
-        'avoirsupp':avoirsupp
+        'avoirsupp':avoirsupp,
+        'suppliers':Supplier.objects.all()
     }
     return render(request, 'viewoneproduct.html', ctx)
 
@@ -635,6 +636,11 @@ def updateproduct(request):
     product.repsprice=json.dumps(selected_reps)
     product.equivalent=equivalent
     product.code=request.POST.get('updatecode')
+    updatesupp=request.POST.get('updatesupplier', None)
+    if updatesupp == "":
+        updatesupp = None
+    if updatesupp:
+        product.supplier_id=updatesupp
     product.refeq1=request.POST.get('refeq1').strip().upper()
     product.refeq2=request.POST.get('refeq2').strip().upper()
     product.refeq3=request.POST.get('refeq3').strip().upper()
