@@ -272,6 +272,13 @@
         }
         var [ref, name, dp, stock, stockfacture, id, sellprice, remise, netprice, representprice] = addname.attr('data').split('§');
         console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
+        color = 'none'
+        // if addprice is lower than netprice, set color to red, if lower than 10% set color to orange
+        if (parseFloat(addprice.val()) < parseFloat(netprice)){
+          color = 'red'
+        } else if (parseFloat(addprice.val()) < parseFloat(netprice) * 1.1){
+          color = 'orange'
+        }
         pdcts=JSON.parse(localStorage.getItem('pdctsinbonlivraison')) || []
         console.log(id, pdcts, pdcts.includes(id))
         // if (addprice.val()<=dp){
@@ -327,7 +334,7 @@
                 <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
                 <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; color: ${color};"></td>
                 <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
                 <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
