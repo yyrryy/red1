@@ -2648,11 +2648,18 @@ function printbonachat(bonid){
         let tr = target.parent().parent()
         let qty = tr.find('.qty').val()
         let price = tr.find('.price').val()
+        let buyprice = tr.find('.buyprice').text()
         let remise = tr.find('.remise').val()
         // net price will be prix achat
         let netprice=price-(price*remise/100)
-
+        color = 'none'
+        if (parseFloat(price) < parseFloat(buyprice)){
+          color = 'red'
+        } else if (parseFloat(price) < parseFloat(buyprice) * 1.1){
+          color = 'orange'
+        }
         let total = tr.find('.total')
+        tr.find('.price').css('background', color)
         // update also net in tr row if it's in row
         let net = tr.find('.netprice')
         if (net.length){

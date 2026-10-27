@@ -274,9 +274,9 @@
         console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
         color = 'none'
         // if addprice is lower than netprice, set color to red, if lower than 10% set color to orange
-        if (parseFloat(addprice.val()) < parseFloat(netprice)){
+        if (parseFloat(addprice.val()) < parseFloat(dp)){
           color = 'red'
-        } else if (parseFloat(addprice.val()) < parseFloat(netprice) * 1.1){
+        } else if (parseFloat(addprice.val()) < parseFloat(dp) * 1.1){
           color = 'orange'
         }
         pdcts=JSON.parse(localStorage.getItem('pdctsinbonlivraison')) || []
@@ -330,11 +330,11 @@
             <tr class="itemrow ${stock<=0? "text-danger":"" }" id=${id}>: 2
                 <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelinebl(event, ${id})">${ref}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${name}</td>
-                <td style="paddingpx 0; font-size: 13px;">${dp}</td>
+                <td class="buyprice" style="paddingpx 0; font-size: 13px;">${dp}</td>
                 <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
                 <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; color: ${color};"></td>
+                <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; background: ${color};"></td>
                 <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
                 <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
                 <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
@@ -377,11 +377,11 @@
         <tr class="itemrow ${stock<=0? "text-danger":"" }">: 2
             <td style="padding: 2px 0; font-size: 13px;" class="ref" onclick="removelinebl(event, ${id})">${ref}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="name text-start">${name}</td>
-            <td style="paddingpx 0; font-size: 13px;">${dp}</td>
+            <td class="buyprice" style="paddingpx 0; font-size: 13px;">${dp}</td>
             <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
             <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+            <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; background: ${color};"></td>
             <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
             <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
             <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
