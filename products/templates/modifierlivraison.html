@@ -246,12 +246,21 @@ margin: 0;
     }
     var [ref, name, dp, stock, stockfacture, id, sellprice, remise, netprice, representprice] = addname.attr('data').split('§');
     console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
+    netprice=parseFloat(addprice.val())-(parseFloat(addprice.val())*parseFloat(addremise.val())/100)
+    color = 'none'
+    // if addprice is lower than netprice, set color to red, if lower than 10% set color to orange
+    if (parseFloat(netprice) < parseFloat(dp)){
+      color = 'red'
+    } else if (parseFloat(netprice) < parseFloat(dp) * 1.2){
+      color = 'orange'
+    }
     pdcts=JSON.parse(localStorage.getItem(`pdctsinbonlivraison${bonid}`))
     console.log(id, pdcts, pdcts.includes(id))
     // if (addprice.val()<=dp){
     //       alertify.error('Le prix doit être supérieur à prix achat')
     //       return
     //     }
+
     if (pdcts.includes(id)){
       addqty.val('')
       addname.val('')
@@ -299,7 +308,7 @@ margin: 0;
               <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
               <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
               <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison{{livraison.id}} " onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-              <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+              <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; background:${color}"></td>
               <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
               <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
               <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>
@@ -345,7 +354,7 @@ margin: 0;
         <td style="padding: 2px 0; font-size: 13px;">${stock}</td>
         <td style="padding: 2px 0; font-size: 13px;" class="clientprice">${priceclient}</td>
         <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate qty notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="qty" value="${addqty.val()}" style="height:23px; width:100%;"></td>
-        <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%;"></td>
+        <td style="padding: 2px 0; font-size: 13px;"><input type="number" class="calculate price notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="price" value="${addprice.val()}" step=0.01 style="height:23px; width:100%; background:${color}"></td>
         <td style="padding: 2px 0; font-size: 13px;"><input type="number" value="${addremise.val()}" class="calculate remise notemptylivraison{{livraison.id}}" onkeyup="calculate(event)" name="remise" style="height:23px; width:100%;"></td>
         <td style="padding: 2px 0; font-size: 13px;" class="netprice">${netprice}</td>
         <td style="padding: 2px 0; font-size: 13px;" class="total">${addtotal}</td>

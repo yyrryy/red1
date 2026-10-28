@@ -272,11 +272,12 @@
         }
         var [ref, name, dp, stock, stockfacture, id, sellprice, remise, netprice, representprice] = addname.attr('data').split('§');
         console.log(ref, name, dp, stock, id, sellprice, remise, netprice, representprice)
+        netprice=parseFloat(addprice.val())-(parseFloat(addprice.val())*parseFloat(addremise.val())/100)
         color = 'none'
         // if addprice is lower than netprice, set color to red, if lower than 10% set color to orange
-        if (parseFloat(addprice.val()) < parseFloat(dp)){
+        if (parseFloat(netprice) < parseFloat(dp)){
           color = 'red'
-        } else if (parseFloat(addprice.val()) < parseFloat(dp) * 1.1){
+        } else if (parseFloat(netprice) < parseFloat(dp) * 1.2){
           color = 'orange'
         }
         pdcts=JSON.parse(localStorage.getItem('pdctsinbonlivraison')) || []
