@@ -75,7 +75,7 @@
       </thead>
       <tbody class="listbcbody">
         {% for order in bons %}
-          <tr class="orderrow {% if 'Reliquat' in order.note and not order.isdelivered %} bg-warning  {% elif not order.isdelivered  %} text-danger {%endif%}"  orderid="{{order.code}}" ondblclick="createtab('command{{order.id}}', 'Commande {{order.order_no}}', '/products/boncommandedetails/{{order.id}}')" {% if 'Reliquat' in order.note %} style="color: blue"{% endif %}>
+          <tr class="orderrow {% if 'Reliquat' in order.note and not order.isdelivered %} bg-warning  {% elif order.isdelivered  %} bg-success {%endif%}"  orderid="{{order.code}}" ondblclick="createtab('command{{order.id}}', 'Commande {{order.order_no}}', '/products/boncommandedetails/{{order.id}}')" {% if 'Reliquat' in order.note %} style="color: blue"{% endif %}>
             <td>{{ order.order_no }}</td>
             <td>{{ order.date|dateadd}}</td>
             <td>{{ order.client.name }}</td>
